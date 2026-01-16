@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "Laptop",
+    "price": 1200.00,
+    "image": "https://via.placeholder.com/150/0000FF/FFFFFF?Text=Laptop"
+  },
+  {
+    "id": "2",
+    "name": "Keyboard",
+    "price": 75.50,
+    "image": "https://via.placeholder.com/150/0000FF/FFFFFF?Text=Keyboard"
+  },
+  {
+    "id": "3",
+    "name": "Mouse",
+    "price": 25.99,
+    "image": "https://via.placeholder.com/150/0000FF/FFFFFF?Text=Mouse"
+  }
+]

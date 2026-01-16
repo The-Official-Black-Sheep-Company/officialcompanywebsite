@@ -1,0 +1,258 @@
+[
+  {
+    "id": 1,
+    "name": "Old Spice Deodorant - Fiji",
+    "price": 8.24,
+    "upc": "012044037591",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Dr_Squatch_Wood_Barrel_Bourbon_Natural_Deodorant_f_photo1_20251227_083154.jpg",
+    "video": "/media/videos/Dr_Squatch_Coconut_Castaway_Natural_Deodorant_for__video_20251227_094335.webm"
+  },
+  {
+    "id": 2,
+    "name": "Dr. Squatch Coconut Castaway Deodorant",
+    "price": 13.99,
+    "upc": "810095594649",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Dr_Squatch_Wood_Barrel_Bourbon_Natural_Deodorant_f_photo1_20251227_083154.jpg",
+    "video": "/media/videos/Dr_Squatch_Coconut_Castaway_Natural_Deodorant_for__video_20251227_094335.webm"
+  },
+  {
+    "id": 3,
+    "name": "Gorilla Glue Clear Super Glue",
+    "price": 9.49,
+    "upc": "052427450012",
+    "location": "A1",
+    "category": "Hardware",
+    "image": "/media/Gorilla_Super_Glue_with_Brush_Nozzle_Applicator_10_photo1_20251223_163220.jpg",
+    "video": "/media/videos/Gorilla_Glue_Clear_-175oz_Super_Glue_for_Wood_Glas_video_20251126_183135.webm"
+  },
+  {
+    "id": 4,
+    "name": "Physicians Formula BB Cream",
+    "price": 14.99,
+    "upc": "044386062078",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/_Physicians_Formula_Murumuru_Butter_Highlighter_Ma_photo1_20251222_083539.jpg",
+    "video": "/media/videos/Physicians_Formula_24_Karat_Gold_Collagen_Serum_1o_video_20251223_180717.webm"
+  },
+  {
+    "id": 5,
+    "name": "Dove Invisible Solid Deodorant",
+    "price": 5.0,
+    "upc": "079400507303",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Dove_Men_Care_Eucalyptus_Mint_Body_Face_Hair_Wash__photo1_20251125_211204.jpg",
+    "video": "/media/videos/Dove_Men_Care_Eucalyptus_Mint_Body_Face_Hair_Wash__video_20251125_211457.webm"
+  },
+  {
+    "id": 6,
+    "name": "Native Charcoal Deodorant",
+    "price": 13.0,
+    "upc": "812154030815",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Dr_Squatch_Wood_Barrel_Bourbon_Natural_Deodorant_f_photo1_20251227_083154.jpg",
+    "video": "/media/videos/Dr_Squatch_Coconut_Castaway_Natural_Deodorant_for__video_20251227_094335.webm"
+  },
+  {
+    "id": 7,
+    "name": "Scrubbing Bubbles Bathroom Cleaner",
+    "price": 5.0,
+    "upc": "025700013129",
+    "location": "A1",
+    "category": "Cleaning",
+    "image": "/media/Scrubbing_Bubbles_Easy_Clean_Multi-Purpose_Bathroo_photo1_20251222_114506.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Kerastase Gloss Absolu Shampoo",
+    "price": 40.0,
+    "upc": "3474637283384",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Kerastase_Premiere_Pre-Shampoo_Treatment_for_Bond__photo1_20251125_165458.jpg",
+    "video": "/media/videos/Kerastase_Premiere_Pre-Shampoo_Treatment_for_Bond__video_20251125_165734.webm"
+  },
+  {
+    "id": 9,
+    "name": "Sponge Caddy",
+    "price": 6.0,
+    "upc": "859547004695",
+    "location": "A1",
+    "category": "Home",
+    "image": "/media/Sponge_Caddy_1ct-White_Translucent__photo1_20251222_124214.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Secret Clinical Deodorant",
+    "price": 9.0,
+    "upc": "037000174233",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Sensodyne_Pronamel_Clinical_Enamel_Strengthening_T_photo1_20251122_002400.jpg",
+    "video": "/media/videos/Dr_Squatch_Coconut_Castaway_Natural_Deodorant_for__video_20251227_094335.webm"
+  },
+  {
+    "id": 11,
+    "name": "Physicians Formula 24K Gold Serum",
+    "price": 18.0,
+    "upc": "044386107434",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/_Physicians_Formula_Murumuru_Butter_Highlighter_Ma_photo1_20251222_083539.jpg",
+    "video": "/media/videos/Physicians_Formula_24_Karat_Gold_Collagen_Serum_1o_video_20251223_180717.webm"
+  },
+  {
+    "id": 12,
+    "name": "Tide PODS Laundry Detergent",
+    "price": 9.0,
+    "upc": "030772203279",
+    "location": "A1",
+    "category": "Cleaning",
+    "image": "/media/Tide_Downy_April_Fresh_HE_Deep_Cleaning_Concentrat_photo1_20251222_121807.jpg",
+    "video": "/media/videos/Gain_Happy_Super-Sized_Flings_Laundry_Detergent_Pa_video_20251125_145214.webm"
+  },
+  {
+    "id": 13,
+    "name": "LED Headlamp 3 Modes",
+    "price": 8.0,
+    "upc": "639277237125",
+    "location": "A1",
+    "category": "Electronics",
+    "image": "/media/LED_Headlamp_3_Modes_photo1_20251126_174148.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Native Vanilla Wonderland Body Wash",
+    "price": 8.5,
+    "upc": "30772217399",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Native_Deodorant_Natural_Deodorant_for_Men_Aluminu_photo1_20251222_113534.jpg",
+    "video": "/media/videos/Native_Coconut_Vanilla_Body_Wash__video_20251227_042608.webm"
+  },
+  {
+    "id": 15,
+    "name": "Dove Men+Care Eucalyptus Wash",
+    "price": 4.5,
+    "upc": "8720181444708",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Dove_Men_Care_Eucalyptus_Mint_Body_Face_Hair_Wash__photo1_20251125_211204.jpg",
+    "video": "/media/videos/Dove_Men_Care_Eucalyptus_Mint_Body_Face_Hair_Wash__video_20251125_211457.webm"
+  },
+  {
+    "id": 16,
+    "name": "Kerastase Premiere Pre-Shampoo",
+    "price": 50.0,
+    "upc": "3474637217273",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Kerastase_Premiere_Pre-Shampoo_Treatment_for_Bond__photo1_20251125_165458.jpg",
+    "video": "/media/videos/Kerastase_Premiere_Pre-Shampoo_Treatment_for_Bond__video_20251125_165734.webm"
+  },
+  {
+    "id": 17,
+    "name": "BACtrack C8 Breathalyzer",
+    "price": 80.0,
+    "upc": "857186005554",
+    "location": "A1",
+    "category": "Electronics",
+    "image": "/media/BACtrack_C8_Breathalyzer_Professional-Grade_Accura_photo1_20251125_162324.jpg",
+    "video": "/media/videos/BACtrack_C8_Breathalyzer_Professional-Grade_Accura_video_20251125_162742.webm"
+  },
+  {
+    "id": 18,
+    "name": "Gain Laundry Detergent Flings",
+    "price": 10.29,
+    "upc": "030772118320",
+    "location": "A1",
+    "category": "Cleaning",
+    "image": "/media/Gain_Happy_Super-Sized_Flings_Laundry_Detergent_Pa_photo1_20251125_143157.jpg",
+    "video": "/media/videos/Gain_Happy_Super-Sized_Flings_Laundry_Detergent_Pa_video_20251125_145214.webm"
+  },
+  {
+    "id": 19,
+    "name": "Kerastase Hair Gift Set",
+    "price": 55.0,
+    "upc": "3474637323349",
+    "location": "A1",
+    "category": "Health & Beauty",
+    "image": "/media/Kerastase_Premiere_Pre-Shampoo_Treatment_for_Bond__photo1_20251125_165458.jpg",
+    "video": "/media/videos/Dove_Men_Care_Eucalyptus_Mint_Body_Face_Hair_Wash__video_20251125_211457.webm"
+  },
+  {
+    "id": 20,
+    "name": "Rainbow High Fairies Doll",
+    "price": 11.99,
+    "upc": "035051543381",
+    "location": "A1",
+    "category": "Toys",
+    "image": "/media/_Physicians_Formula_Murumuru_Butter_Highlighter_Ma_photo1_20251222_083539.jpg",
+    "video": "/media/videos/Rainbow_High_Littles_Rainbow_Fantasy_Fairies_Pet_-_video_20251125_110445.webm"
+  },
+  {
+    "id": 21,
+    "name": "Extra Virgin Olive Oil",
+    "price": 18.97,
+    "upc": "041790001303",
+    "location": "A1",
+    "category": "Food",
+    "image": "/media/OLIVE_OIL_photo1_20251125_135905.jpg",
+    "video": "/media/videos/OLIVE_OIL_video_20251125_140207.webm"
+  },
+  {
+    "id": 22,
+    "name": "B17 Standard Bike Saddle",
+    "price": 116.99,
+    "upc": "831273005245",
+    "location": "A1",
+    "category": "Sports",
+    "image": "/media/B17_Standard_Saddle_-_Black_-_Black_Steel_photo1_20251125_132155.jpg",
+    "video": "/media/videos/B17_Standard_Saddle_-_Black_-_Black_Steel_video_20251125_132648.webm"
+  },
+  {
+    "id": 23,
+    "name": "Rainbow High Gabriella Doll",
+    "price": 34.99,
+    "upc": "035051987932",
+    "location": "A1",
+    "category": "Toys",
+    "image": "/media/_Physicians_Formula_Murumuru_Butter_Highlighter_Ma_photo1_20251222_083539.jpg",
+    "video": "/media/videos/Rainbow_High_Littles_Rainbow_Fantasy_Fairies_Pet_-_video_20251125_110445.webm"
+  },
+  {
+    "id": 24,
+    "name": "Monster Jam Spider-Man RC Truck",
+    "price": 16.09,
+    "upc": "681147077454",
+    "location": "A1",
+    "category": "Toys",
+    "image": "/media/Monster_Jam_Marvel_The_Amazing_Spider-Man_RC_Monst_photo1_20251122_123948.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Key & Castle Garbage Bag Grippers",
+    "price": 4.0,
+    "upc": "637118124726",
+    "location": "A1",
+    "category": "Home",
+    "image": "/media/Key_Castle_Garbage_Bag_Grippers_photo1_20251126_185059.jpg",
+    "video": "/media/videos/Key_Castle_Garbage_Bag_Grippers_video_20251126_185403.webm"
+  },
+  {
+    "id": 26,
+    "name": "Tide PODS Spring Meadow",
+    "price": 7.99,
+    "upc": "037000509547",
+    "location": "A1",
+    "category": "Cleaning",
+    "image": "/media/Tide_Downy_April_Fresh_HE_Deep_Cleaning_Concentrat_photo1_20251222_121807.jpg",
+    "video": "/media/videos/Tide_Downy_April_Fresh_HE_Deep_Cleaning_Concentrat_video_20251125_155235.webm"
+  }
+]

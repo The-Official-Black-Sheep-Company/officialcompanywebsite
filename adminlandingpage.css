@@ -1,0 +1,815 @@
+:root {
+    --black: #000000;
+    --dark-gray: #1a1a1a; /* Dark gray for shapes */
+    --gold: #FFD700;
+    --accent: #e17055; /* Orange accent color */
+    --active-shadow: 0 0 15px 5px; /* Base for green light or black shadow */
+}
+
+body {
+    background-color: var(--black);
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100vh;
+}
+
+/* --- Background Shapes Container --- */
+#shape-container {
+    position: fixed; /* Changed from absolute */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1; /* Behind content, above body background */
+    pointer-events: none; /* Allow clicks to pass through */
+}
+
+/* --- Gold Cross --- */
+#gold-cross {
+    position: absolute; /* Keep absolute, relative to fixed shape-container */
+    width: 50px;
+    height: 100px;
+    z-index: 1; /* On top of shapes in #shape-container */
+    pointer-events: none;
+    background: none !important;
+    background-color: transparent !important;
+}
+
+#gold-cross::before, #gold-cross::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+    box-shadow: 0 0 5px var(--gold);
+}
+
+/* Vertical bar of the cross (long skinny vertical beam) */
+#gold-cross::before {
+    width: 10px;
+    height: 100px;
+    left: 20px;
+    top: 0;
+}
+
+/* Horizontal bar of the cross (shorter crossbeam near top) */
+#gold-cross::after {
+    width: 50px;
+    height: 10px;
+    left: 0;
+    top: 20px;
+}
+
+#main-content {
+    position: relative; /* Must have a position property */
+    z-index: 2; /* Higher z-index to be on top of shapes */
+    background-color: transparent; /* Allow background shapes to show through */
+}
+
+
+/* --- Header and Search --- */
+.dashboard-header {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--dark-gray);
+    background-color: var(--black);
+    position: relative;
+    z-index: 3;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.dashboard-header h1 {
+    text-align: left;
+    margin: 0;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Search Container */
+.search-container {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid var(--dark-gray);
+    background-color: var(--black);
+    position: relative;
+    z-index: 3;
+}
+
+#searchBar {
+    width: 500px;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 25px;
+    border: 2px solid var(--gold);
+    background-color: var(--dark-gray);
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#searchBar:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+}
+
+#searchBar::placeholder {
+    color: #888;
+}
+
+/* --- Footer --- */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--black);
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid var(--dark-gray);
+    z-index: 3;
+}
+
+#bible-verse {
+    font-style: italic;
+    color: #bbb;
+    font-size: 0.85em;
+}
+
+/* --- Tabs with Hover Dropdowns --- */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    background-color: var(--black);
+    border-bottom: 2px solid var(--dark-gray);
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 3;
+}
+
+/* --- Background Shapes - EDUCATIONAL GEOMETRY --- */
+.background-shape {
+    position: absolute; /* Changed from fixed */
+    background-color: var(--dark-gray);
+    opacity: 0.6;
+    pointer-events: none;
+    /* z-index is not needed here as it's inside a container */
+}
+
+/* BASIC SHAPES */
+.background-shape.circle {
+    border-radius: 50%;
+}
+
+.background-shape.square {
+    border-radius: 5px;
+}
+
+.background-shape.rectangle {
+    border-radius: 3px;
+    transform: scaleX(1.6);
+}
+
+.background-shape.triangle {
+    width: 0 !important;
+    height: 0 !important;
+    background-color: transparent !important;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 69px solid var(--dark-gray);
+    opacity: 0.25;
+}
+
+/* Other shapes... */
+.background-shape.quadrilateral {
+    clip-path: polygon(15% 10%, 85% 5%, 90% 90%, 10% 95%);
+}
+
+.background-shape.parallelogram {
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
+
+.background-shape.rhombus {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.background-shape.trapezoid {
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+}
+
+.background-shape.kite {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 90%, 0% 50%);
+}
+
+.background-shape.pentagon {
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+.background-shape.hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.background-shape.heptagon {
+    clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+}
+
+.background-shape.octagon {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.background-shape.nonagon {
+    clip-path: polygon(50% 0%, 83% 12%, 100% 43%, 94% 78%, 68% 100%, 32% 100%, 6% 78%, 0% 43%, 17% 12%);
+}
+
+.background-shape.decagon {
+    clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+}
+
+.background-shape.hendecagon {
+    clip-path: polygon(50% 0%, 75% 5%, 95% 25%, 100% 50%, 95% 75%, 75% 95%, 50% 100%, 25% 95%, 5% 75%, 0% 50%, 5% 25%, 25% 5%);
+}
+
+.background-shape.dodecagon {
+    clip-path: polygon(50% 0%, 70% 5%, 87% 17%, 97% 33%, 100% 50%, 97% 67%, 87% 83%, 70% 95%, 50% 100%, 30% 95%, 13% 83%, 3% 67%, 0% 50%, 3% 33%, 13% 17%, 30% 5%);
+}
+
+.background-shape.star {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.background-shape.star6 {
+    clip-path: polygon(50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+}
+
+.background-shape.star8 {
+    clip-path: polygon(50% 0%, 58% 30%, 85% 15%, 70% 42%, 100% 50%, 70% 58%, 85% 85%, 58% 70%, 50% 100%, 42% 70%, 15% 85%, 30% 58%, 0% 50%, 30% 42%, 15% 15%, 42% 30%);
+}
+
+.background-shape.ellipse {
+    border-radius: 50%;
+    transform: scaleX(1.7);
+}
+
+.background-shape.oval {
+    border-radius: 50%;
+    transform: scaleY(1.4);
+}
+
+.background-shape.crescent {
+    border-radius: 50%;
+    box-shadow: inset 20px 0 0 0 var(--black);
+}
+
+.background-shape.semicircle {
+    border-radius: 100% 100% 0 0;
+}
+
+.background-shape.diamond {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    transform: rotate(45deg);
+}
+
+.background-shape.arrow {
+    clip-path: polygon(0% 30%, 70% 30%, 70% 0%, 100% 50%, 70% 100%, 70% 70%, 0% 70%);
+}
+
+.background-shape.chevron {
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%);
+}
+
+.background-shape.cross {
+    clip-path: polygon(33% 0%, 67% 0%, 67% 33%, 100% 33%, 100% 67%, 67% 67%, 67% 100%, 33% 100%, 33% 67%, 0% 67%, 0% 33%, 33% 33%);
+}
+
+.background-shape.plus {
+    clip-path: polygon(40% 0%, 60% 0%, 60% 40%, 100% 40%, 100% 60%, 60% 60%, 60% 100%, 40% 100%, 40% 60%, 0% 60%, 0% 40%, 40% 40%);
+}
+
+.background-shape.heart {
+    clip-path: path('M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z');
+}
+
+.background-shape.teardrop {
+    border-radius: 50% 0 50% 50%;
+    transform: rotate(-45deg);
+}
+
+.background-shape.lshape {
+    clip-path: polygon(0% 0%, 40% 0%, 40% 60%, 100% 60%, 100% 100%, 0% 100%);
+}
+
+.background-shape.tshape {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 40%, 60% 40%, 60% 100%, 40% 100%, 40% 40%, 0% 40%);
+}
+
+@media (max-width: 768px) {
+    .tabs {
+        justify-content: center;
+    }
+
+    .tab-button {
+        padding: 8px 10px;
+        font-size: 0.7em;
+        white-space: nowrap;
+    }
+
+    #searchBar {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .button-grid {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .app-button {
+        font-size: 0.85em;
+        padding: 10px 12px;
+    }
+
+    header h1 {
+        font-size: 1.3em;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-button {
+        padding: 6px 8px;
+        font-size: 0.6em;
+    }
+
+    header h1 {
+        font-size: 1em;
+    }
+}
+
+.tab-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.tab-button {
+    padding: 15px 30px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-right: 1px solid var(--dark-gray);
+    background-color: var(--dark-gray);
+    color: #ccc;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab-button:hover {
+    background-color: #2a2a2a;
+    color: var(--gold);
+}
+
+.tab-button.active-selection {
+    background-color: #2a2a2a;
+    color: var(--gold);
+    border-bottom: 3px solid var(--gold);
+}
+
+.tab-dropdown:last-child .tab-button {
+    border-right: none;
+}
+
+/* Dropdown Menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--dark-gray);
+    min-width: 220px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    border: 1px solid var(--gold);
+    border-top: none;
+}
+
+/* Show dropdown on hover */
+.tab-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Dropdown items (for cascading menus) */
+.dropdown-item {
+    position: relative;
+}
+
+.dropdown-menu a {
+    color: #ccc;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.2s ease;
+    font-size: 0.95em;
+}
+
+.dropdown-menu a:hover {
+    background-color: #2a2a2a;
+    color: var(--gold);
+    padding-left: 25px;
+}
+
+/* Submenu (cascading dropdown to the right) */
+.submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #2a2a2a;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--gold);
+    z-index: 1001;
+}
+
+/* Show submenu on hover */
+.dropdown-item:hover .submenu {
+    display: block;
+}
+
+.submenu a {
+    color: #ccc;
+    padding: 10px 18px;
+    font-size: 0.9em;
+}
+
+.submenu a:hover {
+    background-color: #333;
+    color: var(--gold);
+    padding-left: 23px;
+}
+
+/* --- Tab Content --- */
+.tab-content {
+    display: none;
+    padding: 20px;
+    min-height: 400px;
+}
+
+.tab-content.active-tab {
+    display: block;
+}
+
+/* --- Button Grid --- */
+.button-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 100px 20px 20px 20px;
+    max-width: 1225px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- App Buttons --- */
+.app-button {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.95em;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid #333;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-align: center;
+    width: fit-content;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.app-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+    border-color: var(--gold);
+}
+
+.app-button.on:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 0 35px rgba(0, 255, 136, 0.9),
+        0 0 70px rgba(0, 255, 136, 0.6),
+        0 0 100px rgba(0, 255, 136, 0.4) !important;
+}
+
+/* --- App Button Dropdown Menu --- */
+.app-button-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.app-button-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 9999;
+    min-width: 140px;
+    overflow: hidden;
+}
+
+.app-button-wrapper:hover .app-button-dropdown,
+.app-button-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure button with open dropdown is above all other buttons */
+.app-button:has(.app-button-dropdown.show) {
+    z-index: 10000;
+}
+
+.app-button-dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85em;
+    color: #ccc;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #333;
+}
+
+.app-button-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.app-button-dropdown-item:hover {
+    background: #3a3a3a;
+    color: #fff;
+}
+
+.app-button-dropdown-item.go-to-page:hover {
+    background: rgba(0, 150, 255, 0.2);
+    color: #00aaff;
+}
+
+.app-button-dropdown-item.stop-service:hover {
+    background: rgba(255, 50, 50, 0.2);
+    color: #ff5555;
+}
+
+/* Dropdown caret on app buttons */
+.app-button .caret {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+    opacity: 0.6;
+    transition: transform 0.2s ease;
+}
+
+.app-button:hover .caret {
+    opacity: 1;
+}
+
+/* Port number badge in top-left corner */
+.app-button .port-badge {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 10px;
+    padding: 0px 4px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #999;
+    border-radius: 3px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.9;
+    opacity: 0.8;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+}
+
+.app-button.on .port-badge {
+    background: rgba(0, 255, 136, 0.25);
+    color: #00ff88;
+    font-weight: 400;
+}
+
+.app-button.pressed {
+    transform: scale(0.95);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* OFF State - Random Grey Variants */
+.app-button.off {
+    box-shadow: none;
+    border-color: #333;
+}
+
+/* Dark grey background with grey text */
+.app-button.off.grey-variant-1 {
+    background-color: #1a1a1a;
+    color: #888;
+}
+
+/* Grey background with dark grey text */
+.app-button.off.grey-variant-2 {
+    background-color: #555;
+    color: #1a1a1a;
+}
+
+.app-button.off:hover {
+    opacity: 0.8;
+}
+
+/* ON State - Will have random colors applied via JS */
+.app-button.on {
+    color: white;
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Pulsing glow animation */
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 20px rgba(0, 255, 136, 0.6),
+            0 0 40px rgba(0, 255, 136, 0.4),
+            0 0 60px rgba(0, 255, 136, 0.2),
+            inset 0 0 20px rgba(0, 255, 136, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 30px rgba(0, 255, 136, 0.8),
+            0 0 60px rgba(0, 255, 136, 0.5),
+            0 0 90px rgba(0, 255, 136, 0.3),
+            inset 0 0 30px rgba(0, 255, 136, 0.15);
+    }
+}
+
+/* Status indicator dot */
+.app-button .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    transition: all 0.3s ease;
+}
+
+.app-button.off .status-indicator {
+    background: #444;
+    box-shadow: none;
+}
+
+.app-button.on .status-indicator {
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff88;
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.app-button span {
+    margin-top: 8px;
+    z-index: 1;
+}
+
+
+/* --- Dropdown Container --- */
+.dropdown-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.dropdown-container label {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-right: 15px;
+    color: var(--gold);
+}
+
+.dropdown-container select {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 2px solid var(--gold);
+    background-color: var(--dark-gray);
+    color: white;
+    cursor: pointer;
+    min-width: 250px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.dropdown-container select:hover {
+    background-color: #2a2a2a;
+    box-shadow: 0 0 10px var(--gold);
+}
+
+.dropdown-container select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px var(--gold);
+}
+
+/* --- Server Sections --- */
+.server-section, .content-section {
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.server-section h2 {
+    text-align: center;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+/* --- Service and Shopping Content --- */
+.service-content, .shopping-content {
+    padding: 40px;
+    text-align: center;
+    min-height: 300px;
+}
+
+.service-content h2, .shopping-content h2 {
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.service-content p, .shopping-content p {
+    font-size: 1.1em;
+    color: #ccc;
+}
+
+.service-content a, .shopping-content a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.service-content a:hover, .shopping-content a:hover {
+    text-shadow: 0 0 10px var(--gold);
+}
+
+
+/* --- New Header Button Styles --- */
+.login-button {
+    font-size: 1em;
+    padding: 10px 20px;
+    background-color: var(--dark-gray);
+    color: white;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.signup-button {
+    font-weight: 900;
+    font-size: 1.3em;
+    padding: 10px 20px;
+    border: none;
+    text-decoration: none;
+    background-image: linear-gradient(to right, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+

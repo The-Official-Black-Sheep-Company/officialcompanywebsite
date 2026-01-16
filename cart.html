@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - The Official Black Sheep Company</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-black text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-sheep text-2xl"></i>
+                <h1 class="text-xl md:text-2xl font-bold tracking-wide uppercase">The Official Black Sheep Company</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-gray-300 transition">Shop</a>
+                <a href="#" class="hover:text-gray-300 transition">Collections</a>
+                <a href="#" class="hover:text-gray-300 transition">About</a>
+                <a href="#" class="hover:text-gray-300 transition">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="relative hover:text-gray-300 transition">
+                    <i class="fa-solid fa-shopping-cart text-xl"></i>
+                    <span id="header-cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 text-white border-t border-gray-800">
+            <nav class="flex flex-col p-4 space-y-4">
+                <a href="#" class="hover:text-gray-300 transition">Shop</a>
+                <a href="#" class="hover:text-gray-300 transition">Collections</a>
+                <a href="#" class="hover:text-gray-300 transition">About</a>
+                <a href="#" class="hover:text-gray-300 transition">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        
+        <div class="flex flex-col md:flex-row gap-8">
+            
+            <!-- Cart Items Section -->
+            <div class="w-full md:w-2/3">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Shopping Cart</h2>
+                    <span id="cart-total-items" class="text-gray-500">3 Items</span>
+                </div>
+
+                <!-- Cart List Container -->
+                <div id="cart-items-container" class="space-y-4">
+                    <!-- Items will be injected here via JS -->
+                </div>
+
+                <!-- Empty Cart Message (Hidden by default) -->
+                <div id="empty-cart-message" class="hidden text-center py-12 bg-white rounded-lg shadow-sm">
+                    <div class="text-6xl text-gray-300 mb-4">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Your cart is empty</h3>
+                    <p class="text-gray-500 mb-6">Looks like you haven't added anything yet.</p>
+                    <button onclick="continueShopping()" class="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition font-medium">
+                        Start Shopping
+                    </button>
+                </div>
+
+                <!-- Continue Shopping Button (Desktop) -->
+                <div class="mt-8 hidden md:block">
+                    <button onclick="continueShopping()" class="flex items-center text-gray-600 hover:text-black transition">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order Summary Section -->
+            <div id="order-summary" class="w-full md:w-1/3">
+                <div class="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+                    <h2 class="text-xl font-bold mb-6 border-b pb-4">Order Summary</h2>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Subtotal</span>
+                            <span id="summary-subtotal">$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Shipping</span>
+                            <span class="text-green-600">Free</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Tax (Estimated)</span>
+                            <span id="summary-tax">$0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-4 mb-6">
+                        <div class="flex justify-between text-xl font-bold">
+                            <span>Total</span>
+                            <span id="summary-total">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button onclick="checkout()" class="w-full bg-black text-white py-4 rounded-lg font-bold text-lg hover:bg-gray-800 transition shadow-lg transform active:scale-95">
+                        Proceed to Checkout
+                    </button>
+
+                    <div class="mt-4 flex justify-center space-x-2 text-gray-400 text-2xl">
+                        <i class="fa-brands fa-cc-visa"></i>
+                        <i class="fa-brands fa-cc-mastercard"></i>
+                        <i class="fa-brands fa-cc-amex"></i>
+                        <i class="fa-brands fa-cc-paypal"></i>
+                    </div>
+                </div>
+                
+                <!-- Continue Shopping Button (Mobile) -->
+                <div class="mt-6 md:hidden text-center">
+                    <button onclick="continueShopping()" class="text-gray-600 hover:text-black transition font-medium">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4 text-white">
+                        <i class="fa-solid fa-sheep text-xl"></i>
+                        <h3 class="font-bold text-lg uppercase">Black Sheep Co.</h3>
+                    </div>
+                    <p class="text-sm text-gray-400">Premium quality wool and apparel for the distinctive individual. Be different. Be the black sheep.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Shop</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Men's Collection</a></li>
+                        <li><a href="#" class="hover:text-white transition">Women's Collection</a></li>
+                        <li><a href="#" class="hover:text-white transition">Accessories</a></li>
+                        <li><a href="#" class="hover:text-white transition">New Arrivals</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Customer Care</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Shipping Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Returns & Exchanges</a></li>
+                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Stay Connected</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook text-xl"></i></a>
+                    </div>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none w-full border border-gray-700 focus:border-gray-500">
+                        <button class="bg-white text-black px-4 py-2 rounded-r-md font-bold hover:bg-gray-200 transition">Join</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
+                &copy; 2023 The Official Black Sheep Company. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl mx-4 overflow-hidden transform scale-95 transition-transform duration-300" id="modal-content">
+            <div class="flex justify-end p-2">
+                <button onclick="closeModal()" class="text-gray-500 hover:text-black p-2">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col md:flex-row px-6 pb-8 pt-0">
+                <div class="w-full md:w-1/2 mb-4 md:mb-0">
+                    <img id="modal-image" src="" alt="Product Detail" class="w-full h-64 object-cover rounded-lg shadow-md">
+                </div>
+                <div class="w-full md:w-1/2 md:pl-8 flex flex-col justify-between">
+                    <div>
+                        <span id="modal-category" class="text-xs font-bold text-gray-500 uppercase tracking-wider">Category</span>
+                        <h2 id="modal-title" class="text-2xl font-bold mb-2">Product Title</h2>
+                        <div id="modal-price" class="text-xl text-gray-800 font-semibold mb-4">$0.00</div>
+                        <p id="modal-description" class="text-gray-600 text-sm mb-6 leading-relaxed">Description goes here.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="closeModal()" class="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-50 transition">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Success Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-md mx-4 p-8 text-center transform scale-95 transition-transform duration-300" id="checkout-modal-content">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-check text-4xl text-green-600"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Order Placed!</h2>
+            <p class="text-gray-600 mb-6">Thank you for shopping with The Official Black Sheep Company. Your order #BS-8821 is being processed.</p>
+            <button onclick="closeCheckoutModal()" class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <!-- JavaScript functionality -->
+    <script>
+        // Mock Data
+        let cartItems = [
+            {
+                id: 1,
+                title: "Premium Merino Wool Sweater",
+                category: "Men's Apparel",
+                price: 129.00,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1620799140408-ed5341cd2431?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Crafted from the finest merino wool, this sweater offers unmatched comfort and warmth without the bulk. Perfect for layering."
+            },
+            {
+                id: 2,
+                title: "Black Sheep Signature Cap",
+                category: "Accessories",
+                price: 35.00,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Our signature baseball cap featuring the iconic Black Sheep logo. Adjustable strap for a custom fit."
+            },
+            {
+                id: 3,
+                title: "Hand-Knitted Wool Scarf",
+                category: "Unisex",
+                price: 85.00,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Keep the cold at bay with this chunky knit scarf. Available in charcoal grey, it adds texture and style to any outfit."
+            }
+        ];
+
+        // State variables
+        const taxRate = 0.08;
+
+        // Render Cart Items
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const totalItemsEl = document.getElementById('cart-total-items');
+            const headerCountEl = document.getElementById('header-cart-count');
+            const emptyMessage = document.getElementById('empty-cart-message');
+            const summarySection = document.getElementById('order-summary');
+            
+            container.innerHTML = '';
+            
+            // Update counts
+            const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            totalItemsEl.textContent = `${totalCount} Item${totalCount !== 1 ? 's' : ''}`;
+            headerCountEl.textContent = totalCount;
+
+            if (cartItems.length === 0) {
+                container.classList.add('hidden');
+                emptyMessage.classList.remove('hidden');
+                summarySection.classList.add('opacity-50', 'pointer-events-none'); // Disable summary interaction
+                updateSummary(); // Clear values
+                return;
+            } else {
+                container.classList.remove('hidden');
+                emptyMessage.classList.add('hidden');
+                summarySection.classList.remove('opacity-50', 'pointer-events-none');
+            }
+
+            cartItems.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'bg-white p-4 rounded-lg shadow-sm flex flex-col sm:flex-row items-center gap-4 transition-all hover:shadow-md';
+                itemEl.innerHTML = `
+                    <div class="relative w-full sm:w-24 h-24 flex-shrink-0 cursor-pointer group" onclick="viewItem(${item.id})">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover rounded-md group-hover:opacity-90 transition">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/30 rounded-md">
+                            <i class="fa-solid fa-eye text-white drop-shadow-md"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-grow text-center sm:text-left">
+                        <h3 class="font-bold text-lg text-gray-800 cursor-pointer hover:text-gray-600" onclick="viewItem(${item.id})">${item.title}</h3>
+                        <p class="text-sm text-gray-500">${item.category}</p>
+                        <div class="mt-1 font-semibold">$${item.price.toFixed(2)}</div>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <div class="flex items-center border border-gray-300 rounded-md">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="px-3 py-1 hover:bg-gray-100 text-gray-600 transition disabled:opacity-50" ${item.quantity <= 1 ? '' : ''}>-</button>
+                            <span class="px-2 py-1 text-sm font-semibold min-w-[30px] text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="px-3 py-1 hover:bg-gray-100 text-gray-600 transition">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col items-center sm:items-end min-w-[80px]">
+                        <div class="font-bold text-lg mb-2">$${(item.price * item.quantity).toFixed(2)}</div>
+                        <button onclick="removeItem(${item.id})" class="text-red-500 hover:text-red-700 text-sm flex items-center transition">
+                            <i class="fa-solid fa-trash-can mr-1"></i> Remove
+                        </button>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+
+            updateSummary();
+        }
+
+        // Update Order Summary
+        function updateSummary() {
+            const subtotalEl = document.getElementById('summary-subtotal');
+            const taxEl = document.getElementById('summary-tax');
+            const totalEl = document.getElementById('summary-total');
+
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * taxRate;
+            const total = subtotal + tax;
+
+            subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+            taxEl.textContent = `$${tax.toFixed(2)}`;
+            totalEl.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Remove Item
+        function removeItem(id) {
+            // Find item name for the message
+            const item = cartItems.find(i => i.id === id);
+            cartItems = cartItems.filter(item => item.id !== id);
+            renderCart();
+            showToast(`${item.title} removed from cart`, 'error');
+        }
+
+        // Update Quantity
+        function updateQuantity(id, change) {
+            const item = cartItems.find(i => i.id === id);
+            if (item) {
+                const newQuantity = item.quantity + change;
+                if (newQuantity > 0) {
+                    item.quantity = newQuantity;
+                    renderCart();
+                }
+            }
+        }
+
+        // View Item Details (Modal)
+        function viewItem(id) {
+            const item = cartItems.find(i => i.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-image').src = item.image;
+            document.getElementById('modal-title').textContent = item.title;
+            document.getElementById('modal-category').textContent = item.category;
+            document.getElementById('modal-price').textContent = `$${item.price.toFixed(2)}`;
+            document.getElementById('modal-description').textContent = item.description;
+
+            const modal = document.getElementById('product-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        // Close Modal
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Show Toast Notification
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-gray-800';
+            let icon = 'fa-info-circle';
+            
+            if (type === 'success') {
+                bgClass = 'bg-green-600';
+                icon = 'fa-check-circle';
+            } else if (type === 'error') {
+                bgClass = 'bg-red-600';
+                icon = 'fa-exclamation-circle';
+            }
+
+            toast.className = `${bgClass} text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 transform translate-y-10 opacity-0 transition-all duration-300 min-w-[300px]`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon}"></i>
+                <span class="font-medium">${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            });
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Continue Shopping (Mock)
+        function continueShopping() {
+            showToast("Redirecting to shop...", 'info');
+        }
+
+        // Checkout (Mock)
+        function checkout() {
+            if (cartItems.length === 0) return;
+            
+            const modal = document.getElementById('checkout-modal');
+            const modalContent = document.getElementById('checkout-modal-content');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+            
+            // Clear cart logic could go here
+        }
+
+        function closeCheckoutModal() {
+            const modal = document.getElementById('checkout-modal');
+            const modalContent = document.getElementById('checkout-modal-content');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // Optional: Clear cart after successful checkout demo
+                cartItems = [];
+                renderCart();
+            }, 300);
+        }
+
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+
+            // Close modal when clicking outside
+            document.getElementById('product-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'product-modal') {
+                    closeModal();
+                }
+            });
+            
+            // Close checkout modal when clicking outside
+            document.getElementById('checkout-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'checkout-modal') {
+                    closeCheckoutModal();
+                }
+            });
+        });
+
+    </script>
+    <!-- Chatwoot AI Chatbot Widget -->
+    <script src="/chatwoot-widget-config.js"></script>
+</body>
+</html>
+
