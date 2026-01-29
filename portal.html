@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Black Sheep | Members Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/tech.css">
+    <style>
+        /* Portal specific tweaks */
+        body {
+            background-color: #050505;
+            overflow-y: auto;
+        }
+
+        .sidebar {
+            background: rgba(10, 10, 10, 0.95);
+            border-right: 1px solid #333;
+        }
+
+        .rightbar {
+            background: rgba(10, 10, 10, 0.8);
+            border-left: 1px solid #333;
+        }
+
+        .feed-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid #333;
+        }
+
+        .nav-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: #a78bfa;
+        }
+
+        .nav-item.active {
+            background: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+            border-right: 2px solid #8b5cf6;
+        }
+    </style>
+</head>
+
+<body class="text-gray-300 font-['Rajdhani']">
+
+    <!-- Bg Layers from Tech Page for consistency -->
+    <div class="fixed inset-0 pointer-events-none z-0 grid-bg opacity-30"></div>
+    <div class="fixed inset-0 pointer-events-none z-0 bg-sheen opacity-80"></div>
+
+    <div class="flex h-screen relative z-10 overflow-hidden">
+
+        <!-- SIDEBAR (Left) -->
+        <aside class="sidebar w-64 hidden md:flex flex-col flex-shrink-0">
+            <div class="h-16 flex items-center px-6 border-b border-[#333]">
+                <span class="text-xl font-bold font-['Orbitron'] text-white tracking-wider">TBS PORTAL</span>
+            </div>
+
+            <div class="flex-1 overflow-y-auto py-4">
+                <nav class="space-y-1 px-3">
+                    <a href="#"
+                        class="nav-item active flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                        Timeline
+                    </a>
+                    <a href="#"
+                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                        Friends
+                    </a>
+                    <a href="#"
+                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i data-lucide="image" class="w-5 h-5 mr-3"></i>
+                        Photos
+                    </a>
+                    <a href="https://element.io" target="_blank"
+                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i data-lucide="message-square" class="w-5 h-5 mr-3"></i>
+                        Matrix Chat
+                    </a>
+                    <a href="#"
+                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i data-lucide="video" class="w-5 h-5 mr-3"></i>
+                        Facechat
+                    </a>
+                    <a href="#"
+                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i data-lucide="phone" class="w-5 h-5 mr-3"></i>
+                        Call (SIP)
+                    </a>
+                </nav>
+            </div>
+
+            <div class="p-4 border-t border-[#333]">
+                <div class="flex items-center">
+                    <div
+                        class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold">
+                        U
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-white">Guest User</p>
+                        <a href="index.html" class="text-xs text-gray-500 hover:text-gray-300">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT (Center) -->
+        <main class="flex-1 overflow-y-auto relative custom-scrollbar">
+            <!-- Mobile Header -->
+            <div class="md:hidden h-16 flex items-center justify-between px-4 border-b border-[#333] bg-[#0a0a0a]">
+                <span class="font-['Orbitron'] font-bold text-white">TBS PORTAL</span>
+                <button class="p-2 rounded-md text-gray-400">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div class="max-w-3xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+
+                <!-- Post Creator -->
+                <div class="feed-card rounded-lg p-4 mb-6 shadow-lg">
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex-shrink-0">
+                        </div>
+                        <div class="flex-1">
+                            <textarea id="post-content" rows="2"
+                                class="w-full bg-transparent border-none focus:ring-0 text-gray-200 resize-none placeholder-gray-600"
+                                placeholder="What's on your mind?"></textarea>
+                            <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-800">
+                                <div class="flex gap-2">
+                                    <button class="p-2 text-violet-400 hover:bg-white/5 rounded-full"
+                                        title="Upload Photo">
+                                        <i data-lucide="image" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                                <button id="post-btn"
+                                    class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-1.5 rounded-full text-sm font-bold transition-all">
+                                    POST
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed Stream -->
+                <div id="feed-stream" class="space-y-6">
+                    <!-- Sample Post -->
+                    <div class="feed-card rounded-lg p-4 shadow-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gray-700"></div>
+                                <div>
+                                    <h3 class="font-bold text-white text-sm">System Admin</h3>
+                                    <p class="text-xs text-gray-500">2h ago</p>
+                                </div>
+                            </div>
+                            <button class="text-gray-500 hover:text-white"><i data-lucide="more-horizontal"
+                                    class="w-5 h-5"></i></button>
+                        </div>
+                        <p class="text-gray-300 mb-4">Welcome to the new Members Portal. Functionality is currently
+                            limited but growing. Stay tuned for secure Matrix integration.</p>
+                        <div class="flex items-center gap-6 text-gray-500 text-sm">
+                            <button class="flex items-center gap-2 hover:text-violet-400"><i data-lucide="heart"
+                                    class="w-4 h-4"></i> 12</button>
+                            <button class="flex items-center gap-2 hover:text-violet-400"><i
+                                    data-lucide="message-circle" class="w-4 h-4"></i> Comment</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-20"></div> <!-- space for bottom -->
+            </div>
+        </main>
+
+        <!-- RIGHT BAR (Online/Notifs) -->
+        <aside class="rightbar w-72 hidden lg:block flex-shrink-0 p-6">
+            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Online Members</h3>
+            <ul class="space-y-4">
+                <li class="flex items-center gap-3">
+                    <div
+                        class="w-8 h-8 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center border border-green-500/30">
+                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                    </div>
+                    <span class="text-sm font-medium">SwoopG</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">?</div>
+                    <span class="text-sm text-gray-500">Anon_882</span>
+                </li>
+            </ul>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+
+        // Simple Post Logic
+        const postBtn = document.getElementById('post-btn');
+        const postContent = document.getElementById('post-content');
+        const feedStream = document.getElementById('feed-stream');
+
+        postBtn.addEventListener('click', () => {
+            const content = postContent.value.trim();
+            if (!content) return;
+
+            const postHTML = `
+                <div class="feed-card rounded-lg p-4 shadow-lg animate-fade-in-up">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold">U</div>
+                            <div>
+                                <h3 class="font-bold text-white text-sm">Guest User</h3>
+                                <p class="text-xs text-gray-500">Just now</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">${content.replace(/\n/g, '<br>')}</p>
+                    <div class="flex items-center gap-6 text-gray-500 text-sm">
+                        <button class="flex items-center gap-2 hover:text-violet-400"><i data-lucide="heart" class="w-4 h-4"></i> 0</button>
+                        <button class="flex items-center gap-2 hover:text-violet-400"><i data-lucide="message-circle" class="w-4 h-4"></i> Comment</button>
+                    </div>
+                </div>
+            `;
+
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = postHTML;
+            feedStream.prepend(wrapper.firstElementChild);
+
+            postContent.value = '';
+            lucide.createIcons();
+        });
+
+        // Add fade-in animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in-up {
+                animation: fadeInUp 0.4s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

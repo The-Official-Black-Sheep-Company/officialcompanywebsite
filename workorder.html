@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Order | The Black Sheep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-color: #050505;
+            color: #d4d4d4;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .step-active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .step-hidden {
+            display: none;
+        }
+
+        .card-select {
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+            background: rgba(20, 20, 20, 0.6);
+        }
+
+        .card-select:hover {
+            border-color: #F97316;
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+            transform: translateY(-2px);
+            cursor: pointer;
+        }
+
+        .card-selected {
+            border-color: #F97316;
+            background: rgba(249, 115, 22, 0.1);
+        }
+
+        .time-slot {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .time-slot:hover {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .time-slot.selected {
+            background: #8b5cf6;
+            color: white;
+            border-color: #8b5cf6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Checkbox custom style */
+        .custom-checkbox input:checked+div {
+            background-color: #F97316;
+            border-color: #F97316;
+        }
+
+        .custom-checkbox input:checked+div svg {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="py-4 px-6 border-b border-[#333] bg-[#0a0a0a] flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="text-gray-400 hover:text-white"><i data-lucide="arrow-left"
+                    class="w-6 h-6"></i></a>
+            <h1
+                class="font-['Orbitron'] font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">
+                WORK ORDER</h1>
+        </div>
+        <div class="text-xs text-gray-500 font-mono" id="app-status">V1.0.0</div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="flex-1 max-w-lg mx-auto w-full p-6">
+
+        <!-- STEP 1: SERVICE SELECTION -->
+        <div id="step-service" class="step-active">
+            <h2 class="text-2xl font-bold text-white mb-2">Select Service</h2>
+            <p class="text-gray-500 mb-6 text-sm">Choose the type of work you need assistance with.</p>
+
+            <div class="space-y-4">
+                <div class="card-select p-4 rounded-lg flex items-center gap-4" onclick="selectService('pet')">
+                    <div
+                        class="w-12 h-12 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center">
+                        <i data-lucide="dog" class="w-6 h-6"></i></div>
+                    <div>
+                        <h3 class="font-bold text-white">Pet Services</h3>
+                        <p class="text-xs text-gray-400">Walking, Sitting, Grooming</p>
+                    </div>
+                </div>
+
+                <div class="card-select p-4 rounded-lg flex items-center gap-4" onclick="selectService('junk')">
+                    <div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-500 flex items-center justify-center"><i
+                            data-lucide="trash-2" class="w-6 h-6"></i></div>
+                    <div>
+                        <h3 class="font-bold text-white">Junk Removal</h3>
+                        <p class="text-xs text-gray-400">Hauling, Moving, Disposal</p>
+                    </div>
+                </div>
+
+                <div class="card-select p-4 rounded-lg flex items-center gap-4" onclick="selectService('cleaning')">
+                    <div class="w-12 h-12 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i></div>
+                    <div>
+                        <h3 class="font-bold text-white">Cleaning Services</h3>
+                        <p class="text-xs text-gray-400">Residential & Commercial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: CALENDAR -->
+        <div id="step-calendar" class="step-hidden">
+            <h2 class="text-2xl font-bold text-white mb-2">Schedule</h2>
+            <p class="text-gray-500 mb-6 text-sm">Select a date and timeframe.</p>
+
+            <!-- Mock Calendar Grid -->
+            <div class="bg-[#111] p-4 rounded-lg border border-[#333] mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <button class="text-gray-400"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                    <span class="font-bold text-white">October 2026</span>
+                    <button class="text-gray-400"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+                </div>
+                <div class="grid grid-cols-7 gap-2 text-center text-sm mb-2 text-gray-500 font-bold">
+                    <div>S</div>
+                    <div>M</div>
+                    <div>T</div>
+                    <div>W</div>
+                    <div>T</div>
+                    <div>F</div>
+                    <div>S</div>
+                </div>
+                <div class="grid grid-cols-7 gap-2 text-center text-sm">
+                    <!-- Days -->
+                    <div class="p-2 text-gray-600">28</div>
+                    <div class="p-2 text-gray-600">29</div>
+                    <div class="p-2 text-gray-600">30</div>
+                    <div class="p-2 rounded hover:bg-white/10 cursor-pointer">1</div>
+                    <div class="p-2 rounded hover:bg-white/10 cursor-pointer">2</div>
+                    <div class="p-2 rounded hover:bg-white/10 cursor-pointer bg-orange-600 text-white font-bold">3</div>
+                    <div class="p-2 rounded hover:bg-white/10 cursor-pointer">4</div>
+                </div>
+            </div>
+
+            <h3 class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wider">Available Slots</h3>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="time-slot" onclick="selectTime(this, '09:00 AM')">09:00 AM</div>
+                <div class="time-slot" onclick="selectTime(this, '11:00 AM')">11:00 AM</div>
+                <div class="time-slot" onclick="selectTime(this, '01:00 PM')">01:00 PM</div>
+                <div class="time-slot" onclick="selectTime(this, '03:00 PM')">03:00 PM</div>
+            </div>
+
+            <button onclick="goToStep('details')" id="btn-to-details"
+                class="mt-8 w-full bg-gray-700 text-gray-400 py-3 rounded font-bold cursor-not-allowed"
+                disabled>Continue</button>
+        </div>
+
+        <!-- STEP 3: DETAILS -->
+        <div id="step-details" class="step-hidden">
+            <h2 class="text-2xl font-bold text-white mb-2">Job Details</h2>
+            <p class="text-gray-500 mb-6 text-sm">Upload photos and specify items.</p>
+
+            <!-- Photo Upload -->
+            <div class="border-2 border-dashed border-[#444] rounded-lg p-6 text-center hover:border-orange-500 transition-colors cursor-pointer mb-8"
+                onclick="document.getElementById('file-upload').click()">
+                <i data-lucide="camera" class="w-8 h-8 mx-auto text-gray-500 mb-2"></i>
+                <p class="text-sm text-gray-300">Tap to take photo / upload</p>
+                <input type="file" id="file-upload" class="hidden" multiple onchange="handleFileUpload(this)">
+            </div>
+            <div id="preview-gallery" class="flex gap-2 mb-6 overflow-x-auto"></div>
+
+            <!-- Dynamic Checkboxes -->
+            <h3 class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-wider">Checklist</h3>
+            <div id="dynamic-checklist" class="space-y-3 mb-8">
+                <!-- Injected via JS -->
+            </div>
+
+            <button onclick="submitWorkOrder()"
+                class="w-full bg-gradient-to-r from-orange-600 to-yellow-600 text-white py-3 rounded font-bold hover:shadow-lg hover:shadow-orange-500/20 transition-all">
+                Submit Work Order
+            </button>
+        </div>
+
+        <!-- STEP 4: SUCCESS / LIVE JOB -->
+        <div id="step-live" class="step-hidden text-center">
+            <div
+                class="w-16 h-16 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="check" class="w-8 h-8"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-2">Order Confirmed!</h2>
+            <p class="text-gray-400 mb-8 max-w-xs mx-auto text-sm">Your service has been scheduled. You can now track
+                progress in Live Mode.</p>
+
+            <div class="bg-[#111] border border-[#333] rounded-lg p-4 text-left mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xs font-bold text-gray-500 uppercase">Live Job Checklist</span>
+                    <span class="text-xs text-orange-500 animate-pulse">● In Progress</span>
+                </div>
+                <div id="live-checklist" class="space-y-3">
+                    <!-- Populated from selection -->
+                </div>
+            </div>
+
+            <button onclick="location.reload()" class="text-gray-500 text-sm hover:text-white">Start New Order</button>
+        </div>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // State
+        const data = {
+            service: null,
+            date: 'Oct 3, 2026',
+            time: null,
+            files: [],
+            items: []
+        };
+
+        const checklists = {
+            pet: ['Husky', 'Pitbull', 'German Shepherd', 'Feeding', 'Walk (30m)', 'Medication'],
+            junk: ['Mattress', 'Couch', 'Dresser', 'Appliances', 'Construction Debris', 'Yard Waste'],
+            cleaning: ['Living Room', 'Kitchen Deep Clean', 'Bathrooms', 'Windows', 'Carpets', 'Sanitization']
+        };
+
+        // Navigation
+        function goToStep(stepId) {
+            document.querySelectorAll('[id^="step-"]').forEach(el => {
+                el.classList.add('step-hidden');
+                el.classList.remove('step-active');
+            });
+            document.getElementById(`step-${stepId}`).classList.remove('step-hidden');
+            document.getElementById(`step-${stepId}`).classList.add('step-active');
+
+            if (stepId === 'details') renderChecklist();
+        }
+
+        // Logic
+        function selectService(type) {
+            data.service = type;
+            goToStep('calendar');
+        }
+
+        function selectTime(el, time) {
+            document.querySelectorAll('.time-slot').forEach(div => div.classList.remove('selected'));
+            el.classList.add('selected');
+            data.time = time;
+
+            const btn = document.getElementById('btn-to-details');
+            btn.disabled = false;
+            btn.classList.remove('bg-gray-700', 'text-gray-400', 'cursor-not-allowed');
+            btn.classList.add('bg-white', 'text-black', 'hover:bg-gray-200');
+        }
+
+        function handleFileUpload(input) {
+            const gallery = document.getElementById('preview-gallery');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = "w-16 h-16 object-cover rounded border border-[#333]";
+                    gallery.appendChild(img);
+                    data.files.push(e.target.result); // In real app, upload to server
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('dynamic-checklist');
+            container.innerHTML = '';
+
+            checklists[data.service].forEach(item => {
+                const id = item.replace(/\s+/g, '-').toLowerCase();
+                container.innerHTML += `
+                    <label class="custom-checkbox flex items-center gap-3 cursor-pointer p-3 rounded hover:bg-white/5 border border-transparent hover:border-[#333] transition-colors">
+                        <input type="checkbox" class="hidden" value="${item}" onchange="toggleItem(this)">
+                        <div class="w-5 h-5 border border-gray-600 rounded flex items-center justify-center transition-colors">
+                            <svg class="w-3 h-3 text-black hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <span class="text-sm text-gray-300 font-medium">${item}</span>
+                    </label>
+                `;
+            });
+        }
+
+        function toggleItem(checkbox) {
+            if (checkbox.checked) {
+                data.items.push(checkbox.value);
+            } else {
+                data.items = data.items.filter(i => i !== checkbox.value);
+            }
+        }
+
+        function submitWorkOrder() {
+            // Mock API / Cal.com integration
+            console.log("Submitting Work Order:", data);
+            console.log("Integrate with: https://cal.com/api/book with time:", data.time);
+
+            // Populate Live View
+            const liveList = document.getElementById('live-checklist');
+            liveList.innerHTML = '';
+            data.items.forEach(item => {
+                liveList.innerHTML += `
+                    <div class="flex items-center gap-3 opacity-50">
+                        <i data-lucide="circle" class="w-4 h-4 text-gray-500"></i>
+                        <span class="text-sm line-through-active">${item}</span>
+                    </div>
+                `;
+            });
+
+            goToStep('live');
+            lucide.createIcons();
+        }
+
+    </script>
+</body>
+
+</html>

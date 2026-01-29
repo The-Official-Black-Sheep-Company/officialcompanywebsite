@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      # HTTP Router - redirects to HTTPS
+      - "traefik.http.routers.website-http.rule=Host(`theofficialblacksheepco.com`) || Host(`www.theofficialblacksheepco.com`)"
+      - "traefik.http.routers.website-http.entrypoints=web"
+      - "traefik.http.routers.website-http.middlewares=website-redirect"
+      # HTTPS Router
+      - "traefik.http.routers.website-https.rule=Host(`theofficialblacksheepco.com`) || Host(`www.theofficialblacksheepco.com`)"
+      - "traefik.http.routers.website-https.entrypoints=websecure"
+      - "traefik.http.routers.website-https.tls=true"
+      - "traefik.http.routers.website-https.tls.certresolver=letsencrypt"
+      # Middleware for HTTPS redirect
+      - "traefik.http.middlewares.website-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.website-redirect.redirectscheme.permanent=true"
+      # Service
+      - "traefik.http.services.website.loadbalancer.server.port=80"
+    restart: unless-stopped
+networks:
+  proxy:
+    external: true
