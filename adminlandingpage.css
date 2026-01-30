@@ -19,9 +19,11 @@ body {
 
 /* --- Background Shapes Container --- */
 #shape-container {
-    position: fixed; /* Changed from absolute */
+    position: fixed;
+    top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
     z-index: 1; /* Behind content, above body background */
     pointer-events: none; /* Allow clicks to pass through */

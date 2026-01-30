@@ -241,9 +241,10 @@ function loadProducts() {
             const productGrid = document.getElementById('product-grid');
             const countElement = document.getElementById('product-count');
             countElement.textContent = 'Error';
-            productGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: red;">Error loading products from database. Make sure the inventory server is running on port 8443.</p>';
         });
 }
+
+
 
 
 // Generate random background shapes - EDUCATIONAL GEOMETRY
@@ -336,27 +337,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Position the gold cross
     positionGoldCross();
 
-    // Adjust shape-container position and height dynamically
-    const shapeContainer = document.getElementById('shape-container');
-    const tabsElement = document.querySelector('.tabs');
-    const footerElement = document.querySelector('footer');
-
-    if (shapeContainer && tabsElement && footerElement) {
-        const updateShapeContainer = () => {
-            const tabsBottom = tabsElement.getBoundingClientRect().bottom + window.scrollY;
-            const footerTop = footerElement.getBoundingClientRect().top + window.scrollY;
-
-            shapeContainer.style.top = `${tabsBottom}px`;
-            shapeContainer.style.height = `${footerTop - tabsBottom}px`;
-            shapeContainer.style.position = 'fixed'; // Ensure it's fixed position
-            shapeContainer.style.left = '0';
-            shapeContainer.style.width = '100%';
-        };
-
-        // Run once and on resize
-        updateShapeContainer();
-        window.addEventListener('resize', updateShapeContainer);
-    }
+    // Show Home Server by default
+    showSection('HomeServerMain');
 
     const searchBar = document.getElementById('searchBar');
     const mainContent = document.getElementById('main-content');
@@ -375,9 +357,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If search is cleared, hide results and show default content
                 searchResultsContainer.style.display = 'none';
                 mainContent.style.display = 'block';
-                document.querySelectorAll('.server-section, .content-section').forEach(section => {
-                    section.style.display = 'none';
-                });
+                // Show the previously active section or default
+                // For now, let's just show HomeServerMain to be safe, or we could track state
+                showSection('HomeServerMain');
                 return;
             }
 
@@ -415,8 +397,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.app-button').forEach(button => {
         const appName = button.getAttribute('data-app-name');
         const uniqueColor = getColor(appName);
-        // Don't set initial color - let checkStatus handle it based on actual state
-        // button.style.backgroundColor = uniqueColor;
 
         // Add caret indicator to each button
         if (!button.querySelector('.caret')) {
@@ -585,10 +565,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Check status of all buttons on page load
-    checkAllStatuses();
+    try {
+        checkAllStatuses();
+    } catch (e) {
+        console.error("Failed to check statuses:", e);
+    }
 
     // Re-check every 5 seconds for near real-time updates
-    setInterval(checkAllStatuses, 5000);
+    setInterval(() => {
+        try {
+            checkAllStatuses();
+        } catch (e) { /* ignore silent failures */ }
+    }, 5000);
 
     // Periodically update products
     setInterval(() => {
