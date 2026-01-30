@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +13,16 @@
         .chat-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
+
         .chat-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
+
         .chat-scrollbar::-webkit-scrollbar-thumb {
             background-color: rgba(107, 114, 128, 0.8);
             border-radius: 9999px;
         }
+
         /* Fullscreen mode for chat */
         #chat-window.fullscreen {
             top: 0;
@@ -33,8 +37,9 @@
             z-index: 9999;
         }
     </style>
-    
+
 </head>
+
 <body>
 
     <header class="dashboard-header">
@@ -56,8 +61,8 @@
                     Login</a>
             </div>
         </div>
-    </div>
-</header>
+        </div>
+    </header>
 
     <div class="search-container">
         <input type="text" id="searchBar" placeholder="Search applications, virtual machines, software etc..." />
@@ -175,10 +180,13 @@
             <a href="services.html" class="tab-button" style="text-decoration: none; display: block;">Services ▼</a>
             <div class="dropdown-menu">
                 <a href="#" onclick="showServiceContent('CellphoneRepair'); return false;">Tech-Sector</a>
-                <a href="#" onclick="showServiceContent('CleaningCommercial'); return false;">Cleaning Services - Commercial</a>
-                <a href="#" onclick="showServiceContent('CleaningResidential'); return false;">Cleaning Services - Residential</a>
+                <a href="#" onclick="showServiceContent('CleaningCommercial'); return false;">Cleaning Services -
+                    Commercial</a>
+                <a href="#" onclick="showServiceContent('CleaningResidential'); return false;">Cleaning Services -
+                    Residential</a>
                 <a href="petservices.html">Pet Services</a>
-                <a href="#" onclick="showServiceContent('JunkRemoval'); return false;">Junk Removal, Moving & Hauling</a>
+                <a href="#" onclick="showServiceContent('JunkRemoval'); return false;">Junk Removal, Moving &
+                    Hauling</a>
                 <a href="#" onclick="showServiceContent('MobileLaundryMat'); return false;">Mobile Laundry Mat</a>
                 <a href="#" onclick="showServiceContent('MovingHauling'); return false;">Merch & Training</a>
             </div>
@@ -416,16 +424,20 @@
         <!-- Virtual Machines Section -->
         <div id="VirtualMachines" class="server-section" style="display:none;">
             <div class="button-grid">
-                <div class="app-button off" data-app-name="DebianServer" data-port="" onclick="startVM('DebianServer', '')">
+                <div class="app-button off" data-app-name="DebianServer" data-port=""
+                    onclick="startVM('DebianServer', '')">
                     <span>Debian Server</span>
                 </div>
-                <div class="app-button off" data-app-name="HomeAssistant" data-port="8123" onclick="startVM('HomeAssistant', 'http://10.0.0.246:8123')">
+                <div class="app-button off" data-app-name="HomeAssistant" data-port="8123"
+                    onclick="startVM('HomeAssistant', 'http://10.0.0.246:8123')">
                     <span>Home Assistant</span>
                 </div>
-                <div class="app-button off" data-app-name="OMV" data-port="80" onclick="startVM('OMV', 'http://10.0.0.205')">
+                <div class="app-button off" data-app-name="OMV" data-port="80"
+                    onclick="startVM('OMV', 'http://10.0.0.205')">
                     <span>OMV</span>
                 </div>
-                <div class="app-button off" data-app-name="pfSense" data-port="" onclick="startVM('pfSense', 'http://10.0.0.148')">
+                <div class="app-button off" data-app-name="pfSense" data-port=""
+                    onclick="startVM('pfSense', 'http://10.0.0.148')">
                     <span>PfSense</span>
                 </div>
             </div>
@@ -457,7 +469,8 @@
             <!-- Featured Products Carousel -->
             <div id="featured-section" style="margin-bottom: 30px;">
                 <h3 style="margin-bottom: 15px; color: #F97316;">✨ Featured Products</h3>
-                <div class="featured-carousel" style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; scroll-snap-type: x mandatory;">
+                <div class="featured-carousel"
+                    style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; scroll-snap-type: x mandatory;">
                     <!-- Featured products will be loaded here dynamically -->
                 </div>
             </div>
@@ -488,11 +501,16 @@
             <div style="background: #f5f5f5; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
                 <h3 style="color: #666; margin-bottom: 15px;">Configuration</h3>
                 <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <span style="font-weight: 600; color: #666;">Verification Token:</span>
-                        <button onclick="copyToClipboard(document.getElementById('verificationToken').textContent)" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Copy Token</button>
+                        <button onclick="copyToClipboard(document.getElementById('verificationToken').textContent)"
+                            style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Copy
+                            Token</button>
                     </div>
-                    <div id="verificationToken" style="background: #000; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; word-break: break-all;">Loading...</div>
+                    <div id="verificationToken"
+                        style="background: #000; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; word-break: break-all;">
+                        Loading...</div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -510,11 +528,16 @@
             <div style="background: #f5f5f5; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
                 <h3 style="color: #666; margin-bottom: 15px;">Endpoint Information</h3>
                 <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <span style="font-weight: 600; color: #666;">Endpoint URL:</span>
-                        <button onclick="copyToClipboard(getEbayEndpoint())" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Copy URL</button>
+                        <button onclick="copyToClipboard(getEbayEndpoint())"
+                            style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Copy
+                            URL</button>
                     </div>
-                    <div id="ebayEndpointUrl" style="background: #000; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; word-break: break-all;">Loading...</div>
+                    <div id="ebayEndpointUrl"
+                        style="background: #000; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; word-break: break-all;">
+                        Loading...</div>
                 </div>
 
                 <div style="background: white; padding: 15px; border-radius: 8px;">
@@ -525,49 +548,52 @@
 
             <div style="background: #f5f5f5; border-radius: 10px; padding: 20px; margin-bottom: 200px;">
                 <h3 style="color: #666; margin-bottom: 15px;">Recent Notifications</h3>
-                <button onclick="refreshNotifications()" style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Refresh</button>
-                <div id="notificationLog" style="background: #000; color: #0f0; padding: 15px; border-radius: 8px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.9em;">
-                    <p style="color: #888;">No notifications yet. Waiting for eBay verification token or account deletion notifications...</p>
+                <button onclick="refreshNotifications()"
+                    style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Refresh</button>
+                <div id="notificationLog"
+                    style="background: #000; color: #0f0; padding: 15px; border-radius: 8px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.9em;">
+                    <p style="color: #888;">No notifications yet. Waiting for eBay verification token or account
+                        deletion notifications...</p>
                 </div>
             </div>
         </div>
 
         <!-- MONITORING SECTION -->
         <div id="Monitoring" class="server-section" style="display:none;">
-        <div class="button-grid">
-            <div class="app-button off" data-app-name="WazuhManager" data-port="443">
-                <div class="status-indicator"></div>
-                <span>Wazuh Manager</span>
+            <div class="button-grid">
+                <div class="app-button off" data-app-name="WazuhManager" data-port="443">
+                    <div class="status-indicator"></div>
+                    <span>Wazuh Manager</span>
+                </div>
+                <div class="app-button off" data-app-name="WazuhAgent1" data-port="">
+                    <div class="status-indicator"></div>
+                    <span>Wazuh Agent 1</span>
+                </div>
+                <div class="app-button off" data-app-name="WazuhAgent2" data-port="">
+                    <div class="status-indicator"></div>
+                    <span>Wazuh Agent 2</span>
+                </div>
+                <div class="app-button off" data-app-name="Glances" data-port="61208">
+                    <div class="status-indicator"></div>
+                    <span>Glances</span>
+                </div>
+                <div class="app-button off" data-app-name="GlancesAgent1" data-port="">
+                    <div class="status-indicator"></div>
+                    <span>Glances Agent 1</span>
+                </div>
+                <div class="app-button off" data-app-name="Kubernetes" data-port="8001">
+                    <div class="status-indicator"></div>
+                    <span>Kubernetes</span>
+                </div>
+                <div class="app-button off" data-app-name="Snort" data-port="8083">
+                    <div class="status-indicator"></div>
+                    <span>Snort IDS</span>
+                </div>
+                <div class="app-button off" data-app-name="Fail2Ban" data-port="">
+                    <div class="status-indicator"></div>
+                    <span>Fail2Ban</span>
+                </div>
             </div>
-            <div class="app-button off" data-app-name="WazuhAgent1" data-port="">
-                <div class="status-indicator"></div>
-                <span>Wazuh Agent 1</span>
-            </div>
-            <div class="app-button off" data-app-name="WazuhAgent2" data-port="">
-                <div class="status-indicator"></div>
-                <span>Wazuh Agent 2</span>
-            </div>
-            <div class="app-button off" data-app-name="Glances" data-port="61208">
-                <div class="status-indicator"></div>
-                <span>Glances</span>
-            </div>
-            <div class="app-button off" data-app-name="GlancesAgent1" data-port="">
-                <div class="status-indicator"></div>
-                <span>Glances Agent 1</span>
-            </div>
-            <div class="app-button off" data-app-name="Kubernetes" data-port="8001">
-                <div class="status-indicator"></div>
-                <span>Kubernetes</span>
-            </div>
-            <div class="app-button off" data-app-name="Snort" data-port="8083">
-                <div class="status-indicator"></div>
-                <span>Snort IDS</span>
-            </div>
-            <div class="app-button off" data-app-name="Fail2Ban" data-port="">
-                <div class="status-indicator"></div>
-                <span>Fail2Ban</span>
-            </div>
-        </div>
         </div>
     </div>
 
@@ -615,8 +641,11 @@
         <div style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
             <h3 style="color: #666; margin-bottom: 15px;">Bible Study Resources</h3>
             <div style="background: white; padding: 20px; border-radius: 8px;">
-                <p style="color: #333; margin-bottom: 10px;">Welcome to the Bible Study section. Here you can find resources, study materials, and devotional content.</p>
-                <p style="color: #333; margin-bottom: 10px;"><strong>Bible Server:</strong> <a href="http://172.234.229.103:8081" target="_blank" style="color: #007bff;">Access Bible Server</a></p>
+                <p style="color: #333; margin-bottom: 10px;">Welcome to the Bible Study section. Here you can find
+                    resources, study materials, and devotional content.</p>
+                <p style="color: #333; margin-bottom: 10px;"><strong>Bible Server:</strong> <a
+                        href="http://172.234.229.103:8081" target="_blank" style="color: #007bff;">Access Bible
+                        Server</a></p>
             </div>
         </div>
     </div>
@@ -627,8 +656,10 @@
         <div style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
             <h3 style="color: #666; margin-bottom: 15px;">Contact Information</h3>
             <div style="background: white; padding: 20px; border-radius: 8px;">
-                <p style="color: #333; margin-bottom: 10px;"><strong>Company:</strong> The Official Black Sheep Company</p>
-                <p style="color: #333; margin-bottom: 10px;"><strong>Email:</strong> Support@theofficialblacksheepcompany.com</p>
+                <p style="color: #333; margin-bottom: 10px;"><strong>Company:</strong> The Official Black Sheep Company
+                </p>
+                <p style="color: #333; margin-bottom: 10px;"><strong>Email:</strong>
+                    Support@theofficialblacksheepcompany.com</p>
                 <p style="color: #333; margin-bottom: 10px;"><strong>Phone:</strong> (425) 517-9528</p>
             </div>
             <h3 style="color: #666; margin-bottom: 15px;">Pricavy Policy</h3>
@@ -640,9 +671,10 @@
         </div>
     </div>
 
-        </div> <!-- Closes #main-content -->
+    </div> <!-- Closes #main-content -->
     <footer>
-        <p id="bible-verse">The Lord bless you and keep you; the Lord make his face shine upon you and be gracious to you; the Lord turn his face toward you and give you peace. - Numbers 6:24-26</p>
+        <p id="bible-verse">The Lord bless you and keep you; the Lord make his face shine upon you and be gracious to
+            you; the Lord turn his face toward you and give you peace. - Numbers 6:24-26</p>
     </footer>
 
     <script src="js/index.js"></script>
@@ -721,4 +753,5 @@
     <!-- Chatwoot AI Chatbot Widget -->
     <script src="/chatwoot-widget-config.js"></script>
 </body>
+
 </html>

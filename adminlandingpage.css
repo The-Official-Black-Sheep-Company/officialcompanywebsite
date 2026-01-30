@@ -1,9 +1,12 @@
 :root {
     --black: #000000;
-    --dark-gray: #1a1a1a; /* Dark gray for shapes */
+    --dark-gray: #1a1a1a;
+    /* Dark gray for shapes */
     --gold: #FFD700;
-    --accent: #e17055; /* Orange accent color */
-    --active-shadow: 0 0 15px 5px; /* Base for green light or black shadow */
+    --accent: #e17055;
+    /* Orange accent color */
+    --active-shadow: 0 0 15px 5px;
+    /* Base for green light or black shadow */
 }
 
 body {
@@ -25,22 +28,27 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    z-index: 1; /* Behind content, above body background */
-    pointer-events: none; /* Allow clicks to pass through */
+    z-index: 1;
+    /* Behind content, above body background */
+    pointer-events: none;
+    /* Allow clicks to pass through */
 }
 
 /* --- Gold Cross --- */
 #gold-cross {
-    position: absolute; /* Keep absolute, relative to fixed shape-container */
+    position: absolute;
+    /* Keep absolute, relative to fixed shape-container */
     width: 50px;
     height: 100px;
-    z-index: 1; /* On top of shapes in #shape-container */
+    z-index: 1;
+    /* On top of shapes in #shape-container */
     pointer-events: none;
     background: none !important;
     background-color: transparent !important;
 }
 
-#gold-cross::before, #gold-cross::after {
+#gold-cross::before,
+#gold-cross::after {
     content: '';
     position: absolute;
     background: var(--gold);
@@ -64,9 +72,12 @@ body {
 }
 
 #main-content {
-    position: relative; /* Must have a position property */
-    z-index: 2; /* Higher z-index to be on top of shapes */
-    background-color: transparent; /* Allow background shapes to show through */
+    position: relative;
+    /* Must have a position property */
+    z-index: 2;
+    /* Higher z-index to be on top of shapes */
+    background-color: transparent;
+    /* Allow background shapes to show through */
 }
 
 
@@ -162,7 +173,8 @@ footer {
 
 /* --- Background Shapes - EDUCATIONAL GEOMETRY --- */
 .background-shape {
-    position: absolute; /* Changed from fixed */
+    position: absolute;
+    /* Changed from fixed */
     background-color: var(--dark-gray);
     opacity: 0.6;
     pointer-events: none;
@@ -661,13 +673,16 @@ footer {
 
 /* Pulsing glow animation */
 @keyframes pulseGlow {
-    0%, 100% {
+
+    0%,
+    100% {
         box-shadow:
             0 0 20px rgba(0, 255, 136, 0.6),
             0 0 40px rgba(0, 255, 136, 0.4),
             0 0 60px rgba(0, 255, 136, 0.2),
             inset 0 0 20px rgba(0, 255, 136, 0.1);
     }
+
     50% {
         box-shadow:
             0 0 30px rgba(0, 255, 136, 0.8),
@@ -700,8 +715,15 @@ footer {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
 }
 
 .app-button span {
@@ -747,7 +769,8 @@ footer {
 }
 
 /* --- Server Sections --- */
-.server-section, .content-section {
+.server-section,
+.content-section {
     margin-top: 20px;
     position: relative;
     z-index: 1;
@@ -761,23 +784,27 @@ footer {
 }
 
 /* --- Service and Shopping Content --- */
-.service-content, .shopping-content {
+.service-content,
+.shopping-content {
     padding: 40px;
     text-align: center;
     min-height: 300px;
 }
 
-.service-content h2, .shopping-content h2 {
+.service-content h2,
+.shopping-content h2 {
     color: var(--gold);
     margin-bottom: 20px;
 }
 
-.service-content p, .shopping-content p {
+.service-content p,
+.shopping-content p {
     font-size: 1.1em;
     color: #ccc;
 }
 
-.service-content a, .shopping-content a {
+.service-content a,
+.shopping-content a {
     color: var(--gold);
     text-decoration: none;
     font-size: 1.2em;
@@ -785,7 +812,8 @@ footer {
     transition: all 0.3s ease;
 }
 
-.service-content a:hover, .shopping-content a:hover {
+.service-content a:hover,
+.shopping-content a:hover {
     text-shadow: 0 0 10px var(--gold);
 }
 
@@ -814,4 +842,3 @@ footer {
     letter-spacing: 0.5px;
     display: inline-block;
 }
-

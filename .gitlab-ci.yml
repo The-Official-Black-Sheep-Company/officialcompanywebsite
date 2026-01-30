@@ -5,10 +5,18 @@ pages:
   stage: deploy
   script:
     - mkdir -p public
-    - cp index.html public/
+    # Copy all HTML files
+    - cp *.html public/
+    # Copy CSS folder
+    - cp -r css public/
+    # Copy JS folder
+    - cp -r js public/
+    # Copy other assets
+    - cp -r few-verses.txt public/ || true
+    - cp -r chatwoot-widget-config.js public/ || true
+    - cp -r api public/ || true
   artifacts:
     paths:
       - public
   only:
     - main
-
