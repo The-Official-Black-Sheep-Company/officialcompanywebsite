@@ -15,6 +15,7 @@ pages:
     - cp -r few-verses.txt public/ || true
     - cp -r chatwoot-widget-config.js public/ || true
     - cp -r api public/ || true
+    - cp adminlandingpage.css public/ || true
   artifacts:
     paths:
       - public
