@@ -124,7 +124,7 @@ function showProductsContent() {
 function loadProducts() {
     // Fetch products from database API with featured products and count
     // Use HTTPS to match the API server
-    const apiUrl = 'https://10.0.0.36:8443/api/products';
+    const apiUrl = API_BASE_URL + 'products';
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
@@ -252,8 +252,9 @@ function generateRandomShapes() {
     const shapeContainer = document.getElementById('shape-container');
     if (!shapeContainer) return;
 
-    // Clear existing shapes just in case
-    shapeContainer.innerHTML = '';
+    // Clear existing background shapes but preserve the gold cross
+    const existingShapes = shapeContainer.querySelectorAll('.background-shape');
+    existingShapes.forEach(shape => shape.remove());
 
     const numShapes = Math.floor(Math.random() * 201); // 0-200 shapes
     const shapeTypes = [
@@ -793,7 +794,7 @@ function getEbayEndpoint() {
 
 async function loadEbayConfig() {
     try {
-        const response = await fetch('http://localhost:8444/api/ebay/config');
+        const response = await fetch(API_BASE_URL + 'ebay/config');
         if (response.ok) {
             const config = await response.json();
 
@@ -822,7 +823,7 @@ async function checkEndpointStatus() {
     const statusElement = document.getElementById('endpointStatus');
 
     try {
-        const response = await fetch('http://localhost:8444/api/ebay/endpoint-status');
+        const response = await fetch(API_BASE_URL + 'ebay/endpoint-status');
         if (response.ok) {
             const data = await response.json();
             statusElement.textContent = data.status || 'Active';
@@ -841,7 +842,7 @@ async function refreshNotifications() {
     const logElement = document.getElementById('notificationLog');
 
     try {
-        const response = await fetch('http://localhost:8444/api/ebay/notifications');
+        const response = await fetch(API_BASE_URL + 'ebay/notifications');
         if (response.ok) {
             const data = await response.json();
 

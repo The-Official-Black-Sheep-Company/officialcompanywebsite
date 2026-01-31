@@ -165,7 +165,7 @@ h3,
 /* ---- Autoglitch (grayscale only) ---- */
 .glitch-auto {
     position: relative;
-    animation: glitch-skew 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite, tv-flicker 0.1s infinite;
 }
 
 .glitch-auto::before,
@@ -629,7 +629,7 @@ h3,
 /* Grayscale glitch */
 .glitch-gray {
     position: relative;
-    animation: glitch-skew-gray 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    animation: glitch-skew-gray 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite, tv-flicker 0.15s infinite;
 }
 
 .glitch-gray::before,
@@ -786,6 +786,63 @@ h3,
 
 .status-transition {
     transition: color 0.3s ease;
+}
+
+@keyframes tv-flicker {
+    0% {
+        opacity: 0.9;
+        transform: translateX(0);
+    }
+
+    10% {
+        opacity: 0.7;
+        transform: translateX(-1px);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateX(1px);
+    }
+
+    30% {
+        opacity: 0.8;
+        transform: translateX(0);
+    }
+
+    40% {
+        opacity: 0.9;
+        transform: translateX(2px);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: translateX(-2px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    70% {
+        opacity: 0.8;
+        transform: translateX(-1px);
+    }
+
+    80% {
+        opacity: 0.9;
+        transform: translateX(1px);
+    }
+
+    90% {
+        opacity: 0.7;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 #floating-particles {

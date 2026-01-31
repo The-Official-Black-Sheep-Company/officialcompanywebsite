@@ -1,11 +1,13 @@
 services:
-  web:
+  frontend:
     build: .
+    volumes:
+      - .:/usr/local/apache2/htdocs/
     networks:
       - proxy
     labels:
       - "traefik.enable=true"
-      # HTTP Router - redirects to HTTPS
+      # HTTP Router
       - "traefik.http.routers.website-http.rule=Host(`theofficialblacksheepco.com`) || Host(`www.theofficialblacksheepco.com`)"
       - "traefik.http.routers.website-http.entrypoints=web"
       - "traefik.http.routers.website-http.middlewares=website-redirect"
@@ -20,6 +22,26 @@ services:
       # Service
       - "traefik.http.services.website.loadbalancer.server.port=80"
     restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/app
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      # API Router (Priority is higher by default for longer paths if using PathPrefix)
+      - "traefik.http.routers.website-api.rule=(Host(`theofficialblacksheepco.com`) || Host(`www.theofficialblacksheepco.com`)) && PathPrefix(`/api`)"
+      - "traefik.http.routers.website-api.entrypoints=websecure"
+      - "traefik.http.routers.website-api.tls=true"
+      - "traefik.http.routers.website-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.website-api.loadbalancer.server.port=5004"
+    restart: unless-stopped
+
 networks:
   proxy:
     external: true

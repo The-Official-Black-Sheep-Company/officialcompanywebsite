@@ -28,8 +28,8 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    z-index: 1;
-    /* Behind content, above body background */
+    z-index: 999;
+    /* Move to very high index so it's on top of everything */
     pointer-events: none;
     /* Allow clicks to pass through */
 }
@@ -40,8 +40,8 @@ body {
     width: 60px;
     /* Slightly larger */
     height: 120px;
-    z-index: 100;
-    /* High z-index within container to be above other shapes */
+    z-index: 1000;
+    /* On top of other background shapes */
     pointer-events: none;
     background: none !important;
     background-color: transparent !important;
@@ -74,7 +74,7 @@ body {
 #main-content {
     position: relative;
     /* Must have a position property */
-    z-index: 2;
+    z-index: 10;
     /* Higher z-index to be on top of shapes */
     background-color: transparent;
     /* Allow background shapes to show through */

@@ -584,7 +584,7 @@ function cycleProtocols() {
     protocolText.className = 'protocol-base text-transparent bg-clip-text bg-gradient-to-r from-gray-500 via-gray-200 to-gray-500 opacity-90 ' + variants[currentVariant];
     currentVariant = (currentVariant + 1) % variants.length;
 
-    const randomDelay = Math.floor(Math.random() * 4000) + 2000;
+    const randomDelay = Math.floor(Math.random() * 250) + 50; // High speed flicker (50ms - 300ms)
     setTimeout(cycleProtocols, randomDelay);
 }
 
