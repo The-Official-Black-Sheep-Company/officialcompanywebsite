@@ -4,250 +4,1017 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Black Sheep | Members Portal</title>
+    <meta name="description" content="The Black Sheep Company - Members Portal">
+    <title>TBS Portal | Members Dashboard</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/tech.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <style>
-        /* Portal specific tweaks */
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f7e98e;
+            --gold-dark: #8b6914;
+            --orange: #f97316;
+            --orange-light: #fb923c;
+            --dark-bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #050505;
-            overflow-y: auto;
+            background-color: var(--dark-bg);
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 90%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            color: #e5e5e5;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* Grid Background Effect */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Glow Effects */
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .glow-orange {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Bento Card Styles */
+        .bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .bento-card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bento-card-body {
+            padding: 20px;
+        }
+
+        /* Sidebar Styles */
         .sidebar {
-            background: rgba(10, 10, 10, 0.95);
-            border-right: 1px solid #333;
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.98) 0%, rgba(5, 5, 5, 0.98) 100%);
+            border-right: 1px solid var(--border-color);
         }
 
-        .rightbar {
-            background: rgba(10, 10, 10, 0.8);
-            border-left: 1px solid #333;
-        }
-
-        .feed-card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 1px solid #333;
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin: 4px 8px;
+            border-radius: 10px;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
         }
 
         .nav-item:hover {
-            background: rgba(139, 92, 246, 0.1);
-            color: #a78bfa;
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--orange-light);
         }
 
         .nav-item.active {
-            background: rgba(139, 92, 246, 0.2);
-            color: #c4b5fd;
-            border-right: 2px solid #8b5cf6;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
+            color: var(--gold-light);
+            border-left: 3px solid var(--orange);
+        }
+
+        /* Quick Stat Cards */
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        /* Activity Feed */
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--orange) 0%, var(--gold) 100%);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e5e5e5;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--gold);
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 16px;
+            background: rgba(30, 30, 30, 0.5);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: rgba(40, 40, 40, 0.6);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(20, 20, 20, 0.5);
+        }
+
+        .faq-answer.open {
+            max-height: 200px;
+        }
+
+        .faq-answer-content {
+            padding: 16px;
+            color: #9ca3af;
+        }
+
+        /* Invoice Table */
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-table th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--gold);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .invoice-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Status Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .badge-pending {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--orange);
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        /* Section Tabs */
+        .section-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #9ca3af;
+        }
+
+        .section-tab.active {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--orange-light);
+        }
+
+        .section-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .sidebar-desktop {
+                display: none;
+            }
+
+            .mobile-header {
+                display: flex !important;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-header {
+                display: none !important;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--gold-dark) 0%, var(--gold) 100%);
+            border-radius: 4px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Section Content */
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
         }
     </style>
 </head>
 
-<body class="text-gray-300 font-['Rajdhani']">
+<body class="grid-bg">
 
-    <!-- Bg Layers from Tech Page for consistency -->
-    <div class="fixed inset-0 pointer-events-none z-0 grid-bg opacity-30"></div>
-    <div class="fixed inset-0 pointer-events-none z-0 bg-sheen opacity-80"></div>
+    <div class="flex h-screen">
 
-    <div class="flex h-screen relative z-10 overflow-hidden">
-
-        <!-- SIDEBAR (Left) -->
-        <aside class="sidebar w-64 hidden md:flex flex-col flex-shrink-0">
-            <div class="h-16 flex items-center px-6 border-b border-[#333]">
-                <span class="text-xl font-bold font-['Orbitron'] text-white tracking-wider">TBS PORTAL</span>
+        <!-- SIDEBAR (Desktop) -->
+        <aside class="sidebar sidebar-desktop w-64 flex flex-col flex-shrink-0">
+            <!-- Logo -->
+            <div class="h-16 flex items-center px-6 border-b border-[rgba(212,175,55,0.2)]">
+                <a href="index.html" class="flex items-center gap-2 no-underline">
+                    <span class="text-lg font-bold font-['Orbitron'] text-white tracking-wider">TBS</span>
+                    <span class="text-sm text-[#f97316]">PORTAL</span>
+                </a>
             </div>
 
-            <div class="flex-1 overflow-y-auto py-4">
-                <nav class="space-y-1 px-3">
-                    <a href="#"
-                        class="nav-item active flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
-                        Timeline
-                    </a>
-                    <a href="#"
-                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                        <i data-lucide="users" class="w-5 h-5 mr-3"></i>
-                        Friends
-                    </a>
-                    <a href="#"
-                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                        <i data-lucide="image" class="w-5 h-5 mr-3"></i>
-                        Photos
-                    </a>
-                    <a href="https://element.io" target="_blank"
-                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                        <i data-lucide="message-square" class="w-5 h-5 mr-3"></i>
-                        Matrix Chat
-                    </a>
-                    <a href="#"
-                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                        <i data-lucide="video" class="w-5 h-5 mr-3"></i>
-                        Facechat
-                    </a>
-                    <a href="#"
-                        class="nav-item flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                        <i data-lucide="phone" class="w-5 h-5 mr-3"></i>
-                        Call (SIP)
-                    </a>
-                </nav>
-            </div>
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto py-4">
+                <div class="px-4 mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-widest">Main Menu</span>
+                </div>
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <i data-lucide="user" class="w-5 h-5 mr-3"></i>
+                    Profile
+                </a>
+                <a href="#" class="nav-item" data-section="billing">
+                    <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
+                    Billing
+                </a>
+                <a href="#" class="nav-item" data-section="support">
+                    <i data-lucide="help-circle" class="w-5 h-5 mr-3"></i>
+                    Support
+                </a>
+                <a href="#" class="nav-item" data-section="activity">
+                    <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
+                    Activity
+                </a>
 
-            <div class="p-4 border-t border-[#333]">
-                <div class="flex items-center">
+                <div class="px-4 mt-6 mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-widest">Quick Links</span>
+                </div>
+                <a href="index.html" class="nav-item">
+                    <i data-lucide="home" class="w-5 h-5 mr-3"></i>
+                    Main Site
+                </a>
+                <a href="store.html" class="nav-item">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 mr-3"></i>
+                    Store
+                </a>
+            </nav>
+
+            <!-- User Section -->
+            <div class="p-4 border-t border-[rgba(212,175,55,0.2)]">
+                <div class="flex items-center gap-3">
                     <div
-                        class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold">
-                        U
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold">
+                        G
                     </div>
-                    <div class="ml-3">
+                    <div class="flex-1">
                         <p class="text-sm font-medium text-white">Guest User</p>
-                        <a href="index.html" class="text-xs text-gray-500 hover:text-gray-300">Log Out</a>
+                        <p class="text-xs text-gray-500">Not logged in</p>
                     </div>
                 </div>
+                <button onclick="loginWithKeycloak()" class="btn-primary w-full mt-3 text-sm">
+                    <i data-lucide="log-in" class="w-4 h-4 inline mr-2"></i>
+                    Sign In
+                </button>
             </div>
         </aside>
 
-        <!-- MAIN CONTENT (Center) -->
-        <main class="flex-1 overflow-y-auto relative custom-scrollbar">
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+
             <!-- Mobile Header -->
-            <div class="md:hidden h-16 flex items-center justify-between px-4 border-b border-[#333] bg-[#0a0a0a]">
-                <span class="font-['Orbitron'] font-bold text-white">TBS PORTAL</span>
-                <button class="p-2 rounded-md text-gray-400">
+            <div
+                class="mobile-header h-14 flex items-center justify-between px-4 border-b border-[rgba(212,175,55,0.2)] bg-[rgba(10,10,10,0.98)]">
+                <a href="index.html" class="font-['Orbitron'] font-bold text-white">TBS PORTAL</a>
+                <button id="mobile-menu-btn" class="p-2 rounded-lg text-gray-400 hover:bg-white/10">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
 
-            <div class="max-w-3xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <!-- Top Bar -->
+            <header
+                class="h-16 flex items-center justify-between px-6 border-b border-[rgba(212,175,55,0.2)] bg-[rgba(10,10,10,0.5)] flex-shrink-0">
+                <div>
+                    <h1 id="section-title" class="text-xl font-semibold text-white font-['Orbitron']">Dashboard</h1>
+                    <p class="text-sm text-gray-500">Welcome back! Here's your overview.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 relative">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
+                    </button>
+                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </header>
 
-                <!-- Post Creator -->
-                <div class="feed-card rounded-lg p-4 mb-6 shadow-lg">
-                    <div class="flex gap-4">
-                        <div
-                            class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex-shrink-0">
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto p-6">
+
+                <!-- DASHBOARD SECTION -->
+                <div id="dashboard-section" class="section-content active">
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-400 text-sm">Active Services</span>
+                                <i data-lucide="zap" class="w-5 h-5 text-orange-500"></i>
+                            </div>
+                            <p class="text-2xl font-bold text-white">3</p>
+                            <p class="text-xs text-green-500 mt-1">All running</p>
                         </div>
-                        <div class="flex-1">
-                            <textarea id="post-content" rows="2"
-                                class="w-full bg-transparent border-none focus:ring-0 text-gray-200 resize-none placeholder-gray-600"
-                                placeholder="What's on your mind?"></textarea>
-                            <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-800">
-                                <div class="flex gap-2">
-                                    <button class="p-2 text-violet-400 hover:bg-white/5 rounded-full"
-                                        title="Upload Photo">
-                                        <i data-lucide="image" class="w-5 h-5"></i>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-400 text-sm">Open Tickets</span>
+                                <i data-lucide="message-square" class="w-5 h-5 text-blue-500"></i>
+                            </div>
+                            <p class="text-2xl font-bold text-white">0</p>
+                            <p class="text-xs text-gray-500 mt-1">No pending issues</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-400 text-sm">Balance Due</span>
+                                <i data-lucide="dollar-sign" class="w-5 h-5 text-yellow-500"></i>
+                            </div>
+                            <p class="text-2xl font-bold text-white">$0.00</p>
+                            <p class="text-xs text-green-500 mt-1">All paid</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-400 text-sm">Member Since</span>
+                                <i data-lucide="calendar" class="w-5 h-5 text-purple-500"></i>
+                            </div>
+                            <p class="text-2xl font-bold text-white">—</p>
+                            <p class="text-xs text-gray-500 mt-1">Sign in to view</p>
+                        </div>
+                    </div>
+
+                    <!-- Bento Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Quick Actions Card -->
+                        <div class="bento-card lg:col-span-2">
+                            <div class="bento-card-header">
+                                <i data-lucide="rocket" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-semibold text-white">Quick Actions</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <button
+                                        class="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                        <i data-lucide="file-plus" class="w-6 h-6 text-orange-400"></i>
+                                        <span class="text-sm text-gray-300">New Ticket</span>
+                                    </button>
+                                    <button
+                                        class="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                        <i data-lucide="file-text" class="w-6 h-6 text-blue-400"></i>
+                                        <span class="text-sm text-gray-300">View Invoices</span>
+                                    </button>
+                                    <button
+                                        class="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                        <i data-lucide="book-open" class="w-6 h-6 text-green-400"></i>
+                                        <span class="text-sm text-gray-300">Knowledge Base</span>
+                                    </button>
+                                    <button
+                                        class="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                        <i data-lucide="phone" class="w-6 h-6 text-purple-400"></i>
+                                        <span class="text-sm text-gray-300">Contact Us</span>
                                     </button>
                                 </div>
-                                <button id="post-btn"
-                                    class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-1.5 rounded-full text-sm font-bold transition-all">
-                                    POST
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity Card -->
+                        <div class="bento-card">
+                            <div class="bento-card-header">
+                                <i data-lucide="clock" class="w-5 h-5 text-blue-500"></i>
+                                <h3 class="font-semibold text-white">Recent Activity</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="activity-item">
+                                    <div class="activity-dot bg-green-500"></div>
+                                    <div>
+                                        <p class="text-sm text-gray-300">Portal accessed</p>
+                                        <p class="text-xs text-gray-500">Just now</p>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-dot bg-blue-500"></div>
+                                    <div>
+                                        <p class="text-sm text-gray-300">Welcome to the portal!</p>
+                                        <p class="text-xs text-gray-500">Sign in to see your activity</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services Status -->
+                        <div class="bento-card lg:col-span-2">
+                            <div class="bento-card-header">
+                                <i data-lucide="server" class="w-5 h-5 text-green-500"></i>
+                                <h3 class="font-semibold text-white">Your Services</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                            <span class="text-gray-300">Web Hosting</span>
+                                        </div>
+                                        <span class="badge badge-success">Active</span>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                            <span class="text-gray-300">Email Service</span>
+                                        </div>
+                                        <span class="badge badge-success">Active</span>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                            <span class="text-gray-300">Cloud Storage</span>
+                                        </div>
+                                        <span class="badge badge-pending">Setup Required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Announcements -->
+                        <div class="bento-card">
+                            <div class="bento-card-header">
+                                <i data-lucide="megaphone" class="w-5 h-5 text-yellow-500"></i>
+                                <h3 class="font-semibold text-white">Announcements</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div
+                                    class="p-4 rounded-lg bg-gradient-to-r from-orange-500/10 to-yellow-500/10 border border-orange-500/20">
+                                    <h4 class="font-semibold text-orange-400 mb-1">New Portal Launch!</h4>
+                                    <p class="text-sm text-gray-400">Welcome to the new Members Portal. We're excited to
+                                        bring you a better experience.</p>
+                                    <p class="text-xs text-gray-500 mt-2">Posted today</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILE SECTION -->
+                <div id="profile-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Profile Card -->
+                        <div class="bento-card">
+                            <div class="bento-card-body text-center">
+                                <div
+                                    class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black text-3xl font-bold mb-4">
+                                    G
+                                </div>
+                                <h3 class="text-xl font-semibold text-white">Guest User</h3>
+                                <p class="text-gray-500 mb-4">guest@example.com</p>
+                                <button class="btn-secondary w-full">
+                                    <i data-lucide="camera" class="w-4 h-4 inline mr-2"></i>
+                                    Change Photo
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Feed Stream -->
-                <div id="feed-stream" class="space-y-6">
-                    <!-- Sample Post -->
-                    <div class="feed-card rounded-lg p-4 shadow-lg">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-gray-700"></div>
-                                <div>
-                                    <h3 class="font-bold text-white text-sm">System Admin</h3>
-                                    <p class="text-xs text-gray-500">2h ago</p>
+                        <!-- Profile Details -->
+                        <div class="bento-card lg:col-span-2">
+                            <div class="bento-card-header">
+                                <i data-lucide="user-cog" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-semibold text-white">Account Details</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <form class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-1">First Name</label>
+                                            <input type="text" value="Guest"
+                                                class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-1">Last Name</label>
+                                            <input type="text" value="User"
+                                                class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-400 mb-1">Email Address</label>
+                                        <input type="email" value="guest@example.com"
+                                            class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-400 mb-1">Company Name</label>
+                                        <input type="text" placeholder="Your company"
+                                            class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none placeholder-gray-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
+                                        <input type="tel" placeholder="+1 (555) 000-0000"
+                                            class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none placeholder-gray-600">
+                                    </div>
+                                    <button type="submit" class="btn-primary">
+                                        <i data-lucide="save" class="w-4 h-4 inline mr-2"></i>
+                                        Save Changes
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Security Settings -->
+                        <div class="bento-card lg:col-span-3">
+                            <div class="bento-card-header">
+                                <i data-lucide="shield" class="w-5 h-5 text-green-500"></i>
+                                <h3 class="font-semibold text-white">Security Settings</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="flex items-center justify-between p-4 rounded-lg bg-white/5 mb-3">
+                                    <div>
+                                        <h4 class="font-medium text-white">Two-Factor Authentication</h4>
+                                        <p class="text-sm text-gray-500">Add an extra layer of security to your account
+                                        </p>
+                                    </div>
+                                    <span class="badge badge-pending">Not Enabled</span>
+                                </div>
+                                <div class="flex items-center justify-between p-4 rounded-lg bg-white/5">
+                                    <div>
+                                        <h4 class="font-medium text-white">Password</h4>
+                                        <p class="text-sm text-gray-500">Last changed: Never</p>
+                                    </div>
+                                    <button class="btn-secondary text-sm">Change Password</button>
                                 </div>
                             </div>
-                            <button class="text-gray-500 hover:text-white"><i data-lucide="more-horizontal"
-                                    class="w-5 h-5"></i></button>
-                        </div>
-                        <p class="text-gray-300 mb-4">Welcome to the new Members Portal. Functionality is currently
-                            limited but growing. Stay tuned for secure Matrix integration.</p>
-                        <div class="flex items-center gap-6 text-gray-500 text-sm">
-                            <button class="flex items-center gap-2 hover:text-violet-400"><i data-lucide="heart"
-                                    class="w-4 h-4"></i> 12</button>
-                            <button class="flex items-center gap-2 hover:text-violet-400"><i
-                                    data-lucide="message-circle" class="w-4 h-4"></i> Comment</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="h-20"></div> <!-- space for bottom -->
-            </div>
-        </main>
+                <!-- BILLING SECTION -->
+                <div id="billing-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Balance Overview -->
+                        <div class="bento-card">
+                            <div class="bento-card-body text-center">
+                                <p class="text-gray-400 text-sm mb-2">Current Balance</p>
+                                <p class="text-4xl font-bold text-white mb-4">$0.00</p>
+                                <span class="badge badge-success">All Paid</span>
+                                <button class="btn-primary w-full mt-4">
+                                    <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
+                                    Add Funds
+                                </button>
+                            </div>
+                        </div>
 
-        <!-- RIGHT BAR (Online/Notifs) -->
-        <aside class="rightbar w-72 hidden lg:block flex-shrink-0 p-6">
-            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Online Members</h3>
-            <ul class="space-y-4">
-                <li class="flex items-center gap-3">
-                    <div
-                        class="w-8 h-8 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center border border-green-500/30">
-                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                    </div>
-                    <span class="text-sm font-medium">SwoopG</span>
-                </li>
-                <li class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">?</div>
-                    <span class="text-sm text-gray-500">Anon_882</span>
-                </li>
-            </ul>
-        </aside>
+                        <!-- Payment Methods -->
+                        <div class="bento-card lg:col-span-2">
+                            <div class="bento-card-header">
+                                <i data-lucide="credit-card" class="w-5 h-5 text-blue-500"></i>
+                                <h3 class="font-semibold text-white">Payment Methods</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="flex items-center justify-between p-4 rounded-lg bg-white/5 mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-400 rounded flex items-center justify-center text-white text-xs font-bold">
+                                            VISA</div>
+                                        <div>
+                                            <p class="text-white">•••• •••• •••• 4242</p>
+                                            <p class="text-xs text-gray-500">Expires 12/25</p>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-info">Default</span>
+                                </div>
+                                <button class="btn-secondary w-full">
+                                    <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
+                                    Add Payment Method
+                                </button>
+                            </div>
+                        </div>
 
-    </div>
-
-    <!-- Scripts -->
-    <script>
-        lucide.createIcons();
-
-        // Simple Post Logic
-        const postBtn = document.getElementById('post-btn');
-        const postContent = document.getElementById('post-content');
-        const feedStream = document.getElementById('feed-stream');
-
-        postBtn.addEventListener('click', () => {
-            const content = postContent.value.trim();
-            if (!content) return;
-
-            const postHTML = `
-                <div class="feed-card rounded-lg p-4 shadow-lg animate-fade-in-up">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold">U</div>
-                            <div>
-                                <h3 class="font-bold text-white text-sm">Guest User</h3>
-                                <p class="text-xs text-gray-500">Just now</p>
+                        <!-- Invoice History -->
+                        <div class="bento-card lg:col-span-3">
+                            <div class="bento-card-header">
+                                <i data-lucide="file-text" class="w-5 h-5 text-yellow-500"></i>
+                                <h3 class="font-semibold text-white">Invoice History</h3>
+                            </div>
+                            <div class="bento-card-body overflow-x-auto">
+                                <table class="invoice-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice #</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-gray-300">INV-001</td>
+                                            <td class="text-gray-400">Jan 15, 2026</td>
+                                            <td class="text-white">$49.99</td>
+                                            <td><span class="badge badge-success">Paid</span></td>
+                                            <td>
+                                                <button
+                                                    class="text-orange-400 hover:text-orange-300 text-sm">Download</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-gray-300">INV-002</td>
+                                            <td class="text-gray-400">Feb 1, 2026</td>
+                                            <td class="text-white">$29.99</td>
+                                            <td><span class="badge badge-success">Paid</span></td>
+                                            <td>
+                                                <button
+                                                    class="text-orange-400 hover:text-orange-300 text-sm">Download</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-300 mb-4">${content.replace(/\n/g, '<br>')}</p>
-                    <div class="flex items-center gap-6 text-gray-500 text-sm">
-                        <button class="flex items-center gap-2 hover:text-violet-400"><i data-lucide="heart" class="w-4 h-4"></i> 0</button>
-                        <button class="flex items-center gap-2 hover:text-violet-400"><i data-lucide="message-circle" class="w-4 h-4"></i> Comment</button>
+                </div>
+
+                <!-- SUPPORT SECTION -->
+                <div id="support-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Contact Options -->
+                        <div class="bento-card">
+                            <div class="bento-card-header">
+                                <i data-lucide="phone" class="w-5 h-5 text-green-500"></i>
+                                <h3 class="font-semibold text-white">Contact Us</h3>
+                            </div>
+                            <div class="bento-card-body space-y-4">
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5">
+                                    <i data-lucide="phone" class="w-5 h-5 text-orange-400"></i>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Phone</p>
+                                        <p class="text-white">(425) 517-9528</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5">
+                                    <i data-lucide="mail" class="w-5 h-5 text-blue-400"></i>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Email</p>
+                                        <p class="text-white">support@theofficialblacksheepcompany.com</p>
+                                    </div>
+                                </div>
+                                <button class="btn-primary w-full">
+                                    <i data-lucide="message-square" class="w-4 h-4 inline mr-2"></i>
+                                    Open Live Chat
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- FAQ -->
+                        <div class="bento-card lg:col-span-2">
+                            <div class="bento-card-header">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-purple-500"></i>
+                                <h3 class="font-semibold text-white">Frequently Asked Questions</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>How do I reset my password?</span>
+                                        <i data-lucide="chevron-down"
+                                            class="w-5 h-5 text-gray-400 transition-transform"></i>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <div class="faq-answer-content">
+                                            Click on the "Sign In" button and then select "Forgot Password" on the login
+                                            page. You'll receive an email with reset instructions.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>How do I update my billing information?</span>
+                                        <i data-lucide="chevron-down"
+                                            class="w-5 h-5 text-gray-400 transition-transform"></i>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <div class="faq-answer-content">
+                                            Go to the Billing section from the sidebar and click "Add Payment Method" to
+                                            update your card details.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question" onclick="toggleFaq(this)">
+                                        <span>How do I contact support?</span>
+                                        <i data-lucide="chevron-down"
+                                            class="w-5 h-5 text-gray-400 transition-transform"></i>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <div class="faq-answer-content">
+                                            You can reach us by phone at (425) 517-9528, email, or use the live chat
+                                            feature available 24/7.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Ticket -->
+                        <div class="bento-card lg:col-span-3">
+                            <div class="bento-card-header">
+                                <i data-lucide="ticket" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-semibold text-white">Submit a Ticket</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <form class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-1">Subject</label>
+                                            <input type="text" placeholder="Brief description"
+                                                class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none placeholder-gray-600">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-1">Category</label>
+                                            <select
+                                                class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none">
+                                                <option value="">Select a category</option>
+                                                <option value="billing">Billing</option>
+                                                <option value="technical">Technical Support</option>
+                                                <option value="general">General Inquiry</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-400 mb-1">Message</label>
+                                        <textarea rows="4" placeholder="Describe your issue in detail..."
+                                            class="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:border-orange-500 focus:outline-none placeholder-gray-600 resize-none"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn-primary">
+                                        <i data-lucide="send" class="w-4 h-4 inline mr-2"></i>
+                                        Submit Ticket
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            `;
 
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = postHTML;
-            feedStream.prepend(wrapper.firstElementChild);
+                <!-- ACTIVITY SECTION -->
+                <div id="activity-section" class="section-content">
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="activity" class="w-5 h-5 text-blue-500"></i>
+                            <h3 class="font-semibold text-white">Activity Log</h3>
+                            <div class="ml-auto flex gap-2">
+                                <button class="section-tab active">All</button>
+                                <button class="section-tab">Login</button>
+                                <button class="section-tab">Billing</button>
+                            </div>
+                        </div>
+                        <div class="bento-card-body">
+                            <div class="space-y-4">
+                                <div class="activity-item">
+                                    <div class="activity-dot bg-green-500"></div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between">
+                                            <p class="text-gray-300">Portal accessed</p>
+                                            <span class="text-xs text-gray-500">Just now</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500">IP: Hidden for guest users</p>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-dot bg-blue-500"></div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between">
+                                            <p class="text-gray-300">System notification</p>
+                                            <span class="text-xs text-gray-500">Today</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500">Welcome to the new Members Portal!</p>
+                                    </div>
+                                </div>
+                                <div class="p-8 text-center text-gray-500">
+                                    <i data-lucide="lock" class="w-12 h-12 mx-auto mb-4 opacity-50"></i>
+                                    <p>Sign in to view your complete activity history</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            postContent.value = '';
-            lucide.createIcons();
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Section Navigation
+        const navItems = document.querySelectorAll('.nav-item[data-section]');
+        const sections = document.querySelectorAll('.section-content');
+        const sectionTitle = document.getElementById('section-title');
+
+        const sectionTitles = {
+            'dashboard': 'Dashboard',
+            'profile': 'Profile & Account',
+            'billing': 'Billing & Payments',
+            'support': 'Support Center',
+            'activity': 'Activity Log'
+        };
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = item.dataset.section;
+
+                // Update active nav
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                // Show section
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === `${sectionId}-section`) {
+                        section.classList.add('active');
+                    }
+                });
+
+                // Update title
+                sectionTitle.textContent = sectionTitles[sectionId] || 'Dashboard';
+            });
         });
 
-        // Add fade-in animation
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes fadeInUp {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fade-in-up {
-                animation: fadeInUp 0.4s ease-out forwards;
-            }
-        `;
-        document.head.appendChild(style);
+        // FAQ Toggle
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+
+            answer.classList.toggle('open');
+            icon.style.transform = answer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+        }
+
+        // Keycloak Login (placeholder - update URL to your Keycloak instance)
+        function loginWithKeycloak() {
+            // Replace with your actual Keycloak URL
+            const keycloakUrl = 'http://172.234.229.103:9999/realms/TOBSCo/protocol/openid-connect/auth';
+            const clientId = 'portal-client';
+            const redirectUri = encodeURIComponent(window.location.href);
+
+            // Redirect to Keycloak
+            window.location.href = `${keycloakUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=openid`;
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                // Toggle mobile menu (could add a slide-out sidebar for mobile)
+                alert('Mobile menu - implement slide-out sidebar');
+            });
+        }
     </script>
+
 </body>
 
 </html>

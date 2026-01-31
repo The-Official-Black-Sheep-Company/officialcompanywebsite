@@ -16,6 +16,10 @@ pages:
     - cp -r chatwoot-widget-config.js public/ || true
     - cp -r api public/ || true
     - cp adminlandingpage.css public/ || true
+    # Copy Flutter web app
+    - cp -r flutter_app/build/web public/flutter_workorder || true
+    # Copy images folder if it exists
+    - cp -r images public/ || true
   artifacts:
     paths:
       - public
