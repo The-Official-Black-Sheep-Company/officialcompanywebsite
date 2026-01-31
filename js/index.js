@@ -337,8 +337,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Position the gold cross
     positionGoldCross();
 
-    // Show Home Server by default
-    showSection('HomeServerMain');
+    // Don't show any section by default - wait for user to click a tab
+    // All sections are hidden until a tab is selected
+    document.querySelectorAll('.server-section, .content-section').forEach(section => {
+        section.style.display = 'none';
+    });
 
     const searchBar = document.getElementById('searchBar');
     const mainContent = document.getElementById('main-content');
@@ -357,9 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If search is cleared, hide results and show default content
                 searchResultsContainer.style.display = 'none';
                 mainContent.style.display = 'block';
-                // Show the previously active section or default
-                // For now, let's just show HomeServerMain to be safe, or we could track state
-                showSection('HomeServerMain');
+                // No longer showing a default section
+                // Just keep everything hidden until a tab is clicked
                 return;
             }
 

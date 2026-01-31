@@ -359,7 +359,8 @@
             <!-- Logo -->
             <div class="h-16 flex items-center px-6 border-b border-[rgba(212,175,55,0.2)]">
                 <a href="index.html" class="flex items-center gap-2 no-underline">
-                    <span class="text-lg font-bold font-['Orbitron'] text-white tracking-wider">TBS</span>
+                    <span class="text-lg font-bold font-['Orbitron'] text-white tracking-wider">TOBSCo</span>
+
                     <span class="text-sm text-[#f97316]">PORTAL</span>
                 </a>
             </div>
@@ -372,6 +373,18 @@
                 <a href="#" class="nav-item active" data-section="dashboard">
                     <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
                     Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="feeds">
+                    <i data-lucide="rss" class="w-5 h-5 mr-3"></i>
+                    Feeds
+                </a>
+                <a href="#" class="nav-item" data-section="friends">
+                    <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                    Friends
+                </a>
+                <a href="#" class="nav-item" data-section="photobooth">
+                    <i data-lucide="camera" class="w-5 h-5 mr-3"></i>
+                    Photobooth
                 </a>
                 <a href="#" class="nav-item" data-section="profile">
                     <i data-lucide="user" class="w-5 h-5 mr-3"></i>
@@ -388,6 +401,10 @@
                 <a href="#" class="nav-item" data-section="activity">
                     <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
                     Activity
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                    Settings
                 </a>
 
                 <div class="px-4 mt-6 mb-2">
@@ -442,11 +459,13 @@
                     <p class="text-sm text-gray-500">Welcome back! Here's your overview.</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 relative">
+                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 relative"
+                        onclick="openNotifications()">
                         <i data-lucide="bell" class="w-5 h-5"></i>
                         <span class="absolute top-1 right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
                     </button>
-                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10">
+                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10"
+                        onclick="document.querySelector('.nav-item[data-section=\'settings\']').click()">
                         <i data-lucide="settings" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -942,6 +961,453 @@
                     </div>
                 </div>
 
+                <!-- FEEDS SECTION -->
+                <div id="feeds-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Feed Filters -->
+                        <div class="bento-card lg:col-span-3">
+                            <div class="bento-card-header">
+                                <i data-lucide="filter" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-semibold text-white">Platfrom Filters</h3>
+                                <div class="ml-auto flex flex-wrap gap-2">
+                                    <button class="section-tab active">All</button>
+                                    <button class="section-tab">Facebook</button>
+                                    <button class="section-tab">Instagram</button>
+                                    <button class="section-tab">X</button>
+                                    <button class="section-tab">LinkedIn</button>
+                                    <button class="section-tab">YouTube</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Feed Items -->
+                        <div class="lg:col-span-3 space-y-4">
+                            <div class="bento-card">
+                                <div class="bento-card-body">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
+                                            <i data-lucide="facebook" class="w-5 h-5 text-white"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-white font-semibold">The Official Black Sheep Company</p>
+                                            <p class="text-xs text-gray-500">Facebook • 2 hours ago</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 mb-4">Check out our new members portal! 🚀 We've integrated
+                                        all your favorite services into one beautiful dashboard.</p>
+                                    <div
+                                        class="aspect-video bg-white/5 rounded-xl flex items-center justify-center text-gray-600 border border-white/5">
+                                        [Social Media Content Placeholder]
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bento-card">
+                                <div class="bento-card-body">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 flex items-center justify-center">
+                                            <i data-lucide="instagram" class="w-5 h-5 text-white"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-white font-semibold">TOBSCo Official</p>
+                                            <p class="text-xs text-gray-500">Instagram • 5 hours ago</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300">The grind never stops. 🐑⬛ #BlackSheepCompany
+                                        #TechInnovation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FRIENDS SECTION -->
+                <div id="friends-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Add Friends Card -->
+                        <div class="bento-card lg:col-span-3">
+                            <div class="bento-card-header">
+                                <i data-lucide="user-plus" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-semibold text-white">Find & Add Friends</h3>
+                                <div class="ml-auto w-full max-w-xs">
+                                    <div class="relative">
+                                        <i data-lucide="search"
+                                            class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                                        <input type="text" placeholder="Search by username or email..."
+                                            class="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Friends List -->
+                        <div class="lg:col-span-2 space-y-4">
+                            <div class="bento-card">
+                                <div class="bento-card-header">
+                                    <i data-lucide="users" class="w-5 h-5 text-blue-500"></i>
+                                    <h3 class="font-semibold text-white">Your Friends</h3>
+                                    <button class="ml-auto btn-secondary text-xs px-3 py-1.5"
+                                        onclick="toggleFriendEdit()">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5 inline mr-1"></i>
+                                        Edit List
+                                    </button>
+                                </div>
+                                <div class="bento-card-body">
+                                    <div id="friends-list-container" class="space-y-4">
+                                        <!-- Friend Item 1 -->
+                                        <div
+                                            class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="relative">
+                                                    <div
+                                                        class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
+                                                        JD</div>
+                                                    <div
+                                                        class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2 border-[#050505]">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p class="text-white font-medium">John Doe</p>
+                                                    <p class="text-xs text-gray-500">@johndoe • Active Now</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button
+                                                    class="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100 friend-edit-btn hidden">
+                                                    <i data-lucide="user-minus" class="w-4 h-4"></i>
+                                                </button>
+                                                <button
+                                                    class="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+                                                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Friend Item 2 -->
+                                        <div
+                                            class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="relative">
+                                                    <div
+                                                        class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white font-bold">
+                                                        JS</div>
+                                                    <div
+                                                        class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-gray-500 border-2 border-[#050505]">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p class="text-white font-medium">Jane Smith</p>
+                                                    <p class="text-xs text-gray-500">@janesmith • 2h ago</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button
+                                                    class="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100 friend-edit-btn hidden">
+                                                    <i data-lucide="user-minus" class="w-4 h-4"></i>
+                                                </button>
+                                                <button
+                                                    class="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+                                                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Requests & Suggestions -->
+                        <div class="space-y-6">
+                            <div class="bento-card">
+                                <div class="bento-card-header">
+                                    <i data-lucide="user-check" class="w-4 h-4 text-green-500"></i>
+                                    <h3 class="text-sm font-semibold text-white">Pending Requests</h3>
+                                </div>
+                                <div class="bento-card-body p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 text-xs font-bold">
+                                                MK</div>
+                                            <p class="text-xs text-white">Mike King</p>
+                                        </div>
+                                        <div class="flex gap-1">
+                                            <button
+                                                class="p-1.5 rounded-md bg-green-500/10 text-green-500 hover:bg-green-500/20"><i
+                                                    data-lucide="check" class="w-3 h-3"></i></button>
+                                            <button
+                                                class="p-1.5 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/20"><i
+                                                    data-lucide="x" class="w-3 h-3"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bento-card">
+                                <div class="bento-card-header">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-purple-500"></i>
+                                    <h3 class="text-sm font-semibold text-white">Suggested</h3>
+                                </div>
+                                <div class="bento-card-body space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 text-xs">
+                                                AS</div>
+                                            <p class="text-xs text-white">Alex Stone</p>
+                                        </div>
+                                        <button class="text-[10px] text-orange-500 hover:underline">Add Friend</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHOTOBOOTH SECTION -->
+                <div id="photobooth-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Upload Card -->
+                        <div class="bento-card lg:col-span-1">
+                            <div class="bento-card-header">
+                                <i data-lucide="upload" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-semibold text-white">Capture & Upload</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div
+                                    class="aspect-square bg-white/5 rounded-2xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center gap-4 mb-6 group hover:border-orange-500/50 transition-colors cursor-pointer">
+                                    <div
+                                        class="w-16 h-16 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform">
+                                        <i data-lucide="camera" class="w-8 h-8"></i>
+                                    </div>
+                                    <p class="text-sm text-gray-400">Click to capture or drag photo</p>
+                                </div>
+                                <div class="space-y-3">
+                                    <button class="btn-primary w-full flex items-center justify-center gap-2">
+                                        <i data-lucide="send" class="w-4 h-4"></i>
+                                        Post Now to Feed
+                                    </button>
+                                    <button class="btn-secondary w-full flex items-center justify-center gap-2">
+                                        <i data-lucide="user-circle" class="w-4 h-4"></i>
+                                        Update Profile Picture
+                                    </button>
+                                </div>
+                                <p class="text-[10px] text-gray-500 mt-4 text-center italic">Photos updated to profile
+                                    are automatically added to your gallery.</p>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Card -->
+                        <div class="bento-card lg:col-span-2">
+                            <div class="bento-card-header">
+                                <i data-lucide="image" class="w-5 h-5 text-blue-500"></i>
+                                <h3 class="font-semibold text-white">Your Photobooth Gallery</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    <div
+                                        class="aspect-square bg-white/5 rounded-xl border border-white/5 overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=300&fit=crop"
+                                            class="w-full h-full object-cover opacity-50 grayscale" alt="Sample">
+                                    </div>
+                                    <div
+                                        class="aspect-square bg-white/5 rounded-xl border border-white/5 overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=300&h=300&fit=crop"
+                                            class="w-full h-full object-cover opacity-50 grayscale" alt="Sample">
+                                    </div>
+                                    <div
+                                        class="aspect-square bg-white/5 rounded-xl border border-white/5 overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&h=300&fit=crop"
+                                            class="w-full h-full object-cover opacity-50 grayscale" alt="Sample">
+                                    </div>
+                                </div>
+                                <div class="mt-8 text-center py-12 border border-white/5 rounded-2xl bg-white/[0.02]">
+                                    <p class="text-gray-500 italic">No photos yet. Start capturing moments!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS SECTION -->
+                <div id="settings-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Notifications Card -->
+                        <div id="notifications-settings-card" class="bento-card lg:col-span-2 scroll-mt-20">
+                            <div class="bento-card-header">
+                                <i data-lucide="bell" class="w-5 h-5 text-yellow-500"></i>
+                                <h3 class="font-semibold text-white">Notification Preferences</h3>
+                            </div>
+                            <div class="bento-card-body">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <label
+                                        class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="mail" class="w-5 h-5 text-blue-400"></i>
+                                            <span class="text-sm font-medium text-white">Email Notifications</span>
+                                        </div>
+                                        <input type="checkbox" checked
+                                            class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                                    </label>
+                                    <label
+                                        class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="smartphone" class="w-5 h-5 text-green-400"></i>
+                                            <span class="text-sm font-medium text-white">Phone SMS</span>
+                                        </div>
+                                        <input type="checkbox"
+                                            class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                                    </label>
+                                    <label
+                                        class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="layout" class="w-5 h-5 text-purple-400"></i>
+                                            <span class="text-sm font-medium text-white">App Push</span>
+                                        </div>
+                                        <input type="checkbox" checked
+                                            class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                                    </label>
+                                </div>
+                                <button class="btn-primary mt-6">Save Preferences</button>
+                            </div>
+                        </div>
+
+                        <!-- Customization Card -->
+                        <div class="bento-card">
+                            <div class="bento-card-header">
+                                <i data-lucide="palette" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-semibold text-white">Interface Customization</h3>
+                            </div>
+                            <div class="bento-card-body space-y-6">
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-3">Portal Theme</label>
+                                    <div class="grid grid-cols-3 gap-3">
+                                        <button
+                                            class="p-3 rounded-xl bg-orange-500/20 border border-orange-500 text-orange-400 text-sm">Dark</button>
+                                        <button
+                                            class="p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 text-sm hover:border-white/20">Light</button>
+                                        <button
+                                            class="p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 text-sm hover:border-white/20">System</button>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm text-gray-400 mb-2">Background Color</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="color" value="#050505"
+                                                class="w-10 h-10 rounded bg-transparent border-none">
+                                            <span class="text-xs font-mono text-gray-500">#050505</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-400 mb-2">Module Accent</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="color" value="#f97316"
+                                                class="w-10 h-10 rounded bg-transparent border-none">
+                                            <span class="text-xs font-mono text-gray-500">#F97316</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-primary w-full">Apply Changes</button>
+                            </div>
+                        </div>
+
+                        <!-- Integration Card -->
+                        <div class="bento-card">
+                            <div class="bento-card-header">
+                                <i data-lucide="share-2" class="w-5 h-5 text-blue-500"></i>
+                                <h3 class="font-semibold text-white">Social Integrations</h3>
+                            </div>
+                            <div class="bento-card-body space-y-4">
+                                <div class="grid grid-cols-1 gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="facebook" class="w-4 h-4 text-blue-500"></i>
+                                        </div>
+                                        <input type="text" placeholder="Facebook API Key"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="instagram" class="w-4 h-4 text-pink-500"></i>
+                                        </div>
+                                        <input type="text" placeholder="Instagram Access Token"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="message-circle" class="w-4 h-4 text-white"></i>
+                                        </div>
+                                        <input type="text" placeholder="X (Twitter) API Key"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="linkedin" class="w-4 h-4 text-blue-400"></i>
+                                        </div>
+                                        <input type="text" placeholder="LinkedIn Provider ID"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="play" class="w-4 h-4 text-red-500"></i>
+                                        </div>
+                                        <input type="text" placeholder="YouTube Channel ID"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="music" class="w-4 h-4 text-pink-400"></i>
+                                        </div>
+                                        <input type="text" placeholder="TikTok Profile URL"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="pin" class="w-4 h-4 text-red-600"></i>
+                                        </div>
+                                        <input type="text" placeholder="Pinterest Username"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="message-square" class="w-4 h-4 text-green-500"></i>
+                                        </div>
+                                        <input type="text" placeholder="WhatsApp Number"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="tv" class="w-4 h-4 text-purple-500"></i>
+                                        </div>
+                                        <input type="text" placeholder="Twitch Stream Name"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="ghost" class="w-4 h-4 text-yellow-400"></i>
+                                        </div>
+                                        <input type="text" placeholder="Snapchat Username"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+                                            <i data-lucide="hash" class="w-4 h-4 text-indigo-400"></i>
+                                        </div>
+                                        <input type="text" placeholder="Discord Webhook URL"
+                                            class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:border-orange-500 focus:outline-none">
+                                    </div>
+                                </div>
+                                <p class="text-[10px] text-gray-500 mt-2 italic">* Actual social feed integration
+                                    requires valid API credentials.</p>
+                                <button class="btn-secondary w-full text-sm">Save Integrations</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -957,10 +1423,14 @@
 
         const sectionTitles = {
             'dashboard': 'Dashboard',
+            'feeds': 'Unified Activity Feeds',
+            'friends': 'Friend Network',
+            'photobooth': 'Capture Moments',
             'profile': 'Profile & Account',
             'billing': 'Billing & Payments',
             'support': 'Support Center',
-            'activity': 'Activity Log'
+            'activity': 'Activity Log',
+            'settings': 'Portal Customization'
         };
 
         navItems.forEach(item => {
@@ -1012,6 +1482,30 @@
                 // Toggle mobile menu (could add a slide-out sidebar for mobile)
                 alert('Mobile menu - implement slide-out sidebar');
             });
+        }
+
+        // Feature: Open Notifications Settings
+        function openNotifications() {
+            // First click the settings nav item
+            const settingsNav = document.querySelector('.nav-item[data-section="settings"]');
+            if (settingsNav) {
+                settingsNav.click();
+
+                // Then scroll to notifications card
+                setTimeout(() => {
+                    const notifyCard = document.getElementById('notifications-settings-card');
+                    if (notifyCard) {
+                        notifyCard.scrollIntoView({ behavior: 'smooth' });
+                        notifyCard.classList.add('glow-orange');
+                        setTimeout(() => notifyCard.classList.remove('glow-orange'), 2000);
+                    }
+                }, 100);
+            }
+        }
+        // Feature: Friend List Edit Toggle
+        function toggleFriendEdit() {
+            const btns = document.querySelectorAll('.friend-edit-btn');
+            btns.forEach(btn => btn.classList.toggle('hidden'));
         }
     </script>
 

@@ -37,11 +37,11 @@ body {
 /* --- Gold Cross --- */
 #gold-cross {
     position: absolute;
-    /* Keep absolute, relative to fixed shape-container */
-    width: 50px;
-    height: 100px;
-    z-index: 1;
-    /* On top of shapes in #shape-container */
+    width: 60px;
+    /* Slightly larger */
+    height: 120px;
+    z-index: 100;
+    /* High z-index within container to be above other shapes */
     pointer-events: none;
     background: none !important;
     background-color: transparent !important;
@@ -57,18 +57,18 @@ body {
 
 /* Vertical bar of the cross (long skinny vertical beam) */
 #gold-cross::before {
-    width: 10px;
-    height: 100px;
-    left: 20px;
+    width: 12px;
+    height: 120px;
+    left: 24px;
     top: 0;
 }
 
 /* Horizontal bar of the cross (shorter crossbeam near top) */
 #gold-cross::after {
-    width: 50px;
-    height: 10px;
+    width: 60px;
+    height: 12px;
     left: 0;
-    top: 20px;
+    top: 30px;
 }
 
 #main-content {
