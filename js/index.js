@@ -1125,8 +1125,53 @@ showSection = function (sectionId) {
         loadEbayConfig();
         checkEndpointStatus();
         refreshNotifications();
+    } else if (sectionId === 'Blogs') {
+        // Show first blog subtab by default
+        showBlogTab('HistoricFigures');
     }
 };
+
+// Show Blog sub-tabs
+function showBlogTab(tabName) {
+    // Hide all blog content sections
+    document.querySelectorAll('.blog-content').forEach(content => {
+        content.style.display = 'none';
+    });
+
+    // Show selected blog content
+    const selectedContent = document.getElementById(tabName);
+    if (selectedContent) {
+        selectedContent.style.display = 'block';
+    }
+
+    // Update sub-tab button styles
+    document.querySelectorAll('.blog-subtab').forEach(btn => {
+        btn.style.background = '#f3f4f6';
+        btn.style.color = '#374151';
+        btn.classList.remove('active');
+    });
+
+    // Find and highlight the active tab button
+    const activeButton = Array.from(document.querySelectorAll('.blog-subtab')).find(
+        btn => btn.textContent.trim() === tabName.replace(/([A-Z])/g, ' $1').trim()
+    );
+    if (activeButton) {
+        activeButton.style.background = '#FBBF24';
+        activeButton.style.color = '#000000';
+        activeButton.classList.add('active');
+    }
+
+    // Update the Blogs tab button text
+    const blogsTabButton = document.querySelectorAll('.tab-dropdown .tab-button')[8]; // Blogs is the 9th tab
+    if (blogsTabButton) {
+        const tabNameDisplay = tabName.replace(/([A-Z])/g, ' $1').trim();
+        blogsTabButton.textContent = tabNameDisplay + ' ▼';
+
+        // Highlight the Blogs tab
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-selection'));
+        blogsTabButton.classList.add('active-selection');
+    }
+}
 
 // --- START CHATBOT SCRIPT ---
 const chatLog = document.getElementById('chat-log');

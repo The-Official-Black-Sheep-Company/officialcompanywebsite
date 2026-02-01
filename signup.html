@@ -121,31 +121,63 @@
     <!-- Keycloak Integration -->
     <script src="http://172.234.229.103:9999/js/keycloak.js"></script>
     <script>
-        const keycloak = new Keycloak({
+        const keycloakConfig = {
             url: 'http://172.234.229.103:9999',
             realm: 'TOBSCo',
             clientId: 'portal-client'
-        });
+        };
 
-        // Initialize to check if already logged in (optional, but good UX)
-        keycloak.init({ onLoad: 'check-sso' }).then(authenticated => {
-            if (authenticated) {
-                // If already logged in, maybe redirect to portal or show "You are already a member"
-                // For now, leave it be.
+        // Construct fallback URLs in case JS fails
+        function getRegistrationUrl(tier) {
+            const redirectUri = encodeURIComponent(window.location.origin + '/portal.html' + (tier === 'vip' ? '?tier=vip' : ''));
+            return `${keycloakConfig.url}/realms/${keycloakConfig.realm}/protocol/openid-connect/registrations?client_id=${keycloakConfig.clientId}&response_type=code&scope=openid&redirect_uri=${redirectUri}`;
+        }
+
+        let keycloak = null;
+        let isKeycloakReady = false;
+
+        try {
+            if (typeof Keycloak !== 'undefined') {
+                keycloak = new Keycloak(keycloakConfig);
+                keycloak.init({ onLoad: 'check-sso' })
+                    .then(authenticated => {
+                        isKeycloakReady = true;
+                        if (authenticated) {
+                            window.location.href = 'portal.html';
+                        }
+                    })
+                    .catch(e => {
+                        console.error("Keycloak init failed", e);
+                        // Fallback will be used
+                    });
             }
-        });
+        } catch (e) {
+            console.error("Keycloak library error", e);
+        }
 
         function triggerMemberRegister() {
-            keycloak.register();
+            if (isKeycloakReady && keycloak) {
+                keycloak.register().catch(() => {
+                    // If method fails, use fallback
+                    window.location.href = getRegistrationUrl('member');
+                });
+            } else {
+                // Library not loaded or not ready -> Manual Redirect
+                window.location.href = getRegistrationUrl('member');
+            }
         }
 
         function triggerVIPRegister() {
-            // Currently same as member register, but could have different redirect URI or params
-            keycloak.register({
-                redirectUri: window.location.origin + '/portal.html?tier=vip'
-            });
+            if (isKeycloakReady && keycloak) {
+                keycloak.register({
+                    redirectUri: window.location.origin + '/portal.html?tier=vip'
+                }).catch(() => {
+                    window.location.href = getRegistrationUrl('vip');
+                });
+            } else {
+                window.location.href = getRegistrationUrl('vip');
+            }
         }
-
     </script>
 </body>
 
