@@ -122,6 +122,47 @@
             border-left: 3px solid var(--orange);
         }
 
+        /* Settings Submenu */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+            margin: 0 8px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .submenu.open {
+            max-height: 250px;
+            margin-bottom: 8px;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px 8px 44px;
+            color: #9ca3af;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .submenu-item:hover {
+            color: var(--gold-light);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .nav-item .chevron-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.submenu-open .chevron-icon {
+            transform: rotate(180deg);
+        }
+
         /* Quick Stat Cards */
         .stat-card {
             background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
@@ -365,6 +406,24 @@
                 </a>
             </div>
 
+            <!-- User Section (Top) -->
+            <div class="p-4 border-b border-[rgba(212,175,55,0.2)]">
+                <div class="flex items-center gap-3 mb-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold">
+                        G
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-white">Guest User</p>
+                        <p class="text-xs text-gray-500">Not logged in</p>
+                    </div>
+                </div>
+                <button onclick="loginWithKeycloak()" class="btn-primary w-full text-xs py-1.5 px-3">
+                    <i data-lucide="log-in" class="w-3.5 h-3.5 inline mr-1.5"></i>
+                    Sign In
+                </button>
+            </div>
+
             <!-- Navigation -->
             <nav class="flex-1 overflow-y-auto py-4">
                 <div class="px-4 mb-2">
@@ -373,6 +432,14 @@
                 <a href="#" class="nav-item active" data-section="dashboard">
                     <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
                     Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="messages">
+                    <i data-lucide="mail" class="w-5 h-5 mr-3"></i>
+                    Messages
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <i data-lucide="user" class="w-5 h-5 mr-3"></i>
+                    Profile
                 </a>
                 <a href="#" class="nav-item" data-section="feeds">
                     <i data-lucide="rss" class="w-5 h-5 mr-3"></i>
@@ -386,10 +453,6 @@
                     <i data-lucide="camera" class="w-5 h-5 mr-3"></i>
                     Photobooth
                 </a>
-                <a href="#" class="nav-item" data-section="profile">
-                    <i data-lucide="user" class="w-5 h-5 mr-3"></i>
-                    Profile
-                </a>
                 <a href="#" class="nav-item" data-section="billing">
                     <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
                     Billing
@@ -402,10 +465,31 @@
                     <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
                     Activity
                 </a>
-                <a href="#" class="nav-item" data-section="settings">
-                    <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
-                    Settings
-                </a>
+
+                <!-- Settings with Submenu -->
+                <div class="settings-nav-group">
+                    <a href="#" class="nav-item" data-section="settings" id="settings-nav-item">
+                        <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                        Settings
+                        <i data-lucide="chevron-down" class="w-4 h-4 chevron-icon"></i>
+                    </a>
+                    <div class="submenu" id="settings-submenu">
+                        <a href="#" class="submenu-item" onclick="openNotifications(); return false;">
+                            Notifications
+                        </a>
+                        <a href="#" class="submenu-item"
+                            onclick="scrollToSettingsCard('social-integrations-card'); return false;">
+                            API Keys
+                        </a>
+                        <a href="#" class="submenu-item"
+                            onclick="scrollToSettingsCard('customization-card'); return false;">
+                            Preferences
+                        </a>
+                        <a href="#" class="submenu-item" onclick="handleLogout(); return false;">
+                            Logout
+                        </a>
+                    </div>
+                </div>
 
                 <div class="px-4 mt-6 mb-2">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">Quick Links</span>
@@ -419,24 +503,6 @@
                     Store
                 </a>
             </nav>
-
-            <!-- User Section -->
-            <div class="p-4 border-t border-[rgba(212,175,55,0.2)]">
-                <div class="flex items-center gap-3">
-                    <div
-                        class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold">
-                        G
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-medium text-white">Guest User</p>
-                        <p class="text-xs text-gray-500">Not logged in</p>
-                    </div>
-                </div>
-                <button onclick="loginWithKeycloak()" class="btn-primary w-full mt-3 text-sm">
-                    <i data-lucide="log-in" class="w-4 h-4 inline mr-2"></i>
-                    Sign In
-                </button>
-            </div>
         </aside>
 
         <!-- MAIN CONTENT -->
@@ -445,10 +511,24 @@
             <!-- Mobile Header -->
             <div
                 class="mobile-header h-14 flex items-center justify-between px-4 border-b border-[rgba(212,175,55,0.2)] bg-[rgba(10,10,10,0.98)]">
-                <a href="index.html" class="font-['Orbitron'] font-bold text-white">TBS PORTAL</a>
-                <button id="mobile-menu-btn" class="p-2 rounded-lg text-gray-400 hover:bg-white/10">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-gray-400 hover:bg-white/10">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <a href="index.html" class="font-['Orbitron'] font-bold text-white text-sm">TBS PORTAL</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="p-2 rounded-lg text-orange-500 hover:text-white hover:bg-white/10 relative"
+                        onclick="openNotifications()">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span
+                            class="absolute top-2 right-2 w-1.5 h-1.5 bg-red-500 rounded-full border border-black"></span>
+                    </button>
+                    <button class="p-2 rounded-lg text-orange-500 hover:text-white hover:bg-white/10"
+                        onclick="document.querySelector('.nav-item[data-section=\'settings\']').click()">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Top Bar -->
@@ -456,17 +536,24 @@
                 class="h-16 flex items-center justify-between px-6 border-b border-[rgba(212,175,55,0.2)] bg-[rgba(10,10,10,0.5)] flex-shrink-0">
                 <div>
                     <h1 id="section-title" class="text-xl font-semibold text-white font-['Orbitron']">Dashboard</h1>
-                    <p class="text-sm text-gray-500">Welcome back! Here's your overview.</p>
+                    <p id="header-welcome" class="text-sm text-gray-500">Welcome back! Here's your overview.</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 relative"
-                        onclick="openNotifications()">
-                        <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span class="absolute top-1 right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
+                    <!-- Notification Bell -->
+                    <button
+                        class="p-2 rounded-lg text-orange-500 hover:text-white hover:bg-white/10 relative transition-all duration-200 group"
+                        id="notifications-btn" onclick="openNotifications()">
+                        <i data-lucide="bell" class="w-6 h-6 group-hover:scale-110 transition-transform"></i>
+                        <span
+                            class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#050505]"></span>
                     </button>
-                    <button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10"
+                    <!-- Settings Sprocket -->
+                    <button
+                        class="p-2 rounded-lg text-orange-500 hover:text-white hover:bg-white/10 transition-all duration-200 group"
+                        id="settings-sprocket"
                         onclick="document.querySelector('.nav-item[data-section=\'settings\']').click()">
-                        <i data-lucide="settings" class="w-5 h-5"></i>
+                        <i data-lucide="settings"
+                            class="w-6 h-6 group-hover:rotate-90 transition-transform duration-500"></i>
                     </button>
                 </div>
             </header>
@@ -476,6 +563,15 @@
 
                 <!-- DASHBOARD SECTION -->
                 <div id="dashboard-section" class="section-content active">
+                    <div class="mb-8 animate-fade-in">
+                        <h2 class="text-4xl font-bold text-white font-['Orbitron'] tracking-tight">
+                            Hello, <span id="welcome-name"
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-500">Guest</span>!
+                        </h2>
+                        <p class="text-gray-400 mt-2 text-lg">Welcome to your personal dashboard. Everything looks good
+                            today.</p>
+                    </div>
+
                     <!-- Quick Stats -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                         <div class="stat-card">
@@ -616,6 +712,36 @@
                                     <p class="text-sm text-gray-400">Welcome to the new Members Portal. We're excited to
                                         bring you a better experience.</p>
                                     <p class="text-xs text-gray-500 mt-2">Posted today</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MESSAGES SECTION -->
+                <div id="messages-section" class="section-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Messages List -->
+                        <div class="lg:col-span-3">
+                            <div class="bento-card">
+                                <div class="bento-card-header">
+                                    <i data-lucide="inbox" class="w-5 h-5 text-orange-500"></i>
+                                    <h3 class="font-semibold text-white">Inbox</h3>
+                                    <div class="ml-auto flex gap-2">
+                                        <button onclick="loadMessages()"
+                                            class="text-xs bg-white/5 hover:bg-white/10 text-white px-3 py-1 rounded transition-colors">
+                                            <i data-lucide="refresh-cw" class="w-3 h-3 inline mr-1"></i> Refresh
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="bento-card-body">
+                                    <div id="messages-list" class="space-y-4">
+                                        <!-- Messages will be injected here -->
+                                        <div class="text-center text-gray-500 py-8">
+                                            <i data-lucide="loader" class="w-8 h-8 mx-auto animate-spin mb-2"></i>
+                                            <p>Loading messages...</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1275,7 +1401,7 @@
                         </div>
 
                         <!-- Customization Card -->
-                        <div class="bento-card">
+                        <div id="customization-card" class="bento-card scroll-mt-20">
                             <div class="bento-card-header">
                                 <i data-lucide="palette" class="w-5 h-5 text-orange-500"></i>
                                 <h3 class="font-semibold text-white">Interface Customization</h3>
@@ -1315,7 +1441,7 @@
                         </div>
 
                         <!-- Integration Card -->
-                        <div class="bento-card">
+                        <div id="social-integrations-card" class="bento-card scroll-mt-20">
                             <div class="bento-card-header">
                                 <i data-lucide="share-2" class="w-5 h-5 text-blue-500"></i>
                                 <h3 class="font-semibold text-white">Social Integrations</h3>
@@ -1412,86 +1538,33 @@
         </main>
     </div>
 
+    <!-- Keycloak Integration -->
+    <script src="http://172.234.229.103:9999/js/keycloak.js"></script>
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Section Navigation
-        const navItems = document.querySelectorAll('.nav-item[data-section]');
-        const sections = document.querySelectorAll('.section-content');
-        const sectionTitle = document.getElementById('section-title');
-
-        const sectionTitles = {
-            'dashboard': 'Dashboard',
-            'feeds': 'Unified Activity Feeds',
-            'friends': 'Friend Network',
-            'photobooth': 'Capture Moments',
-            'profile': 'Profile & Account',
-            'billing': 'Billing & Payments',
-            'support': 'Support Center',
-            'activity': 'Activity Log',
-            'settings': 'Portal Customization'
-        };
-
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const sectionId = item.dataset.section;
-
-                // Update active nav
-                navItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-
-                // Show section
-                sections.forEach(section => {
-                    section.classList.remove('active');
-                    if (section.id === `${sectionId}-section`) {
-                        section.classList.add('active');
-                    }
-                });
-
-                // Update title
-                sectionTitle.textContent = sectionTitles[sectionId] || 'Dashboard';
-            });
+        const keycloak = new Keycloak({
+            url: 'http://172.234.229.103:9999',
+            realm: 'TOBSCo',
+            clientId: 'portal-client'
         });
 
-        // FAQ Toggle
-        function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('i');
-
-            answer.classList.toggle('open');
-            icon.style.transform = answer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
-        }
-
-        // Keycloak Login (placeholder - update URL to your Keycloak instance)
         function loginWithKeycloak() {
-            // Replace with your actual Keycloak URL
-            const keycloakUrl = 'http://172.234.229.103:9999/realms/TOBSCo/protocol/openid-connect/auth';
-            const clientId = 'portal-client';
-            const redirectUri = encodeURIComponent(window.location.href);
-
-            // Redirect to Keycloak
-            window.location.href = `${keycloakUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=openid`;
+            keycloak.login();
         }
 
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                // Toggle mobile menu (could add a slide-out sidebar for mobile)
-                alert('Mobile menu - implement slide-out sidebar');
-            });
+        function handleLogout() {
+            if (confirm('Are you sure you want to log out?')) {
+                keycloak.logout();
+            }
         }
 
-        // Feature: Open Notifications Settings
         function openNotifications() {
-            // First click the settings nav item
+            // Ensure settings section is active first
             const settingsNav = document.querySelector('.nav-item[data-section="settings"]');
             if (settingsNav) {
-                settingsNav.click();
+                if (!settingsNav.classList.contains('active')) {
+                    settingsNav.click();
+                }
 
-                // Then scroll to notifications card
                 setTimeout(() => {
                     const notifyCard = document.getElementById('notifications-settings-card');
                     if (notifyCard) {
@@ -1502,13 +1575,271 @@
                 }, 100);
             }
         }
+
+        keycloak.init({ onLoad: 'login-required', silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html' })
+            .then(authenticated => {
+                if (authenticated) {
+                    console.log('Authenticated');
+                    const userProfile = keycloak.tokenParsed;
+                    const firstName = userProfile.given_name || (userProfile.name ? userProfile.name.split(' ')[0] : userProfile.preferred_username);
+
+                    // Update Greetings
+                    const welcomeName = document.getElementById('welcome-name');
+                    if (welcomeName) welcomeName.textContent = firstName;
+
+                    const headerWelcome = document.getElementById('header-welcome');
+                    if (headerWelcome) {
+                        headerWelcome.innerHTML = `Welcome back, <span class="text-orange-400 font-bold">${firstName}</span>!`;
+                    }
+
+                    // Update Sidebar User Section
+                    const userSection = document.querySelector('.sidebar .p-4.border-b');
+                    if (userSection) {
+                        const nameEl = userSection.querySelector('.text-sm.font-medium.text-white');
+                        const emailEl = userSection.querySelector('.text-xs.text-gray-500');
+                        const avatarEl = userSection.querySelector('.w-10.h-10');
+                        const signInBtn = userSection.querySelector('button');
+
+                        if (nameEl) nameEl.textContent = userProfile.name || userProfile.preferred_username;
+                        if (emailEl) emailEl.textContent = userProfile.email || 'Authenticated';
+                        if (avatarEl) avatarEl.textContent = (userProfile.given_name || (userProfile.name ? userProfile.name.charAt(0) : 'U')).charAt(0);
+                        if (signInBtn) signInBtn.classList.add('hidden'); // Hide Sign In when logged in
+                    }
+
+                    // Update Member Stat
+                    const stats = document.querySelectorAll('.stat-card');
+                    if (stats.length > 3) {
+                        const memberStat = stats[3];
+                        const val = memberStat.querySelector('p.text-2xl.font-bold');
+                        const sub = memberStat.querySelector('p.text-xs');
+                        if (val) val.textContent = 'Active';
+                        if (sub) sub.textContent = 'Lifetime Member';
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('Keycloak Init Error', err);
+            });
+
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Settings Submenu Logic
+        const settingsNavItem = document.getElementById('settings-nav-item');
+        const settingsSubmenu = document.getElementById('settings-submenu');
+
+        if (settingsNavItem && settingsSubmenu) {
+            settingsNavItem.addEventListener('click', (e) => {
+                // Toggle the submenu visibility
+                settingsNavItem.classList.toggle('submenu-open');
+                settingsSubmenu.classList.toggle('open');
+            });
+        }
+
+        // Helper to scroll to specific settings cards
+        function scrollToSettingsCard(cardId) {
+            // Ensure settings section is active first
+            const settingsNav = document.querySelector('.nav-item[data-section="settings"]');
+            if (settingsNav) {
+                if (!settingsNav.classList.contains('active')) {
+                    settingsNav.click();
+                }
+
+                setTimeout(() => {
+                    const card = document.getElementById(cardId);
+                    if (card) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        card.classList.add('glow-orange');
+                        setTimeout(() => card.classList.remove('glow-orange'), 2000);
+                    }
+                }, 100);
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to log out?')) {
+                // If Keycloak is defined, use it
+                if (typeof keycloak !== 'undefined') {
+                    keycloak.logout();
+                } else {
+                    alert('Logout successful (Demo mode)');
+                }
+            }
+        }
+
+        // Section Switching Logic
+        document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const sectionId = item.getAttribute('data-section');
+                if (!sectionId) return;
+
+                e.preventDefault();
+
+                // Update active state in sidebar
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                // Update Title
+                const sectionTitles = {
+                    'dashboard': 'Dashboard',
+                    'feeds': 'Unified Activity Feeds',
+                    'friends': 'Friend Network',
+                    'photobooth': 'Capture Moments',
+                    'profile': 'Profile & Account',
+                    'billing': 'Billing & Payments',
+                    'support': 'Support Center',
+                    'activity': 'Activity Log',
+                    'settings': 'Portal Customization'
+                };
+                document.getElementById('section-title').textContent = sectionTitles[sectionId] || 'Portal';
+
+                // Show Content Section
+                document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+                const section = document.getElementById(sectionId + '-section');
+                if (section) section.classList.add('active');
+
+                // Close mobile menu if open
+                if (window.innerWidth < 1024) {
+                    const sb = document.querySelector('.sidebar');
+                    sb.classList.add('hidden');
+                    sb.classList.remove('fixed', 'inset-0', 'z-50');
+                }
+            });
+        });
+
+        // FAQ Search
+        function handleFaqSearch(e) {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                item.style.display = question.includes(term) ? 'block' : 'none';
+            });
+        }
+
+        // FAQ Toggle
+        function toggleFaq(el) {
+            const answer = el.nextElementSibling;
+            const icon = el.querySelector('i');
+            const isOpen = answer.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-question i').forEach(i => {
+                i.setAttribute('data-lucide', 'chevron-down');
+            });
+
+            if (!isOpen) {
+                answer.classList.add('open');
+                icon.setAttribute('data-lucide', 'chevron-up');
+            }
+            lucide.createIcons();
+        }
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const sb = document.querySelector('.sidebar');
+                sb.classList.toggle('hidden');
+                sb.classList.toggle('fixed');
+                sb.classList.toggle('inset-0');
+                sb.classList.toggle('z-50');
+            });
+        }
+
+
         // Feature: Friend List Edit Toggle
         function toggleFriendEdit() {
             const btns = document.querySelectorAll('.friend-edit-btn');
             btns.forEach(btn => btn.classList.toggle('hidden'));
         }
     </script>
+    <script>
+        function loadMessages() {
+            const list = document.getElementById('messages-list');
+            if (!list) return;
 
+            list.innerHTML = `
+                <div class="text-center text-gray-500 py-8">
+                    <i data-lucide="loader" class="w-8 h-8 mx-auto animate-spin mb-2"></i>
+                    <p>Loading messages...</p>
+                </div>`;
+
+            const apiBase = 'http://localhost:5004/api';
+
+            fetch(apiBase + '/messages')
+                .then(response => {
+                    if (!response.ok) throw new Error("Failed to load");
+                    return response.json();
+                })
+                .then(messages => {
+                    if (!messages || messages.length === 0) {
+                        list.innerHTML = `
+                            <div class="text-center text-gray-500 py-8">
+                                <i data-lucide="inbox" class="w-12 h-12 mx-auto opacity-20 mb-2"></i>
+                                <p>No messages found.</p>
+                            </div>`;
+                        return;
+                    }
+
+                    list.innerHTML = messages.map(msg => `
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-orange-500/30 transition-all">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${msg.from === 'System' ? 'bg-orange-500/20 text-orange-400' : 'bg-blue-500/20 text-blue-400'}">
+                                        ${msg.from}
+                                    </span>
+                                    <span class="text-xs text-gray-500">${msg.timestamp}</span>
+                                </div>
+                                ${!msg.read ? '<span class="w-2 h-2 rounded-full bg-orange-500"></span>' : ''}
+                            </div>
+                            <h4 class="text-white font-medium mb-1">${msg.subject}</h4>
+                            <p class="text-sm text-gray-400 whitespace-pre-wrap">${msg.body}</p>
+                        </div>
+                    `).join('');
+
+                    if (window.lucide) lucide.createIcons();
+                })
+                .catch(err => {
+                    console.error(err);
+                    list.innerHTML = `
+                        <div class="text-center text-red-400 py-8">
+                            <p>Failed to load messages.</p>
+                            <button onclick="loadMessages()" class="text-xs underline mt-2">Try Again</button>
+                        </div>`;
+                });
+        }
+
+        // Navigation Logic Override/Extension
+        document.addEventListener('DOMContentLoaded', () => {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    // Remove active class from all
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+
+                    // Hide all sections
+                    document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
+
+                    // Show target section
+                    const sectionId = item.dataset.section + '-section';
+                    const target = document.getElementById(sectionId);
+                    if (target) {
+                        target.classList.add('active');
+                        // Specific logic for messages
+                        if (item.dataset.section === 'messages') {
+                            loadMessages();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

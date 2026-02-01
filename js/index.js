@@ -1,6 +1,151 @@
 // Use proxied API path - works for both HTTP and HTTPS, no mixed content issues
 const API_BASE_URL = '/api/';
 
+// Theme Persistence Loader
+function applyTheme() {
+    const saved = localStorage.getItem('tbs_portal_settings');
+    if (saved) {
+        const settings = JSON.parse(saved);
+        document.documentElement.style.setProperty('--orange', settings.primaryColor);
+        document.documentElement.style.setProperty('--gold', settings.secondaryColor);
+        document.documentElement.style.setProperty('--dark-bg', settings.bgColor);
+        document.documentElement.style.setProperty('--card-bg', settings.cardColor);
+
+        document.body.style.fontSize = settings.fontSize + 'px';
+        document.body.style.fontFamily = settings.bodyFont;
+        document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
+            el.style.fontFamily = settings.headingFont;
+        });
+
+        document.body.style.animation = settings.enableAnimations ? '' : 'none';
+        document.body.classList.toggle('no-hover', !settings.hoverEffects);
+        document.body.classList.toggle('compact', settings.compactMode);
+
+        const gridBg = document.getElementById('shape-container');
+        if (gridBg) {
+            gridBg.style.display = settings.gridLines ? 'block' : 'none';
+        }
+    }
+}
+
+// Role-Based Access Control
+function checkAccess(userRole = null) {
+    const role = userRole || localStorage.getItem('tbs_user_role') || 'guest';
+    const isEmployee = role === 'employee' || role === 'admin';
+    const tabs = document.querySelectorAll('.tabs .tab-dropdown');
+    const isAuthenticated = role !== 'guest';
+
+    // Define restricted tabs by index (0-indexed based on index.html)
+    // 0: API Keys, 2: Monitoring, 3: Servers, 6: Tools
+    const restrictedIndices = [0, 2, 3, 6];
+
+    tabs.forEach((tab, index) => {
+        if (restrictedIndices.includes(index)) {
+            tab.style.display = isEmployee ? 'block' : 'none';
+        }
+    });
+
+    // Update Header UI
+    const authButtonsContainer = document.getElementById('auth-buttons-container');
+    const userAvatarContainer = document.getElementById('user-avatar-container');
+    const userAvatarImg = document.getElementById('user-avatar-img');
+
+    if (isAuthenticated) {
+        if (authButtonsContainer) authButtonsContainer.style.display = 'none';
+        if (userAvatarContainer) userAvatarContainer.style.display = 'block';
+
+        // Try to get avatar from Keycloak token if available
+        if (window.keycloak && window.keycloak.tokenParsed) {
+            const picture = window.keycloak.tokenParsed.picture;
+            const name = window.keycloak.tokenParsed.name || window.keycloak.tokenParsed.preferred_username;
+
+            if (picture) {
+                userAvatarImg.src = picture;
+            } else {
+                // Generate initials avatar
+                const initials = name ? name.substring(0, 2).toUpperCase() : 'ME';
+                userAvatarImg.src = `https://ui-avatars.com/api/?name=${initials}&background=FBBF24&color=000&size=128`;
+            }
+        }
+    } else {
+        if (authButtonsContainer) authButtonsContainer.style.display = 'flex';
+        if (userAvatarContainer) userAvatarContainer.style.display = 'none';
+    }
+}
+
+// Keycloak Initialization
+const keycloakConfig = {
+    url: 'http://172.234.229.103:9999',
+    realm: 'TOBSCo',
+    clientId: 'portal-client'
+};
+
+function initKeycloak() {
+    if (typeof Keycloak === 'undefined') {
+        console.warn('Keycloak JS adapter not loaded. Using mock auth.');
+        checkAccess();
+        return;
+    }
+
+    const keycloak = new Keycloak(keycloakConfig);
+    window.keycloak = keycloak;
+
+    keycloak.init({ onLoad: 'check-sso', silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html' })
+        .then(authenticated => {
+            if (authenticated) {
+                console.log('User is authenticated');
+                // Check roles - assuming 'employee' role exists in the client or realm
+                const roles = keycloak.realmAccess ? keycloak.realmAccess.roles : [];
+                const isEmployee = roles.includes('employee') || roles.includes('admin');
+                const userRole = isEmployee ? 'employee' : 'authenticated';
+
+                localStorage.setItem('tbs_user_role', userRole);
+                checkAccess(userRole);
+
+                // CHECK FOR SIGNUP SUCCESS FLAG
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('action') === 'signup_success') {
+                    // Trigger notification
+                    console.log("New signup detected! Sending notification...");
+
+                    const userProfile = keycloak.tokenParsed;
+                    const username = userProfile.preferred_username || userProfile.name || 'Unknown';
+                    const email = userProfile.email || 'unknown@example.com';
+
+                    // Call backend API (using absolute URL if needed, or relative)
+                    // Note: API_BASE_URL is defined at top of file as '/api/'
+                    // dashboard_api.py is assumed to be proxied or running on same host logic
+                    // If running locally dev, dashboard_api is on 5004. 
+                    // Assuming existing proxy setup handles /api -> 5004
+                    // If not, we might need direct port 5004
+
+                    // For safety, try direct port if we are in dev/local non-proxied env
+                    const notifyUrl = 'http://localhost:5004/api/notify/member_signup';
+                    // OR use relative if proxy: const notifyUrl = '/api/notify/member_signup';
+
+                    fetch(notifyUrl, { // Using full URL to match the python server port directly for certainty
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: username, email: email })
+                    }).then(res => {
+                        console.log("Notification sent:", res.status);
+                        // Clear the query param to prevent duplicate notifications on refresh
+                        const newUrl = window.location.pathname;
+                        window.history.replaceState({}, document.title, newUrl);
+                    }).catch(err => console.error("Notification failed:", err));
+                }
+
+            } else {
+                console.log('User is not authenticated');
+                checkAccess('guest');
+            }
+        })
+        .catch(err => {
+            console.error('Failed to initialize Keycloak', err);
+            checkAccess();
+        });
+}
+
 // Show a specific server/content section
 function showSection(sectionId) {
     // Hide all sections
@@ -326,6 +471,15 @@ async function setRandomBibleVerse() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Apply theme and initialize Keycloak
+    applyTheme();
+    initKeycloak();
+
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     // Set random Bible verse
     setRandomBibleVerse();
 
@@ -542,8 +696,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             // Start VM and navigate to URL
                             startVM(vmName, vmUrl, button);
                         } else {
-                            // Start regular service
-                            toggleStatus(appName, 'off', uniqueColor, button);
+                            // Start service using Python script (includes visual feedback and browser opening)
+                            startServiceWithPython(appName, button);
                         }
                     } else if (action === 'stop') {
                         // Stop the service
@@ -785,6 +939,58 @@ function startVM(vmName, url, buttonElement) {
                 alert(`Error communicating with backend for ${vmName}.`);
             });
     }
+}
+
+// Function to start service using Python script
+function startServiceWithPython(appName, buttonElement) {
+    // Set button to loading state
+    buttonElement.classList.remove('off');
+    buttonElement.classList.add('on');
+    setButtonColor(buttonElement, '#FFA500'); // Orange for starting
+
+    // Call Python script to start service
+    fetch('/api/start-service/' + appName, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Service started successfully - set to green glow
+                setButtonColor(buttonElement, getRandomColor());
+                alert(`${appName} started successfully! Opening in new tab...`);
+
+                // Open service in new tab after a short delay
+                setTimeout(() => {
+                    const port = buttonElement.getAttribute('data-port');
+                    if (port) {
+                        const protocol = buttonElement.getAttribute('data-protocol') || 'http';
+                        const customIp = buttonElement.getAttribute('data-ip');
+                        let targetUrl;
+                        if (customIp) {
+                            targetUrl = customIp + ':' + port;
+                        } else {
+                            targetUrl = window.location.hostname + ':' + port;
+                        }
+                        window.open(protocol + '://' + targetUrl, '_blank');
+                    }
+                }, 2000);
+            } else {
+                // Failed - reset to off
+                buttonElement.classList.remove('on');
+                buttonElement.classList.add('off');
+                buttonElement.removeAttribute('style');
+                alert(`Failed to start ${appName}: ${data.error || 'Unknown error'}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error starting service:', appName, error);
+            // Reset button on error
+            buttonElement.classList.remove('on');
+            buttonElement.classList.add('off');
+            buttonElement.removeAttribute('style');
+            alert(`Error communicating with backend for ${appName}.`);
+        });
 }
 
 // API Keys Functions

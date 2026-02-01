@@ -1,0 +1,962 @@
+.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Settings - Preferences | TBS Portal">
+    <title>TBS Portal | Preferences</title>
+
+    <meta name="theme-color" content="#050505">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f7e98e;
+            --gold-dark: #8b6914;
+            --orange: #f97316;
+            --orange-light: #fb923c;
+            --dark-bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 90%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            color: #e5e5e5;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .bento-card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bento-card-body {
+            padding: 20px;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.98) 0%, rgba(5, 5, 5, 0.98) 100%);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin: 4px 8px;
+            border-radius: 10px;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--orange-light);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
+            color: var(--gold-light);
+            border-left: 3px solid var(--orange);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--orange) 0%, var(--gold) 100%);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e5e5e5;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--gold);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.2);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--orange), var(--gold));
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+        }
+
+        select.input-field {
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--gold-dark) 0%, var(--gold) 100%);
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar-desktop {
+                display: none;
+            }
+
+            .mobile-header {
+                display: flex !important;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-header {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="grid-bg">
+
+    <div class="flex h-screen">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar sidebar-desktop w-64 flex flex-col flex-shrink-0">
+            <div class="h-16 flex items-center px-6 border-b border-[rgba(212,175,55,0.2)]">
+                <a href="portal.html" class="flex items-center gap-2 no-underline">
+                    <span class="text-lg font-bold font-['Orbitron'] text-white tracking-wider">TOBSCo</span>
+                    <span class="text-sm text-[#f97316]">PORTAL</span>
+                </a>
+            </div>
+
+            <nav class="flex-1 overflow-y-auto py-4">
+                <div class="px-4 mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-widest">Main Menu</span>
+                </div>
+                <a href="portal.html" class="nav-item">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="portal.html" class="nav-item" data-section="feeds">
+                    <i data-lucide="rss" class="w-5 h-5 mr-3"></i>
+                    Feeds
+                </a>
+                <a href="portal.html" class="nav-item" data-section="friends">
+                    <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                    Friends
+                </a>
+                <a href="portal.html" class="nav-item" data-section="photobooth">
+                    <i data-lucide="camera" class="w-5 h-5 mr-3"></i>
+                    Photobooth
+                </a>
+                <a href="portal.html" class="nav-item" data-section="profile">
+                    <i data-lucide="user" class="w-5 h-5 mr-3"></i>
+                    Profile
+                </a>
+                <a href="portal.html" class="nav-item" data-section="billing">
+                    <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
+                    Billing
+                </a>
+                <a href="portal.html" class="nav-item" data-section="support">
+                    <i data-lucide="help-circle" class="w-5 h-5 mr-3"></i>
+                    Support
+                </a>
+
+                <div class="px-4 mt-6 mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-widest">Settings</span>
+                </div>
+                <a href="settings-preferences.html" class="nav-item active">
+                    <i data-lucide="palette" class="w-5 h-5 mr-3"></i>
+                    Preferences
+                </a>
+                <a href="settings-integrations.html" class="nav-item">
+                    <i data-lucide="share-2" class="w-5 h-5 mr-3"></i>
+                    Integrations
+                </a>
+                <a href="settings-notifications.html" class="nav-item">
+                    <i data-lucide="bell" class="w-5 h-5 mr-3"></i>
+                    Notifications
+                </a>
+                <a href="settings-security.html" class="nav-item">
+                    <i data-lucide="shield" class="w-5 h-5 mr-3"></i>
+                    Security
+                </a>
+                <a href="settings-account.html" class="nav-item">
+                    <i data-lucide="user-cog" class="w-5 h-5 mr-3"></i>
+                    Account
+                </a>
+
+                <div class="px-4 mt-6 mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-widest">Quick Links</span>
+                </div>
+                <a href="index.html" class="nav-item">
+                    <i data-lucide="home" class="w-5 h-5 mr-3"></i>
+                    Main Site
+                </a>
+                <a href="store.html" class="nav-item">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 mr-3"></i>
+                    Store
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-[rgba(212,175,55,0.2)]">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold">
+                        G</div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-white">Guest User</p>
+                        <p class="text-xs text-gray-500">Not logged in</p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="btn-secondary w-full mt-3 text-sm">
+                    <i data-lucide="log-out" class="w-4 h-4 inline mr-2"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Mobile Header -->
+            <div
+                class="mobile-header h-14 flex items-center justify-between px-4 border-b border-[rgba(212,175,55,0.2)] bg-[rgba(10,10,10,0.98)]">
+                <a href="portal.html" class="font-['Orbitron'] font-bold text-white">TBS PORTAL</a>
+                <a href="settings-preferences.html" class="p-2 rounded-lg text-gray-400 hover:bg-white/10">
+                    <i data-lucide="settings" class="w-6 h-6"></i>
+                </a>
+            </div>
+
+            <!-- Top Bar -->
+            <header
+                class="h-16 flex items-center justify-between px-6 border-b border-[rgba(212,175,55,0.2)] bg-[rgba(10,10,10,0.5)] flex-shrink-0">
+                <div>
+                    <h1 class="text-xl font-semibold text-white font-['Orbitron']">Preferences</h1>
+                    <p class="text-sm text-gray-500">Customize your portal experience</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="portal.html" class="btn-secondary text-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4 inline mr-2"></i>
+                        Back to Portal
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto p-6">
+
+                <div class="max-w-4xl mx-auto space-y-6 animate-fade-in">
+
+                    <!-- Theme Section -->
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="palette" class="w-5 h-5 text-orange-500"></i>
+                            <h3 class="font-semibold text-white">Theme</h3>
+                        </div>
+                        <div class="bento-card-body">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <button
+                                    class="theme-btn active p-4 rounded-xl bg-orange-500/20 border-2 border-orange-500 text-orange-400 text-center transition-all"
+                                    data-theme="dark">
+                                    <i data-lucide="moon" class="w-8 h-8 mx-auto mb-2"></i>
+                                    <p class="font-medium">Dark</p>
+                                    <p class="text-xs text-gray-500 mt-1">Default dark mode</p>
+                                </button>
+                                <button
+                                    class="theme-btn p-4 rounded-xl bg-white/5 border-2 border-white/10 text-gray-400 text-center hover:border-white/30 transition-all"
+                                    data-theme="light">
+                                    <i data-lucide="sun" class="w-8 h-8 mx-auto mb-2"></i>
+                                    <p class="font-medium">Light</p>
+                                    <p class="text-xs text-gray-500 mt-1">Bright mode</p>
+                                </button>
+                                <button
+                                    class="theme-btn p-4 rounded-xl bg-white/5 border-2 border-white/10 text-gray-400 text-center hover:border-white/30 transition-all"
+                                    data-theme="system">
+                                    <i data-lucide="monitor" class="w-8 h-8 mx-auto mb-2"></i>
+                                    <p class="font-medium">System</p>
+                                    <p class="text-xs text-gray-500 mt-1">Match device theme</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colors Section -->
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="droplet" class="w-5 h-5 text-blue-500"></i>
+                            <h3 class="font-semibold text-white">Accent Colors</h3>
+                        </div>
+                        <div class="bento-card-body">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-2">Primary Accent</label>
+                                    <div class="flex items-center gap-3">
+                                        <input type="color" id="primaryColor" value="#f97316" class="input-color">
+                                        <input type="text" id="primaryColorHex" value="#f97316"
+                                            class="input-field flex-1 font-mono text-sm" readonly>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-2">Secondary Accent</label>
+                                    <div class="flex items-center gap-3">
+                                        <input type="color" id="secondaryColor" value="#d4af37" class="input-color">
+                                        <input type="text" id="secondaryColorHex" value="#d4af37"
+                                            class="input-field flex-1 font-mono text-sm" readonly>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-2">Background</label>
+                                    <div class="flex items-center gap-3">
+                                        <input type="color" id="bgColor" value="#050505" class="input-color">
+                                        <input type="text" id="bgColorHex" value="#050505"
+                                            class="input-field flex-1 font-mono text-sm" readonly>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-2">Card Background</label>
+                                    <div class="flex items-center gap-3">
+                                        <input type="color" id="cardColor" value="#141414" class="input-color">
+                                        <input type="text" id="cardColorHex" value="#141414"
+                                            class="input-field flex-1 font-mono text-sm" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex flex-wrap gap-3">
+                                <button onclick="applyColors()" class="btn-primary">
+                                    <i data-lucide="check" class="w-4 h-4 inline mr-2"></i>
+                                    Apply Colors
+                                </button>
+                                <button onclick="undoChanges()" class="btn-secondary">
+                                    <i data-lucide="undo-2" class="w-4 h-4 inline mr-2"></i>
+                                    Undo
+                                </button>
+                                <button onclick="resetColors()" class="btn-secondary">
+                                    <i data-lucide="rotate-ccw" class="w-4 h-4 inline mr-2"></i>
+                                    Reset to Default
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typography Section -->
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="type" class="w-5 h-5 text-green-500"></i>
+                            <h3 class="font-semibold text-white">Typography</h3>
+                        </div>
+                        <div class="bento-card-body space-y-6">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Font Size</label>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-sm text-gray-500">A</span>
+                                    <input type="range" id="fontSizeSlider" min="12" max="20" value="16" class="flex-1">
+                                    <span class="text-lg text-gray-500">A</span>
+                                    <span id="fontSizeValue"
+                                        class="text-sm text-orange-400 w-12 text-center">16px</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Heading Font</label>
+                                <select id="headingFont" class="input-field">
+                                    <option value="'Orbitron', sans-serif" selected>Orbitron (Sci-Fi)</option>
+                                    <option value="'Rajdhani', sans-serif">Rajdhani (Tech)</option>
+                                    <option value="system-ui, sans-serif">System Default</option>
+                                    <option value="Arial, sans-serif">Arial</option>
+                                    <option value="Georgia, serif">Georgia</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Body Font</label>
+                                <select id="bodyFont" class="input-field">
+                                    <option value="'Rajdhani', sans-serif" selected>Rajdhani (Tech)</option>
+                                    <option value="'Orbitron', sans-serif">Orbitron (Sci-Fi)</option>
+                                    <option value="system-ui, sans-serif">System Default</option>
+                                    <option value="Arial, sans-serif">Arial</option>
+                                    <option value="Georgia, serif">Georgia</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button onclick="applyTypography()" class="btn-primary">
+                                    <i data-lucide="check" class="w-4 h-4 inline mr-2"></i>
+                                    Apply Typography
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layout Section -->
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="layout" class="w-5 h-5 text-purple-500"></i>
+                            <h3 class="font-semibold text-white">Layout</h3>
+                        </div>
+                        <div class="bento-card-body space-y-6">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Sidebar Position</label>
+                                <select id="sidebarPosition" class="input-field">
+                                    <option value="left" selected>Left</option>
+                                    <option value="right">Right</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Sidebar Width</label>
+                                <select id="sidebarWidth" class="input-field">
+                                    <option value="64">Narrow (64px)</option>
+                                    <option value="80" selected>Medium (80px)</option>
+                                    <option value="96">Wide (96px)</option>
+                                    <option value="256">Full (256px)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="compactMode"
+                                        class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                                    <span class="text-sm text-white">Compact Mode</span>
+                                    <span class="text-xs text-gray-500 ml-auto">Reduce spacing</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="gridLines" checked
+                                        class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                                    <span class="text-sm text-white">Show Grid Lines</span>
+                                    <span class="text-xs text-gray-500 ml-auto">Background grid effect</span>
+                                </label>
+                            </div>
+                            <button onclick="applyLayout()" class="btn-primary">
+                                <i data-lucide="check" class="w-4 h-4 inline mr-2"></i>
+                                Apply Layout
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Animations Section -->
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="zap" class="w-5 h-5 text-yellow-500"></i>
+                            <h3 class="font-semibold text-white">Animations</h3>
+                        </div>
+                        <div class="bento-card-body space-y-4">
+                            <label
+                                class="flex items-center justify-between p-4 rounded-xl bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="motion" class="w-5 h-5 text-blue-400"></i>
+                                    <span class="text-sm font-medium text-white">Enable Animations</span>
+                                </div>
+                                <input type="checkbox" id="enableAnimations" checked
+                                    class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                            </label>
+                            <label
+                                class="flex items-center justify-between p-4 rounded-xl bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-purple-400"></i>
+                                    <span class="text-sm font-medium text-white">Hover Effects</span>
+                                </div>
+                                <input type="checkbox" id="hoverEffects" checked
+                                    class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                            </label>
+                            <label
+                                class="flex items-center justify-between p-4 rounded-xl bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="fade" class="w-5 h-5 text-green-400"></i>
+                                    <span class="text-sm font-medium text-white">Page Transitions</span>
+                                </div>
+                                <input type="checkbox" id="pageTransitions" checked
+                                    class="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500 bg-black/20">
+                            </label>
+                            <div class="mt-4">
+                                <button onclick="saveAnimationSettings()" class="btn-primary">
+                                    <i data-lucide="save" class="w-4 h-4 inline mr-2"></i>
+                                    Save Animation Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reset Section -->
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="rotate-ccw" class="w-5 h-5 text-red-500"></i>
+                            <h3 class="font-semibold text-white">Reset Settings</h3>
+                        </div>
+                        <div class="bento-card-body">
+                            <p class="text-gray-400 text-sm mb-4">Reset all preferences to their default values. This
+                                action cannot be undone.</p>
+                            <button onclick="resetAllSettings()"
+                                class="btn-secondary text-red-400 border-red-500/30 hover:bg-red-500/10">
+                                <i data-lucide="trash-2" class="w-4 h-4 inline mr-2"></i>
+                                Reset All Preferences
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Keycloak Integration -->
+    <script src="http://172.234.229.103:9999/js/keycloak.js"></script>
+    <script>
+        // State management
+        let currentSettings = {};
+        let previousSettings = {};
+
+        const DEFAULT_SETTINGS = {
+            primaryColor: '#f97316',
+            secondaryColor: '#d4af37',
+            bgColor: '#050505',
+            cardColor: '#141414',
+            fontSize: '16',
+            headingFont: "'Orbitron', sans-serif",
+            bodyFont: "'Rajdhani', sans-serif",
+            sidebarPosition: 'left',
+            sidebarWidth: '80',
+            compactMode: false,
+            gridLines: true,
+            enableAnimations: true,
+            hoverEffects: true,
+            pageTransitions: true
+        };
+
+        const keycloak = new Keycloak({
+            url: 'http://172.234.229.103:9999',
+            realm: 'TOBSCo',
+            clientId: 'portal-client'
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                keycloak.logout();
+            }
+        }
+
+        // Initialize Lucide Icons and Keycloak
+        window.addEventListener('load', () => {
+            lucide.createIcons();
+            loadAllSettings();
+
+            keycloak.init({ onLoad: 'login-required', silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html' })
+                .then(authenticated => {
+                    if (authenticated) {
+                        console.log('Authenticated');
+                        // const userProfile = keycloak.tokenParsed; // This line was causing an error, userProfile is not used
+                        // Update any profile specific UI if needed
+                    }
+                })
+                .catch(err => {
+                    console.error('Keycloak Init Error', err);
+                });
+        });
+
+        function loadAllSettings() {
+            const saved = localStorage.getItem('tbs_portal_settings');
+            if (saved) {
+                currentSettings = JSON.parse(saved);
+            } else {
+                currentSettings = { ...DEFAULT_SETTINGS };
+            }
+            applyAllSettings(false);
+            syncUI();
+        }
+
+        function saveAllSettings() {
+            previousSettings = { ...currentSettings };
+            localStorage.setItem('tbs_portal_settings', JSON.stringify(currentSettings));
+            showNotification('Settings saved and applied!', 'success');
+        }
+
+        function undoChanges() {
+            if (Object.keys(previousSettings).length === 0) {
+                showNotification('No previous state to revert to', 'info');
+                return;
+            }
+            currentSettings = { ...previousSettings };
+            applyAllSettings();
+            syncUI();
+            saveAllSettings();
+            showNotification('Changes undone', 'success');
+        }
+
+        function syncUI() {
+            // Colors
+            const prim = document.getElementById('primaryColor');
+            if (prim) {
+                prim.value = currentSettings.primaryColor;
+                document.getElementById('primaryColorHex').value = currentSettings.primaryColor;
+            }
+            const sec = document.getElementById('secondaryColor');
+            if (sec) {
+                sec.value = currentSettings.secondaryColor;
+                document.getElementById('secondaryColorHex').value = currentSettings.secondaryColor;
+            }
+            const bg = document.getElementById('bgColor');
+            if (bg) {
+                bg.value = currentSettings.bgColor;
+                document.getElementById('bgColorHex').value = currentSettings.bgColor;
+            }
+            const card = document.getElementById('cardColor');
+            if (card) {
+                card.value = currentSettings.cardColor;
+                document.getElementById('cardColorHex').value = currentSettings.cardColor;
+            }
+
+            // Typography
+            const fs = document.getElementById('fontSizeSlider');
+            if (fs) {
+                fs.value = currentSettings.fontSize;
+                document.getElementById('fontSizeValue').textContent = currentSettings.fontSize + 'px';
+            }
+            const hf = document.getElementById('headingFont');
+            if (hf) hf.value = currentSettings.headingFont;
+            const bf = document.getElementById('bodyFont');
+            if (bf) bf.value = currentSettings.bodyFont;
+
+            // Layout
+            const sp = document.getElementById('sidebarPosition');
+            if (sp) sp.value = currentSettings.sidebarPosition;
+            const sw = document.getElementById('sidebarWidth');
+            if (sw) sw.value = currentSettings.sidebarWidth;
+            const cm = document.getElementById('compactMode');
+            if (cm) cm.checked = currentSettings.compactMode;
+            const gl = document.getElementById('gridLines');
+            if (gl) gl.checked = currentSettings.gridLines;
+
+            // Animations
+            const ea = document.getElementById('enableAnimations');
+            if (ea) ea.checked = currentSettings.enableAnimations;
+            const he = document.getElementById('hoverEffects');
+            if (he) he.checked = currentSettings.hoverEffects;
+            const pt = document.getElementById('pageTransitions');
+            if (pt) pt.checked = currentSettings.pageTransitions;
+        }
+
+        function applyAllSettings(save = true) {
+            // Apply Colors
+            document.documentElement.style.setProperty('--orange', currentSettings.primaryColor);
+            document.documentElement.style.setProperty('--gold', currentSettings.secondaryColor);
+            document.documentElement.style.setProperty('--dark-bg', currentSettings.bgColor);
+            document.documentElement.style.setProperty('--card-bg', currentSettings.cardColor);
+
+            // Apply Typography
+            document.body.style.fontSize = (currentSettings.fontSize || 16) + 'px';
+            document.body.style.fontFamily = currentSettings.bodyFont;
+            document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(el => {
+                el.style.fontFamily = currentSettings.headingFont;
+            });
+
+            // Apply Layout
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+                sidebar.style.order = currentSettings.sidebarPosition === 'right' ? '2' : '0';
+                sidebar.style.width = currentSettings.sidebarWidth + 'px';
+            }
+            document.body.classList.toggle('compact', currentSettings.compactMode);
+            const gridBg = document.querySelector('.grid-bg');
+            if (gridBg) {
+                gridBg.style.backgroundImage = currentSettings.gridLines ? '' : 'none';
+            }
+
+            // Apply Animations
+            document.body.style.animation = currentSettings.enableAnimations ? '' : 'none';
+            document.body.classList.toggle('no-hover', !currentSettings.hoverEffects);
+
+            if (save) saveAllSettings();
+        }
+
+        // Event Listeners for pickers
+        document.querySelectorAll('input[type="color"]').forEach((picker) => {
+            picker.addEventListener('input', (e) => {
+                const hexInput = picker.nextElementSibling;
+                if (hexInput) hexInput.value = e.target.value;
+            });
+        });
+
+        const fsSlider = document.getElementById('fontSizeSlider');
+        if (fsSlider) {
+            fsSlider.addEventListener('input', (e) => {
+                const fontSizeValue = document.getElementById('fontSizeValue');
+                if (fontSizeValue) fontSizeValue.textContent = e.target.value + 'px';
+            });
+        }
+
+        // Theme selection
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.theme-btn').forEach(b => {
+                    b.classList.remove('active', 'bg-orange-500/20', 'border-orange-500', 'text-orange-400');
+                    b.classList.add('bg-white/5', 'border-white/10', 'text-gray-400');
+                });
+                btn.classList.add('active', 'bg-orange-500/20', 'border-orange-500', 'text-orange-400');
+                btn.classList.remove('bg-white/5', 'border-white/10', 'text-gray-400');
+            });
+        });
+
+        // Action functions
+        function applyColors() {
+            const primaryColor = document.getElementById('primaryColor');
+            if (primaryColor) currentSettings.primaryColor = primaryColor.value;
+            const secondaryColor = document.getElementById('secondaryColor');
+            if (secondaryColor) currentSettings.secondaryColor = secondaryColor.value;
+            const bgColor = document.getElementById('bgColor');
+            if (bgColor) currentSettings.bgColor = bgColor.value;
+            const cardColor = document.getElementById('cardColor');
+            if (cardColor) currentSettings.cardColor = cardColor.value;
+            applyAllSettings();
+        }
+
+        function resetColors() {
+            currentSettings.primaryColor = DEFAULT_SETTINGS.primaryColor;
+            currentSettings.secondaryColor = DEFAULT_SETTINGS.secondaryColor;
+            currentSettings.bgColor = DEFAULT_SETTINGS.bgColor;
+            currentSettings.cardColor = DEFAULT_SETTINGS.cardColor;
+            syncUI();
+            applyAllSettings();
+        }
+
+        function applyTypography() {
+            const fontSizeSlider = document.getElementById('fontSizeSlider');
+            if (fontSizeSlider) currentSettings.fontSize = fontSizeSlider.value;
+            const headingFont = document.getElementById('headingFont');
+            if (headingFont) currentSettings.headingFont = headingFont.value;
+            const bodyFont = document.getElementById('bodyFont');
+            if (bodyFont) currentSettings.bodyFont = bodyFont.value;
+            applyAllSettings();
+        }
+
+        function applyLayout() {
+            const sidebarPosition = document.getElementById('sidebarPosition');
+            if (sidebarPosition) currentSettings.sidebarPosition = sidebarPosition.value;
+            const sidebarWidth = document.getElementById('sidebarWidth');
+            if (sidebarWidth) currentSettings.sidebarWidth = sidebarWidth.value;
+            const compactMode = document.getElementById('compactMode');
+            if (compactMode) currentSettings.compactMode = compactMode.checked;
+            const gridLines = document.getElementById('gridLines');
+            if (gridLines) currentSettings.gridLines = gridLines.checked;
+            applyAllSettings();
+        }
+
+        function saveAnimationSettings() {
+            const enableAnimations = document.getElementById('enableAnimations');
+            if (enableAnimations) currentSettings.enableAnimations = enableAnimations.checked;
+            const hoverEffects = document.getElementById('hoverEffects');
+            if (hoverEffects) currentSettings.hoverEffects = hoverEffects.checked;
+            const pageTransitions = document.getElementById('pageTransitions');
+            if (pageTransitions) currentSettings.pageTransitions = pageTransitions.checked;
+            applyAllSettings();
+        }
+
+        function resetAllSettings() {
+            if (confirm('Are you sure you want to reset all preferences to default? This cannot be undone.')) {
+                currentSettings = { ...DEFAULT_SETTINGS };
+                syncUI();
+                applyAllSettings();
+                showNotification('All preferences reset to default!', 'success');
+            }
+        }
+
+
+        // Specific apply functions updated to update state
+        function applyColors() {
+            currentSettings.primaryColor = document.getElementById('primaryColor').value;
+            currentSettings.secondaryColor = document.getElementById('secondaryColor').value;
+            currentSettings.bgColor = document.getElementById('bgColor').value;
+            currentSettings.cardColor = document.getElementById('cardColor').value;
+            applyAllSettings();
+        }
+
+        function resetColors() {
+            currentSettings.primaryColor = DEFAULT_SETTINGS.primaryColor;
+            currentSettings.secondaryColor = DEFAULT_SETTINGS.secondaryColor;
+            currentSettings.bgColor = DEFAULT_SETTINGS.bgColor;
+            currentSettings.cardColor = DEFAULT_SETTINGS.cardColor;
+            syncUI();
+            applyAllSettings();
+        }
+
+        function applyTypography() {
+            currentSettings.fontSize = document.getElementById('fontSizeSlider').value;
+            currentSettings.headingFont = document.getElementById('headingFont').value;
+            currentSettings.bodyFont = document.getElementById('bodyFont').value;
+            applyAllSettings();
+        }
+
+        function applyLayout() {
+            currentSettings.sidebarPosition = document.getElementById('sidebarPosition').value;
+            currentSettings.sidebarWidth = document.getElementById('sidebarWidth').value;
+            currentSettings.compactMode = document.getElementById('compactMode').checked;
+            currentSettings.gridLines = document.getElementById('gridLines').checked;
+            applyAllSettings();
+        }
+
+        function saveAnimationSettings() {
+            currentSettings.enableAnimations = document.getElementById('enableAnimations').checked;
+            currentSettings.hoverEffects = document.getElementById('hoverEffects').checked;
+            currentSettings.pageTransitions = document.getElementById('pageTransitions').checked;
+            applyAllSettings();
+        }
+
+        function resetAllSettings() {
+            if (confirm('Are you sure you want to reset all preferences to default? This cannot be undone.')) {
+                currentSettings = { ...DEFAULT_SETTINGS };
+                syncUI();
+                applyAllSettings();
+                showNotification('All preferences reset to default!', 'success');
+            }
+        }
+
+        // Notification helper
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in ${type === 'success' ? 'bg-green-500/20 border border-green-500 text-green-400' :
+                type === 'error' ? 'bg-red-500/20 border border-red-500 text-red-400' :
+                    'bg-orange-500/20 border border-orange-500 text-orange-400'
+                }`;
+            notification.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-5 h-5 inline mr-2"></i>${message}`;
+            document.body.appendChild(notification);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

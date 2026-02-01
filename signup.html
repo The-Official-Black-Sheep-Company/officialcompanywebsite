@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Flock | Black Sheep Company</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-color: #050505;
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+        }
+
+        .login-box {
+            background: rgba(16, 16, 16, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid #333;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn-glow {
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-vip:hover {
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+            animation: scan 4s linear infinite;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% {
+                top: -10%;
+            }
+
+            100% {
+                top: 110%;
+            }
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen text-gray-200">
+
+    <!-- Background effects -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div
+            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-30">
+        </div>
+        <div class="scan-line"></div>
+    </div>
+
+    <div class="login-box relative z-10 p-8 rounded-lg w-full max-w-md mx-4 transition-all duration-500">
+        <!-- Logo/Header -->
+        <div class="text-center mb-8">
+            <h1
+                class="text-3xl font-bold font-['Orbitron'] text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 mb-2">
+                NEW RECRUIT
+            </h1>
+            <p class="text-gray-500 text-[10px] uppercase tracking-[0.3em]">Initialize Membership Protocol</p>
+        </div>
+
+        <!-- Options -->
+        <div class="space-y-4">
+            <!-- Option 1: VIP -->
+            <button onclick="triggerVIPRegister()"
+                class="btn-vip w-full bg-gradient-to-r from-yellow-600 to-amber-500 text-black font-bold py-4 rounded font-['Orbitron'] tracking-wider flex items-center justify-center gap-3 text-lg border border-yellow-400/20">
+                SIGN UP FOR VIP ACCOUNT
+            </button>
+
+            <!-- Option 2: Regular Member -->
+            <button onclick="triggerMemberRegister()"
+                class="btn-glow w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold py-4 rounded font-['Orbitron'] tracking-wider flex items-center justify-center gap-3 text-lg border border-violet-400/20">
+                MEMBERS ACCOUNT
+            </button>
+
+            <div class="relative py-2">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-white/5"></div>
+                </div>
+                <div class="relative flex justify-center text-[10px] uppercase tracking-widest"><span
+                        class="bg-[#101010] px-2 text-gray-600">Existing Identity?</span></div>
+            </div>
+
+            <!-- Option 3: Login -->
+            <a href="login.html"
+                class="block w-full text-center border border-violet-500/30 text-violet-400 py-3 rounded font-['Orbitron'] tracking-widest text-sm hover:bg-violet-500/10 transition-all duration-300">
+                ALREADY HAVE AN ACCOUNT? LOGIN!
+            </a>
+
+            <div class="mt-8 text-center border-t border-white/5 pt-6">
+                <a href="index.html"
+                    class="text-xs text-gray-600 hover:text-gray-100 transition-colors tracking-widest uppercase flex items-center justify-center gap-2">
+                    &lsaquo; Return to Surface
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keycloak Integration -->
+    <script src="http://172.234.229.103:9999/js/keycloak.js"></script>
+    <script>
+        const keycloak = new Keycloak({
+            url: 'http://172.234.229.103:9999',
+            realm: 'TOBSCo',
+            clientId: 'portal-client'
+        });
+
+        // Initialize to check if already logged in (optional, but good UX)
+        keycloak.init({ onLoad: 'check-sso' }).then(authenticated => {
+            if (authenticated) {
+                // If already logged in, maybe redirect to portal or show "You are already a member"
+                // For now, leave it be.
+            }
+        });
+
+        function triggerMemberRegister() {
+            keycloak.register();
+        }
+
+        function triggerVIPRegister() {
+            // Currently same as member register, but could have different redirect URI or params
+            keycloak.register({
+                redirectUri: window.location.origin + '/portal.html?tier=vip'
+            });
+        }
+
+    </script>
+</body>
+
+</html>
