@@ -28,8 +28,8 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    z-index: 999;
-    /* Move to very high index so it's on top of everything */
+    z-index: 0;
+    /* Move to low index so it's behind content */
     pointer-events: none;
     /* Allow clicks to pass through */
 }
@@ -40,19 +40,25 @@ body {
     width: 60px;
     /* Slightly larger */
     height: 120px;
-    z-index: 1000;
-    /* On top of other background shapes */
+    z-index: 1;
+    /* Just above shapes */
     pointer-events: none;
     background: none !important;
     background-color: transparent !important;
+    filter: drop-shadow(0 0 10px var(--gold));
 }
 
 #gold-cross::before,
 #gold-cross::after {
     content: '';
     position: absolute;
-    background: var(--gold);
-    box-shadow: 0 0 5px var(--gold);
+    background: #FFF8DC; 
+    /* Lighter gold/white for core brightness */
+    box-shadow: 
+        0 0 10px var(--gold),
+        0 0 20px var(--gold),
+        0 0 40px #FFD700,
+        0 0 60px #FFA500;
 }
 
 /* Vertical bar of the cross (long skinny vertical beam) */

@@ -112,10 +112,7 @@
 
 
 
-    <div id="searchResults" class="server-section" style="display:none;">
-        <h2 style="color: #333; margin-bottom: 20px;">Search Results</h2>
-        <div class="button-grid"></div>
-    </div>
+
 
     <div class="tabs">
         <div class="tab-dropdown">
@@ -124,6 +121,15 @@
 
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('BibleStudy')">Bible Study</button>
+        </div>
+
+        <div class="tab-dropdown">
+            <button class="tab-button" onclick="showSection('Blogs')">Blogs ▼</button>
+            <div class="dropdown-menu">
+                <a href="#" onclick="showBlogTab('HistoricFigures'); return false;">Historic Figures</a>
+                <a href="#" onclick="showBlogTab('Artifacts'); return false;">Artifacts</a>
+                <a href="#" onclick="showBlogTab('HistoricEvents'); return false;">Historic Events</a>
+            </div>
         </div>
 
         <div class="tab-dropdown">
@@ -263,16 +269,14 @@
             <button class="tab-button" onclick="showSection('Contacts')">Contacts</button>
         </div>
 
-        <div class="tab-dropdown">
-            <button class="tab-button" onclick="showSection('Blogs')">Blogs ▼</button>
-            <div class="dropdown-menu">
-                <a href="#" onclick="showBlogTab('HistoricFigures'); return false;">Historic Figures</a>
-                <a href="#" onclick="showBlogTab('Artifacts'); return false;">Artifacts</a>
-                <a href="#" onclick="showBlogTab('HistoricEvents'); return false;">Historic Events</a>
-            </div>
-        </div>
     </div>
 
+
+    <!-- SEARCH RESULTS (moved below tabs) -->
+    <div id="searchResults" class="server-section" style="display:none;">
+        <h2 style="color: #333; margin-bottom: 20px;">Search Results</h2>
+        <div class="button-grid"></div>
+    </div>
 
     <div id="shape-container">
         <div id="gold-cross"></div>
