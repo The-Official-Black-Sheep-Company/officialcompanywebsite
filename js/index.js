@@ -72,7 +72,7 @@ function checkAccess(userRole = null) {
         if (userAvatarContainer) userAvatarContainer.style.display = 'none';
     }
 }
-
+/*
 // Keycloak Initialization
 const keycloakConfig = {
     url: 'http://172.234.229.103:9999',
@@ -144,7 +144,7 @@ function initKeycloak() {
             console.error('Failed to initialize Keycloak', err);
             checkAccess();
         });
-}
+} */
 
 // Show a specific server/content section
 function showSection(sectionId) {
