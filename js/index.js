@@ -74,7 +74,7 @@ function checkAccess(userRole = null) {
 }
 
 // Keycloak Initialization
-const keycloakConfig = {
+/*const keycloakConfig = {
     url: 'http://172.234.229.103:9999',
     realm: 'TOBSCo',
     clientId: 'portal-client'
@@ -144,7 +144,7 @@ function initKeycloak() {
             console.error('Failed to initialize Keycloak', err);
             checkAccess();
         });
-}
+} */
 
 // Show a specific server/content section
 function showSection(sectionId) {
