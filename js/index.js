@@ -138,7 +138,6 @@ function checkAccess() {
     // The previous logic for these elements is being moved out of checkAccess.
 }
 
-
 // Show a specific server/content section
 function showSection(sectionId) {
     // Hide all sections
