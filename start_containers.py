@@ -13,7 +13,7 @@ API_BASE_URL = 'http://localhost:5004/api'
 # List of app names to start (excluding VMs)
 APPS_TO_START = [
     'Chatwoot', 'LeonAI', 'NodeRED', 'Jellyfin', 'HomeAssistant', 'N8N', 'Netdata', 'Glances',
-    'Rasa', 'WazuhManager', 'Elasticsearch', 'Kibana', 'Keycloak', 'Huginn', 'Mautic',
+    'Rasa', 'WazuhManager', 'Elasticsearch', 'Kibana', 'Huginn', 'Mautic',
     'SuiteCRM', 'TimeTrex', 'Odoo', 'Matrix', 'Synapse', 'SocioBoard', 'Motion', 'Snort',
     'Fail2Ban', 'Falco', 'Filebeat', 'Pcsx2', 'WireGuard', 'Dovecot', 'Postfix',
     'Audacity', 'BibleServer', 'Cakewalk', 'Emotion', 'GIMP', 'Inkscape',
