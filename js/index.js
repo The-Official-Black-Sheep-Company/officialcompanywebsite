@@ -74,7 +74,7 @@ function checkAccess(userRole = null) {
 }
 /*
 // Keycloak Initialization
-const keycloakConfig = {
+/*const keycloakConfig = {
     url: 'http://172.234.229.103:9999',
     realm: 'TOBSCo',
     clientId: 'portal-client'
@@ -144,6 +144,7 @@ function initKeycloak() {
             console.error('Failed to initialize Keycloak', err);
             checkAccess();
         });
+ bffe283ce4d2c3c9fbec72b93427b1f8625d76a5
 } */
 
 // Show a specific server/content section
@@ -1130,6 +1131,40 @@ showSection = function (sectionId) {
         showBlogTab('HistoricFigures');
     }
 };
+
+function showBarcodeScannerContent() {
+    showSection('BarcodeScannerContent'); // Make the section visible
+
+    const barcodeScannerContentDiv = document.getElementById('BarcodeScannerContent');
+    if (barcodeScannerContentDiv) {
+        fetch('barcode_scanner/scanner.html')
+            .then(response => response.text())
+            .then(html => {
+                barcodeScannerContentDiv.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading barcode_scanner/scanner.html:', error);
+                barcodeScannerContentDiv.innerHTML = '<p style="color: red;">Failed to load Barcode Scanner content.</p>';
+            });
+    }
+}
+
+function showScannerDisplayContent() {
+    showSection('ScannerDisplayContent'); // Make the section visible
+
+    const scannerDisplayContentDiv = document.getElementById('ScannerDisplayContent');
+    if (scannerDisplayContentDiv) {
+        fetch('barcode_scanner/scannerdisplay.html')
+            .then(response => response.text())
+            .then(html => {
+                scannerDisplayContentDiv.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading barcode_scanner/scannerdisplay.html:', error);
+                scannerDisplayContentDiv.innerHTML = '<p style="color: red;">Failed to load Scanner Display content.</p>';
+            });
+    }
+}
 
 // Show Blog sub-tabs
 function showBlogTab(tabName) {
