@@ -255,12 +255,20 @@
         </div>
 
         <div class="tab-dropdown">
+            <button class="tab-button" onclick="showSection('AppStoreContent')">App Store ▼</button>
+            <div class="dropdown-menu">
+                <a href="flutter_app/web/index.html?app=barcode_scanner">Barcode Scanner Flutter App</a>
+                <a href="flutter_app/web/index.html?app=workorder">Work Order Flutter App</a>
+            </div>
+        </div>
+
+        <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('ServiceDashboard')">Tools ▼</button>
             <div class="dropdown-menu">
                 <a href="workorder.html">Work Order Web</a>
                 <a href="#" onclick="alert('Work Order App download coming soon!')">Work Order App</a>
-                <a href="scanner.html" target="_blank">Barcode Scanner</a>
-                <a href="scannerdisplay.html" target="_blank">Scanner Display</a>
+                <a href="#" onclick="showBarcodeScannerContent(); return false;">Barcode Scanner</a>
+                <a href="#" onclick="showScannerDisplayContent(); return false;">Scanner Display</a>
             </div>
         </div>
 
@@ -534,6 +542,33 @@
             <div id="product-grid" class="product-grid">
                 <!-- Products will be loaded here dynamically -->
             </div>
+        </div>
+
+        <!-- APP STORE CONTENT SECTION -->
+        <div id="AppStoreContent" class="content-section" style="display:none;">
+            <h2 style="color: #333; margin-bottom: 20px;">App Store</h2>
+            <div class="button-grid">
+                <div class="app-button off">
+                    <a href="flutter_app/web/index.html?app=barcode_scanner" style="text-decoration: none; color: inherit;">
+                        <span>Barcode Scanner Flutter App</span>
+                    </a>
+                </div>
+                <div class="app-button off">
+                    <a href="flutter_app/web/index.html?app=workorder" style="text-decoration: none; color: inherit;">
+                        <span>Work Order Flutter App</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barcode Scanner Content Area -->
+        <div id="BarcodeScannerContent" class="content-section" style="display:none;">
+            <!-- scanner.html content will be loaded here -->
+        </div>
+
+        <!-- Scanner Display Content Area -->
+        <div id="ScannerDisplayContent" class="content-section" style="display:none;">
+            <!-- scannerdisplay.html content will be loaded here -->
         </div>
 
         <!-- SERVICE DASHBOARD SECTION -->
