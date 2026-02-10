@@ -96,7 +96,134 @@
       `,
       artifacts: `
         <p>Ancient Hebrew manuscripts, clay tablets, early scroll fragments.</p>
-      `
+      `,
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("biblical-study");
+
+  container.innerHTML = `
+    <h2 class="study-header">Genesis 1 – The Foundation of Everything</h2>
+
+    <div class="study-section">
+      <h3>Historical Context</h3>
+      <p>
+        Genesis, called <em>Bereshit</em> (בְּרֵאשִׁית) in Hebrew, was written in a world surrounded by
+        competing creation myths. Unlike pagan accounts filled with warring gods, Genesis presents
+        a single, sovereign Creator who brings order intentionally and purposefully.
+      </p>
+      <p>
+        The text was preserved by the Hebrew people, transmitted orally before being written,
+        and carefully copied by scribes for centuries. This chapter is not poetry first,
+        but theology first. It explains who God is before it explains what He does.
+      </p>
+    </div>
+
+    <div class="study-section">
+      <h3>Genesis 1:1 – Hebrew Breakdown</h3>
+      <p><strong>Hebrew:</strong> בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ</p>
+      <p><strong>Transliteration:</strong> Bereshit bara Elohim et hashamayim ve’et ha’aretz</p>
+
+      <p>
+        <strong>Bereshit</strong> – “In the beginning.” This does not mean “at a beginning” but
+        <em>the</em> beginning. Time itself starts here. There is no “before” Genesis 1:1.
+      </p>
+
+      <p>
+        <strong>Bara</strong> – “Created.” This verb is only used in Scripture with God as the subject.
+        It implies creation from nothing, not reshaping existing material.
+      </p>
+
+      <p>
+        <strong>Elohim</strong> – A grammatically plural noun used with a singular verb.
+        This is not accidental. It presents complexity within unity.
+        This plurality becomes the theological foundation later understood as the Godhead.
+      </p>
+
+      <p>
+        <strong>The heavens and the earth</strong> – Both are plural in Hebrew.
+        This includes all spiritual realms and all physical realms.
+        Nothing is excluded. Seen and unseen reality begins here.
+      </p>
+    </div>
+
+    <div class="study-section">
+      <h3>The First Messianic Reference</h3>
+      <p>
+        Christian theology identifies Genesis 1:1 as the first implicit reference to Jesus Christ.
+        The New Testament confirms this in John 1:1–3:
+        “All things were made through Him, and without Him nothing was made that was made.”
+      </p>
+      <p>
+        The plural form of <em>Elohim</em> combined with creative authority aligns with Christ
+        as the divine Word present at creation. This is not a later invention.
+        It is a theological thread woven from the first sentence of Scripture.
+      </p>
+    </div>
+
+    <div class="study-section">
+      <h3>Genesis 1:2 – Chaos Before Order</h3>
+      <p>
+        The earth is described as formless and void, covered in darkness.
+        This does not indicate evil but unformed potential.
+        God’s Spirit hovers, ready to bring structure and purpose.
+      </p>
+      <p>
+        This verse establishes a recurring biblical pattern:
+        God brings order out of chaos, light out of darkness, and life out of emptiness.
+      </p>
+    </div>
+
+    <div class="study-section">
+      <h3>The Six Days of Creation</h3>
+      <p>
+        Each day introduces intentional design:
+      </p>
+      <ul>
+        <li>Day 1: Light separated from darkness</li>
+        <li>Day 2: Sky separated from waters</li>
+        <li>Day 3: Land, seas, vegetation</li>
+        <li>Day 4: Sun, moon, stars for signs and seasons</li>
+        <li>Day 5: Sea creatures and birds</li>
+        <li>Day 6: Animals and humanity</li>
+      </ul>
+      <p>
+        Creation progresses from environments to inhabitants.
+        Nothing is random. Everything has purpose.
+      </p>
+    </div>
+
+    <div class="study-section">
+      <h3>Creation of Humanity</h3>
+      <p>
+        Humanity is created in the image of God.
+        This grants intrinsic value, moral responsibility, and creative capacity.
+        Humans are given stewardship, not ownership, over creation.
+      </p>
+      <p>
+        The plural language returns: “Let us make man in our image.”
+        Again, unity with complexity.
+      </p>
+    </div>
+
+    <div class="study-section">
+      <h3>Theological Themes</h3>
+      <ul>
+        <li>God is eternal and self-existent</li>
+        <li>Creation is intentional and ordered</li>
+        <li>Human life has divine purpose</li>
+        <li>Jesus Christ is present from the beginning</li>
+      </ul>
+    </div>
+
+    <div class="study-section">
+      <h3>Why Genesis 1 Matters Today</h3>
+      <p>
+        Genesis 1 answers the biggest human questions:
+        Who are we? Why are we here? Where did everything come from?
+        Every later biblical doctrine builds on this foundation.
+      </p>
+    </div>
+  `;
+});
     },
     {
       title: "Proverbs 1 – Week 1: Wisdom & Fear of the Lord",
