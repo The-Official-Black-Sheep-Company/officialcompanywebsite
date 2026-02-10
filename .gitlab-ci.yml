@@ -18,8 +18,8 @@ pages:
     - cp adminlandingpage.css public/ || true
     # Copy Flutter web app
     - cp -r flutter_app/build/web public/flutter_workorder || true
-    - run npm install
-    - run npm build
+    - npm install
+    - npm build
     # Copy images folder if it exists
     - cp -r images public/ || true
   artifacts:
