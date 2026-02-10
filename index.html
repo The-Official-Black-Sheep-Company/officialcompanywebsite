@@ -10,8 +10,13 @@
     <script src="/js/index.js"></script>
     <script src="/js/biblestudy.js"></script>
     <script src="/js/biblestudy-menu.js"></script>       <!-- External Scripts -->
+    <script src="/js/aahist"></script>
+    <script src="/js/artifacts"></script>
+    <script src="/js/events"></script> 
+    <script src="/js/hist_figures"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <img src="/media/bible/genesis/genesis1-hebrew-manuscript.jpg">
     <style>
         /* Custom scrollbars for chat */
         .chat-scrollbar::-webkit-scrollbar {
@@ -113,21 +118,26 @@
 
 
 
-
+ <!-- api keys -->
     <div class="tabs">
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('APIKeys')">API Keys</button>
         </div>
-
+       <!-- bible study -->
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="showSection('BibleStudy')">Bible Study</button>
+            <button class="tab-button" onclick="showSection('BibleStudy')">Seek Eternity</button>
             <div id="biblical-study"></div>
+            <div id="bible-study-container"></div>
             <script src="biblestudy.js"></script>
             <script src="biblestudy-menu.js"></script>
-       </div>
+          <div class="study-images">
+           <img src="/media/bible/genesis/placeholder1.jpg" alt="Manuscript Image">
+           <img src="/media/bible/genesis/placeholder2.jpg" alt="Ancient Map">
+          </div>
+        </div>
 
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="showSection('Blogs')">Blogs ▼</button>
+            <button class="tab-button" onclick="showSection('Blogs')">Reports ▼</button>
             <div class="dropdown-menu">
                 <a href="#" onclick="showBlogTab('HistoricFigures'); return false;">Historic Figures</a>
                 <a href="#" onclick="showBlogTab('Artifacts'); return false;">Artifacts</a>
@@ -945,7 +955,6 @@
             you; the Lord turn his face toward you and give you peace. - Numbers 6:24-26</p>
     </footer>
 
-    <script src="js/index.js"></script>
     <script src="js/bibhist.js"></script>
 
     <!-- Floating Chat Widget -->
