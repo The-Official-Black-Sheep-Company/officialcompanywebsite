@@ -3,6 +3,7 @@ stages:
 
 pages:
   stage: deploy
+  image: alpine:latest  # Lightweight image
   script:
     - mkdir -p public
     # Copy all HTML files

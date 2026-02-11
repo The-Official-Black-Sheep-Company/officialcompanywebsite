@@ -1,6 +1,91 @@
 // Use proxied API path - works for both HTTP and HTTPS, no mixed content issues
 const API_BASE_URL = '/api/';
 
+import { auth } from './firebase-config.js'; // Import the auth object
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
+
+// Global reference for current user
+let currentUser = null;
+
+function initFirebaseAuth() {
+    onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        if (user) {
+            // User is signed in
+            console.log('User is signed in:', user.displayName || user.email);
+
+            // Update UI for authenticated user
+            const authButtonsContainer = document.getElementById('auth-buttons-container');
+            const userAvatarContainer = document.getElementById('user-avatar-container');
+            const userAvatarImg = document.getElementById('user-avatar-img');
+
+            if (authButtonsContainer) authButtonsContainer.style.display = 'none';
+            if (userAvatarContainer) {
+                userAvatarContainer.style.display = 'block';
+                userAvatarImg.src = user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName ? user.displayName.substring(0, 2) : user.email.substring(0, 2).toUpperCase()}&background=FBBF24&color=000&size=128`;
+            }
+            
+            // Check if on a login/signup specific page and redirect to portal.html
+            // Assuming current page is index.html and portal.html is the target dashboard
+            if (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html')) {
+                window.location.href = './portal.html';
+            }
+
+        } else {
+            // User is signed out
+            console.log('User is signed out.');
+
+            // Update UI for unauthenticated user
+            const authButtonsContainer = document.getElementById('auth-buttons-container');
+            const userAvatarContainer = document.getElementById('user-avatar-container');
+            
+            if (authButtonsContainer) authButtonsContainer.style.display = 'flex';
+            if (userAvatarContainer) userAvatarContainer.style.display = 'none';
+
+            // If on portal.html (protected page), redirect to index.html (login page)
+            if (window.location.pathname.endsWith('/portal.html')) {
+                window.location.href = './index.html';
+            }
+        }
+    });
+}
+
+// Function to create and store news feed posts
+function createAndStoreNewsPost(postData) {
+    const NEWS_FEED_KEY = 'tbs_news_feed_posts';
+    let posts = JSON.parse(localStorage.getItem(NEWS_FEED_KEY) || '[]');
+
+    // Create a unique identifier for the post (topic + week)
+    const postIdentifier = `${postData.topic}-${postData.week}`;
+
+    // Check if a similar post for this topic and week already exists
+    const existingPostIndex = posts.findIndex(p => p.identifier === postIdentifier);
+
+    const newPost = {
+        id: Date.now(), // Unique ID, or use a more robust UUID for very high volume
+        identifier: postIdentifier,
+        title: postData.title,
+        snippet: postData.snippet,
+        imageUrl: postData.imageUrl,
+        topic: postData.topic,
+        week: postData.week,
+        timestamp: new Date().toISOString()
+    };
+
+    if (existingPostIndex > -1) {
+        // Update existing post (e.g., if content changed, though not expected here)
+        posts[existingPostIndex] = newPost;
+    } else {
+        // Add new post to the beginning of the array (most recent first)
+        posts.unshift(newPost);
+        // Optionally, limit the number of posts to prevent localStorage bloat
+        // posts = posts.slice(0, 50); // Keep last 50 posts
+    }
+
+    localStorage.setItem(NEWS_FEED_KEY, JSON.stringify(posts));
+    console.log(`News feed post for ${postData.title} (Week ${postData.week}) stored.`);
+}
+
 // Theme Persistence Loader
 function applyTheme() {
     const saved = localStorage.getItem('tbs_portal_settings');
@@ -29,12 +114,16 @@ function applyTheme() {
 }
 
 // Role-Based Access Control
-function checkAccess(userRole = null) {
-    const role = userRole || localStorage.getItem('tbs_user_role') || 'guest';
-    const isEmployee = role === 'employee' || role === 'admin';
-    const tabs = document.querySelectorAll('.tabs .tab-dropdown');
-    const isAuthenticated = role !== 'guest';
+// Role-Based Access Control - now uses Firebase currentUser for auth status
+function checkAccess() {
+    // Determine if user is authenticated via Firebase
+    const isAuthenticated = currentUser !== null; // currentUser is set by onAuthStateChanged
 
+    // For now, simplify roles - assume authenticated users might have more access than guests.
+    // Real role management would fetch custom claims from Firebase or a backend.
+    const isEmployee = isAuthenticated; // Simplified: all authenticated users are "employees" for tab access
+
+    const tabs = document.querySelectorAll('.tabs .tab-dropdown');
     // Define restricted tabs by index (0-indexed based on index.html)
     // 0: API Keys, 2: Monitoring, 3: Servers, 6: Tools
     const restrictedIndices = [0, 2, 3, 6];
@@ -45,105 +134,8 @@ function checkAccess(userRole = null) {
         }
     });
 
-    // Update Header UI
-    const authButtonsContainer = document.getElementById('auth-buttons-container');
-    const userAvatarContainer = document.getElementById('user-avatar-container');
-    const userAvatarImg = document.getElementById('user-avatar-img');
-
-    if (isAuthenticated) {
-        if (authButtonsContainer) authButtonsContainer.style.display = 'none';
-        if (userAvatarContainer) userAvatarContainer.style.display = 'block';
-
-        // Try to get avatar from Keycloak token if available
-        if (window.keycloak && window.keycloak.tokenParsed) {
-            const picture = window.keycloak.tokenParsed.picture;
-            const name = window.keycloak.tokenParsed.name || window.keycloak.tokenParsed.preferred_username;
-
-            if (picture) {
-                userAvatarImg.src = picture;
-            } else {
-                // Generate initials avatar
-                const initials = name ? name.substring(0, 2).toUpperCase() : 'ME';
-                userAvatarImg.src = `https://ui-avatars.com/api/?name=${initials}&background=FBBF24&color=000&size=128`;
-            }
-        }
-    } else {
-        if (authButtonsContainer) authButtonsContainer.style.display = 'flex';
-        if (userAvatarContainer) userAvatarContainer.style.display = 'none';
-    }
-}
-
-// Keycloak Initialization
-const keycloakConfig = {
-    url: 'http://172.234.229.103:9999',
-    realm: 'TOBSCo',
-    clientId: 'portal-client'
-};
-
-function initKeycloak() {
-    if (typeof Keycloak === 'undefined') {
-        console.warn('Keycloak JS adapter not loaded. Using mock auth.');
-        checkAccess();
-        return;
-    }
-
-    const keycloak = new Keycloak(keycloakConfig);
-    window.keycloak = keycloak;
-
-    keycloak.init({ onLoad: 'check-sso', silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html' })
-        .then(authenticated => {
-            if (authenticated) {
-                console.log('User is authenticated');
-                // Check roles - assuming 'employee' role exists in the client or realm
-                const roles = keycloak.realmAccess ? keycloak.realmAccess.roles : [];
-                const isEmployee = roles.includes('employee') || roles.includes('admin');
-                const userRole = isEmployee ? 'employee' : 'authenticated';
-
-                localStorage.setItem('tbs_user_role', userRole);
-                checkAccess(userRole);
-
-                // CHECK FOR SIGNUP SUCCESS FLAG
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('action') === 'signup_success') {
-                    // Trigger notification
-                    console.log("New signup detected! Sending notification...");
-
-                    const userProfile = keycloak.tokenParsed;
-                    const username = userProfile.preferred_username || userProfile.name || 'Unknown';
-                    const email = userProfile.email || 'unknown@example.com';
-
-                    // Call backend API (using absolute URL if needed, or relative)
-                    // Note: API_BASE_URL is defined at top of file as '/api/'
-                    // dashboard_api.py is assumed to be proxied or running on same host logic
-                    // If running locally dev, dashboard_api is on 5004. 
-                    // Assuming existing proxy setup handles /api -> 5004
-                    // If not, we might need direct port 5004
-
-                    // For safety, try direct port if we are in dev/local non-proxied env
-                    const notifyUrl = 'http://localhost:5004/api/notify/member_signup';
-                    // OR use relative if proxy: const notifyUrl = '/api/notify/member_signup';
-
-                    fetch(notifyUrl, { // Using full URL to match the python server port directly for certainty
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: username, email: email })
-                    }).then(res => {
-                        console.log("Notification sent:", res.status);
-                        // Clear the query param to prevent duplicate notifications on refresh
-                        const newUrl = window.location.pathname;
-                        window.history.replaceState({}, document.title, newUrl);
-                    }).catch(err => console.error("Notification failed:", err));
-                }
-
-            } else {
-                console.log('User is not authenticated');
-                checkAccess('guest');
-            }
-        })
-        .catch(err => {
-            console.error('Failed to initialize Keycloak', err);
-            checkAccess();
-        });
+    // UI elements for authButtonsContainer and userAvatarContainer are now handled by onAuthStateChanged
+    // The previous logic for these elements is being moved out of checkAccess.
 }
 
 // Show a specific server/content section
@@ -470,15 +462,54 @@ async function setRandomBibleVerse() {
     }
 }
 
+// --- Firebase Auth Functions ---
+
+// Sign in with Google
+function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            // Google Sign-In successful. onAuthStateChanged will handle UI updates and redirects.
+            console.log("Google Sign-In successful!", result.user);
+        })
+        .catch((error) => {
+            console.error("Google Sign-In error:", error);
+            alert(`Google Sign-In failed: ${error.message}`);
+        });
+}
+
+// Sign out
+function signOutUser() {
+    signOut(auth).then(() => {
+        // Sign-out successful. onAuthStateChanged will handle UI updates and redirects.
+        console.log("User signed out.");
+    }).catch((error) => {
+        console.error("Sign-out error:", error);
+        alert(`Sign-out failed: ${error.message}`);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Apply theme and initialize Keycloak
-    applyTheme();
-    initKeycloak();
+        applyTheme();
+        initFirebaseAuth();
+    
+        // --- Connect Firebase Auth functions to UI elements ---
+        const googleSignInButton = document.getElementById('google-signin-button');
+        if (googleSignInButton) {
+            googleSignInButton.addEventListener('click', signInWithGoogle);
+        } else {
+            console.warn("Element with ID 'google-signin-button' not found. Google Sign-In button may not be functional.");
+        }
+    
+        const signOutButton = document.getElementById('signout-button');
+        if (signOutButton) {
+            signOutButton.addEventListener('click', signOutUser);
+        } else {
+            console.warn("Element with ID 'signout-button' not found. Sign-out button may not be functional.");
+        }
+    
 
-    // Initialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
 
     // Set random Bible verse
     setRandomBibleVerse();
@@ -802,7 +833,7 @@ function getColor(appName) {
         "Jellyfin": "#9933ff", "HomeAssistant": "#00aa00", "OMV": "#3399ff",
         "Postfix": "#6610f2", "Dovecot": "#6c757d", "Matrix": "#343a40",
         "Synapse": "#0099ff", "SocioBoard": "#5555ff", "Elasticsearch": "#f0ad4e",
-        "Kibana": "#5bc0de", "OpenVAS": "#5cb85c", "Keycloak": "#d9534f",
+        "Kibana": "#5bc0de", "OpenVAS": "#5cb85c",
         "pfSense": "#ff4500"
     };
     return colors[appName] || '#6c757d';
@@ -1116,34 +1147,179 @@ function copyToClipboard(text) {
     });
 }
 
-// Load API Keys data when section is shown
-const originalShowSection = showSection;
-showSection = function (sectionId) {
-    originalShowSection(sectionId);
-    if (sectionId === 'APIKeys') {
-        document.getElementById('ebayEndpointUrl').textContent = getEbayEndpoint();
-        loadEbayConfig();
-        checkEndpointStatus();
-        refreshNotifications();
-    } else if (sectionId === 'Blogs') {
-        // Show first blog subtab by default
-        showBlogTab('HistoricFigures');
-    }
-};
+// --- Firebase Auth Functions ---
 
-// Show Blog sub-tabs
-function showBlogTab(tabName) {
-    // Hide all blog content sections
+// Sign in with Google
+function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            // Google Sign-In successful. onAuthStateChanged will handle UI updates and redirects.
+            console.log("Google Sign-In successful!", result.user);
+        })
+        .catch((error) => {
+            console.error("Google Sign-In error:", error);
+            alert(`Google Sign-In failed: ${error.message}`);
+        });
+}
+
+// Sign out
+function signOutUser() {
+    signOut(auth).then(() => {
+        // Sign-out successful. onAuthStateChanged will handle UI updates and redirects.
+        console.log("User signed out.");
+    }).catch((error) => {
+        console.error("Sign-out error:", error);
+        alert(`Sign-out failed: ${error.message}`);
+    });
+}
+
+// Helper to get ISO week number (1-52 or 53)
+function getWeekNumber(d) {
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    return weekNo;
+}
+
+// Show Foundations of History sub-tabs with Weekly Report Sidebar
+function showFoundationsOfHistoryTab(tabName) {
+    // --- 1. Basic Tab Switching ---
     document.querySelectorAll('.blog-content').forEach(content => {
         content.style.display = 'none';
     });
 
-    // Show selected blog content
-    const selectedContent = document.getElementById(tabName);
-    if (selectedContent) {
-        selectedContent.style.display = 'block';
+    const selectedContentDiv = document.getElementById(tabName);
+    if (selectedContentDiv) {
+        selectedContentDiv.style.display = 'block';
     }
 
+    // --- 2. UI Initialization (run once per tab) ---
+    const isInitialized = selectedContentDiv.dataset.initialized === 'true';
+    if (!isInitialized) {
+        const reportContentId = `report-content-${tabName}`;
+        const weekListId = `week-list-${tabName}`;
+        selectedContentDiv.innerHTML = `
+            <div class="history-container" style="display: flex; height: 100%;">
+                <div class="history-sidebar" style="width: 250px; background: #1a1a1a; padding: 10px; overflow-y: auto; border-right: 1px solid #333;">
+                    <h4 style="color: #FBBF24; margin-top: 0;">Weekly Reports</h4>
+                    <ul id="${weekListId}" style="list-style: none; padding: 0; margin: 0;"></ul>
+                </div>
+                <div class="history-content" id="${reportContentId}" style="flex-grow: 1; padding: 20px; overflow-y: auto;">
+                    <p>Loading report...</p>
+                </div>
+            </div>
+        `;
+        selectedContentDiv.dataset.initialized = 'true';
+    }
+
+    // --- 3. Report Generation Logic and Sidebar Population ---
+    const reportFunctionMap = {
+        'AfricanAmericanHistory': window.generateAahistReport,
+        'Artifacts': window.generateArtifactsReport,
+        'HistoricFigures': window.generateHistFiguresReport,
+        'BiblicalHistory': window.generateBibhistReport
+    };
+
+    const topicListMap = {
+        'AfricanAmericanHistory': window.aahistEvents,
+        'Artifacts': window.artifactsList,
+        'HistoricFigures': window.histFiguresList,
+        'BiblicalHistory': window.bibhistTopics
+    };
+    
+    // Day of week mapping for default report (0=Sunday, 1=Monday... 6=Saturday)
+    const publishDayMap = {
+        'AfricanAmericanHistory': 5, // Friday
+        'Artifacts': 3,              // Wednesday
+        'HistoricFigures': 1,        // Monday
+        'BiblicalHistory': 2         // Tuesday
+    };
+
+
+    const generateReport = async (week) => { // Make generateReport async
+        const reportFunction = reportFunctionMap[tabName];
+        if (typeof reportFunction === 'function') {
+            const reportContainerId = `report-content-${tabName}`;
+            // Await the report function to get the returned data
+            const reportData = await reportFunction(week, reportContainerId); 
+            
+            // Highlight active week/report in sidebar
+            const weekList = document.getElementById(`week-list-${tabName}`);
+            if (weekList) {
+                weekList.querySelectorAll('a').forEach(a => a.style.fontWeight = 'normal');
+                const activeLink = weekList.querySelector(`a[data-week="${week}"]`);
+                if (activeLink) activeLink.style.fontWeight = 'bold';
+            }
+
+            // --- News Feed Integration (Phase 2) ---
+            // Only create a news post if it's the current week AND the designated publish day
+            const today = new Date();
+            const currentDayOfWeek = today.getDay();
+            const currentWeekNumber = getWeekNumber(today);
+            const designatedPublishDay = publishDayMap[tabName];
+
+            if (week === currentWeekNumber && currentDayOfWeek === designatedPublishDay && reportData) {
+                createAndStoreNewsPost({
+                    title: reportData.title,
+                    snippet: reportData.snippet,
+                    imageUrl: reportData.imageUrl,
+                    topic: tabName,
+                    week: week
+                });
+            }
+
+        } else {
+            console.error(`Report generation function for ${tabName} not found or not yet loaded.`);
+        }
+    };
+    
+    const today = new Date();
+    const currentDayOfWeek = today.getDay(); // 0=Sunday, 1=Monday...
+    const currentWeekNumber = getWeekNumber(today);
+    const designatedPublishDay = publishDayMap[tabName];
+    const topicList = topicListMap[tabName];
+
+
+    // Calculate the default week to show (most recently published)
+    let defaultWeekToShow = currentWeekNumber;
+    if (designatedPublishDay !== undefined) { // If a specific publish day is set
+        if (currentDayOfWeek < designatedPublishDay) {
+            // If today is before the publish day, show last week's report
+            defaultWeekToShow = currentWeekNumber > 1 ? currentWeekNumber - 1 : currentWeekNumber; // Handle Week 1 edge case
+        }
+    }
+    // If no specific publish day, or if today is on/after publish day, show current week's report
+
+    // Populate the sidebar with titles and attach event listeners
+    const weekList = document.getElementById(`week-list-${tabName}`);
+    if (weekList && topicList) { // Ensure topicList is loaded
+        weekList.innerHTML = ''; // Clear previous entries
+
+        // Show all reports from Week 1 up to the current week
+        for (let i = 1; i <= currentWeekNumber; i++) {
+            const topicTitle = topicList[(i - 1) % topicList.length];
+            const li = document.createElement('li');
+            li.style.marginBottom = '5px';
+            li.innerHTML = `<a href="#" data-week="${i}" style="color: #ccc; text-decoration: none; display: block; padding: 5px 8px; border-radius: 3px; background: #2a2a2a; transition: background 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onmouseover="this.style.background='#3a3a3a'" onmouseout="this.style.background='#2a2a2a'">${topicTitle} (Week ${i})</a>`;
+            weekList.appendChild(li);
+
+            // Attach event listener for the newly created link
+            li.querySelector('a').addEventListener('click', function(e) {
+                e.preventDefault();
+                const week = parseInt(this.dataset.week, 10);
+                generateReport(week);
+            });
+        }
+    } else if (weekList) {
+        weekList.innerHTML = '<li><p style="color:#aaa;">Loading topic list...</p></li>';
+    }
+
+    // --- 4. Load Default Report ---
+    generateReport(defaultWeekToShow);
+
+    // --- 5. Update Main Tab Button Text and Style (from original function) ---
     // Update sub-tab button styles
     document.querySelectorAll('.blog-subtab').forEach(btn => {
         btn.style.background = '#f3f4f6';
@@ -1160,16 +1336,13 @@ function showBlogTab(tabName) {
         activeButton.style.color = '#000000';
         activeButton.classList.add('active');
     }
-
-    // Update the Blogs tab button text
-    const blogsTabButton = document.querySelectorAll('.tab-dropdown .tab-button')[8]; // Blogs is the 9th tab
-    if (blogsTabButton) {
+    
+    const foundationsOfHistoryTabButton = document.querySelectorAll('.tab-dropdown .tab-button')[8];
+    if (foundationsOfHistoryTabButton) {
         const tabNameDisplay = tabName.replace(/([A-Z])/g, ' $1').trim();
-        blogsTabButton.textContent = tabNameDisplay + ' ▼';
-
-        // Highlight the Blogs tab
+        foundationsOfHistoryTabButton.textContent = tabNameDisplay + ' ▼';
         document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-selection'));
-        blogsTabButton.classList.add('active-selection');
+        foundationsOfHistoryTabButton.classList.add('active-selection');
     }
 }
 

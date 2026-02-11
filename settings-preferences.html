@@ -631,8 +631,7 @@
         </main>
     </div>
 
-    <!-- Keycloak Integration -->
-    <script src="http://172.234.229.103:9999/js/keycloak.js"></script>
+
     <script>
         // State management
         let currentSettings = {};
@@ -655,35 +654,7 @@
             pageTransitions: true
         };
 
-        const keycloak = new Keycloak({
-            url: 'http://172.234.229.103:9999',
-            realm: 'TOBSCo',
-            clientId: 'portal-client'
-        });
 
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                keycloak.logout();
-            }
-        }
-
-        // Initialize Lucide Icons and Keycloak
-        window.addEventListener('load', () => {
-            lucide.createIcons();
-            loadAllSettings();
-
-            keycloak.init({ onLoad: 'login-required', silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html' })
-                .then(authenticated => {
-                    if (authenticated) {
-                        console.log('Authenticated');
-                        // const userProfile = keycloak.tokenParsed; // This line was causing an error, userProfile is not used
-                        // Update any profile specific UI if needed
-                    }
-                })
-                .catch(err => {
-                    console.error('Keycloak Init Error', err);
-                });
-        });
 
         function loadAllSettings() {
             const saved = localStorage.getItem('tbs_portal_settings');

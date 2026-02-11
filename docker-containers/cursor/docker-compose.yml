@@ -1,0 +1,18 @@
+version: "2.1"
+services:
+  code-server:
+      image: lscr.io/linuxserver/code-server:latest
+          container_name: vscode
+              environment:
+                    - PUID=1000
+                          - PGID=1000
+                                - TZ=America/Los_Angeles
+                                      - PASSWORD=your_secure_password # Change this!
+                                            - SUDO_PASSWORD=your_secure_password # Optional: for root access
+                                                  - PROXY_DOMAIN=code.yourdomain.com # Optional: if using Cloudflare Tunnel later
+                                                      volumes:
+                                                            - ./config:/config
+                                                                  - ./workspace:/home/coder/workspace # Where your code lives
+                                                                      ports:
+                                                                            - 8443:8443
+                                                                                restart: unless-stopped
