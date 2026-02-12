@@ -1,3 +1,9 @@
+@keyframes slow-drift {
+    0%   { transform: translate(0,0) rotate(var(--rotation,0deg)); }
+    50%  { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rotation,0deg)); }
+    100% { transform: translate(0,0) rotate(var(--rotation,0deg)); }
+}
+
 :root {
     --black: #000000;
     --dark-gray: #1a1a1a;
