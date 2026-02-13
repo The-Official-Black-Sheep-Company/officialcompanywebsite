@@ -118,114 +118,117 @@
         <input type="text" id="searchBar" placeholder="Search applications, virtual machines, software etc..." />
     </div>
 
+
+
+
+ <!-- api keys -->
     <div class="tabs">
         <div class="tab-dropdown">
-            <a href="apikeys.html" class="tab-button" style="text-decoration: none; display: block;">API Keys</a>
+            <button class="tab-button" onclick="showSection('APIKeys')">API Keys</button>
         </div>
-
+       <!-- bible study -->
         <div class="tab-dropdown">
-            <a href="biblestudy.html" class="tab-button" style="text-decoration: none; display: block;">Seek Eternity</a>
+            <button class="tab-button" onclick="showSection('BibleStudy')">Seek Eternity</button>
         </div>
-
         <div class="tab-dropdown">
-            <a href="reports.html" class="tab-button" style="text-decoration: none; display: block;">Reports ▼</a>
+            <button class="tab-button" onclick="showSection('Blogs')">Reports ▼</button>
             <div class="dropdown-menu">
-                <a href="reports.html#HistoricFigures">Historic Figures</a>
-                <a href="reports.html#Artifacts">Artifacts</a>
-                <a href="reports.html#HistoricEvents">Historic Events</a>
+                <a href="#" onclick="showBlogTab('HistoricFigures'); return false;">Historic Figures</a>
+                <a href="#" onclick="showBlogTab('Artifacts'); return false;">Artifacts</a>
+                <a href="#" onclick="showBlogTab('HistoricEvents'); return false;">Historic Events</a>
             </div>
         </div>
 
         <div class="tab-dropdown">
-            <a href="monitoring.html" class="tab-button" style="text-decoration: none; display: block;">Monitoring ▼</a>
+            <button class="tab-button" onclick="showSection('Monitoring')">Monitoring ▼</button>
             <div class="dropdown-menu">
-                <a href="monitoring.html#Dashboards">Dashboards</a>
+                <a href="#" onclick="showSection('Dashboards'); return false;">Dashboards</a>
                 <a href="https://localhost:443" target="_blank">Wazuh Manager</a>
-                <a href="monitoring.html#WazuhAgents">Wazuh Agents</a>
+                <a href="#" onclick="showSection('Monitoring'); return false;">Wazuh Agents</a>
                 <a href="http://localhost:61208" target="_blank">Glances</a>
                 <a href="http://localhost:8001" target="_blank">Kubernetes</a>
                 <a href="http://localhost:8083" target="_blank">Snort IDS</a>
-                <a href="monitoring.html#Fail2Ban">Fail2Ban</a>
+                <a href="#" onclick="showSection('Monitoring'); return false;">Fail2Ban</a>
             </div>
         </div>
 
         <div class="tab-dropdown">
-            <a href="servers.html" class="tab-button" style="text-decoration: none; display: block;">Servers ▼</a>
+            <button class="tab-button" onclick="showSection('HomeServerMain')">Servers ▼</button>
             <div class="dropdown-menu">
                 <div class="dropdown-item">
-                    <a href="servers.html#ArtsServer">Arts Server ►</a>
+                    <a href="#" onclick="showSection('ArtsServer'); return false;">Arts Server ►</a>
                     <div class="submenu">
-                        <a href="servers.html#Audacity">Audacity</a>
-                        <a href="servers.html#BibleServer">Bible Server</a>
-                        <a href="servers.html#Blender">Blender</a>
-                        <a href="servers.html#Cakewalk">Cakewalk</a>
-                        <a href="servers.html#vscode">vscode</a>
-                        <a href="servers.html#GIMP">GIMP</a>
-                        <a href="servers.html#Inkscape">Inkscape</a>
-                        <a href="servers.html#Jellyfin">Jellyfin</a>
-                        <a href="servers.html#LeonAI">Leon AI</a>
-                        <a href="servers.html#Node-RED">Node-RED</a>
-                        <a href="servers.html#UnrealEngine">Unreal Engine</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Audacity</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Bible Server</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Blender</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Cakewalk</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">vscode</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">GIMP</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Inkscape</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Jellyfin</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Leon AI</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Node-RED</a>
+                        <a href="#" onclick="showSection('ArtsServer'); return false;">Unreal Engine</a>
                     </div>
                 </div>
                 <div class="dropdown-item">
-                    <a href="servers.html#BusinessServer">Business Server ►</a>
+                    <a href="#" onclick="showSection('BusinessServer'); return false;">Business Server ►</a>
                     <div class="submenu">
-                        <a href="servers.html#BoxBilling">BoxBilling</a>
-                        <a href="servers.html#ERPNext">ERPNext</a>
-                        <a href="servers.html#FireflyIII">Firefly III</a>
-                        <a href="servers.html#Huginn">Huginn</a>
-                        <a href="servers.html#Magento2">Magento 2</a>
-                        <a href="servers.html#Mautic">Mautic</a>
-                        <a href="servers.html#Odoo">Odoo</a>
-                        <a href="servers.html#OrangeHRM">OrangeHRM</a>
-                        <a href="servers.html#PartsKeeper">PartsKeeper</a>
-                        <a href="servers.html#Spree">Spree</a>
-                        <a href="servers.html#SuiteCRM">SuiteCRM</a>
-                        <a href="servers.html#TimeTrex">TimeTrex</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">BoxBilling</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">ERPNext</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">Firefly III</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">Huginn</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">Magento 2</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">Mautic</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">Odoo</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">OrangeHRM</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">PartsKeeper</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">Spree</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">SuiteCRM</a>
+                        <a href="#" onclick="showSection('BusinessServer'); return false;">TimeTrex</a>
                     </div>
                 </div>
                 <div class="dropdown-item">
-                    <a href="servers.html#CloudServer">Cloud Server ►</a>
+                    <a href="#" onclick="showSection('CloudServer'); return false;">Cloud Server ►</a>
                     <div class="submenu">
-                        <a href="servers.html#Elasticsearch">Elasticsearch</a>
-                        <a href="servers.html#Keycloak">Keycloak</a>
-                        <a href="servers.html#Kibana">Kibana</a>
-                        <a href="servers.html#OpenVAS">OpenVAS</a>
+                        <a href="#" onclick="showSection('CloudServer'); return false;">Elasticsearch</a>
+                        <a href="#" onclick="showSection('CloudServer'); return false;">Keycloak</a>
+                        <a href="#" onclick="showSection('CloudServer'); return false;">Kibana</a>
+                        <a href="#" onclick="showSection('CloudServer'); return false;">OpenVAS</a>
                     </div>
                 </div>
                 <div class="dropdown-item">
-                    <a href="servers.html#HomeServerMain">Home Server ►</a>
+                    <a href="#" onclick="showSection('HomeServerMain'); return false;">Home Server ►</a>
                     <div class="submenu">
-                        <a href="servers.html#Fail2Ban">Fail2Ban</a>
-                        <a href="servers.html#Falco">Falco</a>
-                        <a href="servers.html#Filebeat">Filebeat</a>
-                        <a href="servers.html#Glances">Glances</a>
-                        <a href="servers.html#Jellyfin">Jellyfin</a>
-                        <a href="servers.html#LeonAI">Leon AI</a>
-                        <a href="servers.html#Motion">Motion</a>
-                        <a href="servers.html#N8N">N8N</a>
-                        <a href="servers.html#Netdata">Netdata</a>
-                        <a href="servers.html#Node-RED">Node-RED</a>
-                        <a href="servers.html#Pcsx2">Pcsx2</a>
-                        <a href="servers.html#Snort">Snort</a>
-                        <a href="servers.html#WireGuard">WireGuard</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Fail2Ban</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Falco</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Filebeat</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Glances</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Jellyfin</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Leon AI</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Motion</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">N8N</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Netdata</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Node-RED</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Pcsx2</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">Snort</a>
+                        <a href="#" onclick="showSection('HomeServerMain'); return false;">WireGuard</a>
                     </div>
                 </div>
                 <div class="dropdown-item">
-                    <a href="servers.html#MailServer">Mail Server ►</a>
+                    <a href="#" onclick="showSection('MailServer'); return false;">Mail Server ►</a>
                     <div class="submenu">
-                        <a href="servers.html#Chatwoot">Chatwoot</a>
-                        <a href="servers.html#Dovecot">Dovecot</a>
-                        <a href="servers.html#Matrix">Matrix</a>
-                        <a href="servers.html#Postfix">Postfix</a>
-                        <a href="servers.html#Rasa">Rasa</a>
-                        <a href="servers.html#SocioBoard">SocioBoard</a>
-                        <a href="servers.html#Synapse">Synapse</a>
+                        <a href="#" onclick="showSection('MailServer'); return false;">Chatwoot</a>
+                        <a href="#" onclick="showSection('MailServer'); return false;">Dovecot</a>
+                        <a href="#" onclick="showSection('MailServer'); return false;">Matrix</a>
+                        <a href="#" onclick="showSection('MailServer'); return false;">Postfix</a>
+                        <a href="#" onclick="showSection('MailServer'); return false;">Rasa</a>
+                        <a href="#" onclick="showSection('MailServer'); return false;">SocioBoard</a>
+                        <a href="#" onclick="showSection('MailServer'); return false;">Synapse</a>
                     </div>
                 </div>
                 <div class="dropdown-item">
-                    <a href="servers.html#VirtualMachines">Virtual Machines ►</a>
+                    <a href="#" onclick="showSection('VirtualMachines'); return false;">Virtual Machines ►</a>
                 </div>
             </div>
         </div>
@@ -233,30 +236,34 @@
         <div class="tab-dropdown">
             <a href="services.html" class="tab-button" style="text-decoration: none; display: block;">Services ▼</a>
             <div class="dropdown-menu">
-                <a href="techpage.html">Tech-Sector</a>
-                <a href="cleaning-services.html">Cleaning Services</a>
+                <a href="#" onclick="showServiceContent('CellphoneRepair'); return false;">Tech-Sector</a>
+                <a href="#" onclick="showServiceContent('CleaningCommercial'); return false;">Cleaning Services -
+                    Commercial</a>
+                <a href="#" onclick="showServiceContent('CleaningResidential'); return false;">Cleaning Services -
+                    Residential</a>
                 <a href="petservices.html">Pet Services</a>
-                <a href="junkremoval.html">Junk Removal, Moving & Hauling</a>
-                <a href="#">Mobile Laundry Mat</a>
-                <a href="#">Merch & Training</a>
+                <a href="#" onclick="showServiceContent('JunkRemoval'); return false;">Junk Removal, Moving &
+                    Hauling</a>
+                <a href="#" onclick="showServiceContent('MobileLaundryMat'); return false;">Mobile Laundry Mat</a>
+                <a href="#" onclick="showServiceContent('MovingHauling'); return false;">Merch & Training</a>
             </div>
         </div>
 
         <div class="tab-dropdown">
-            <a href="store.html" class="tab-button" style="text-decoration: none; display: block;">Shopping ▼</a>
+            <button class="tab-button" onclick="showShoppingContent()">Shopping ▼</button>
             <div class="dropdown-menu">
                 <a href="store.html">Store</a>
-                <a href="shopping.html#AmazonFBA">Amazon FBA Page</a>
-                <a href="shopping.html#Craigslist">Craigslist</a>
-                <a href="shopping.html#eBay">eBay</a>
-                <a href="shopping.html#FacebookStore">Facebook Store</a>
-                <a href="shopping.html#Shopify">Shopify</a>
-                <a href="product.html">Products</a>
+                <a href="#" onclick="showShoppingContent('AmazonFBA'); return false;">Amazon FBA Page</a>
+                <a href="#" onclick="showShoppingContent('Craigslist'); return false;">Craigslist</a>
+                <a href="#" onclick="showShoppingContent('eBay'); return false;">eBay</a>
+                <a href="#" onclick="showShoppingContent('FacebookStore'); return false;">Facebook Store</a>
+                <a href="#" onclick="showShoppingContent('Shopify'); return false;">Shopify</a>
+                <a href="#" onclick="showProductsContent(); return false;">Products</a>
             </div>
         </div>
 
         <div class="tab-dropdown">
-            <a href="appstore.html" class="tab-button" style="text-decoration: none; display: block;">App Store ▼</a>
+            <button class="tab-button" onclick="showSection('AppStoreContent')">App Store ▼</button>
             <div class="dropdown-menu">
                 <a href="flutter_app/web/index.html?app=barcode_scanner">Barcode Scanner Flutter App</a>
                 <a href="flutter_app/web/index.html?app=workorder">Work Order Flutter App</a>
@@ -264,18 +271,19 @@
         </div>
 
         <div class="tab-dropdown">
-            <a href="workorder.html" class="tab-button" style="text-decoration: none; display: block;">Tools ▼</a>
+            <button class="tab-button" onclick="showSection('ServiceDashboard')">Tools ▼</button>
             <div class="dropdown-menu">
                 <a href="workorder.html">Work Order Web</a>
                 <a href="#" onclick="alert('Work Order App download coming soon!')">Work Order App</a>
-                <a href="workorder.html#BarcodeScanner">Barcode Scanner</a>
-                <a href="workorder.html#ScannerDisplay">Scanner Display</a>
+                <a href="#" onclick="showBarcodeScannerContent(); return false;">Barcode Scanner</a>
+                <a href="#" onclick="showScannerDisplayContent(); return false;">Scanner Display</a>
             </div>
         </div>
 
         <div class="tab-dropdown">
-            <a href="contacts.html" class="tab-button" style="text-decoration: none; display: block;">Contacts</a>
+            <button class="tab-button" onclick="showSection('Contacts')">Contacts</button>
         </div>
+
     </div>
 
 
@@ -730,8 +738,8 @@
             <script src="biblestudy.js"></script>
             <script src="biblestudy-menu.js"></script>
           <div class="study-images">
-           <img src="/media/bible/genesis/placeholder1.jpg">
-           <img src="/media/bible/genesis/placeholder2.jpg">
+           <img src="/media/bible/genesis/placeholder1.>
+           <img src="/media/bible/genesis/placeholder2.>
           </div>
                         <!-- Content will be dynamically loaded here by JavaScript -->
                     </div>        <script>
@@ -892,13 +900,16 @@
         <!-- Nested Tabs Row -->
         <div class="blog-subtabs"
             style="display: flex; gap: 5px; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
-            <button class="blog-subtab active" onclick="showBlogTab('HistoricFigures')">
+            <button class="blog-subtab active" onclick="showBlogTab('HistoricFigures')"
+                style="padding: 10px 20px; background: #f3f4f6; border: none; border-radius: 6px 6px 0 0; cursor: pointer; font-weight: 500; color: #374151;">
                 Historic Figures
             </button>
-            <button class="blog-subtab" onclick="showBlogTab('Artifacts')">
+            <button class="blog-subtab" onclick="showBlogTab('Artifacts')"
+                style="padding: 10px 20px; background: #f3f4f6; border: none; border-radius: 6px 6px 0 0; cursor: pointer; font-weight: 500; color: #374151;">
                 Artifacts
             </button>
-            <button class="blog-subtab" onclick="showBlogTab('HistoricEvents')">
+            <button class="blog-subtab" onclick="showBlogTab('HistoricEvents')"
+                style="padding: 10px 20px; background: #f3f4f6; border: none; border-radius: 6px 6px 0 0; cursor: pointer; font-weight: 500; color: #374151;">
                 Historic Events
             </button>
         </div>

@@ -1046,36 +1046,161 @@
 
     <div class="tabs">
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="window.location.href='index.html'">API Keys</button>
+            <a href="apikeys.html" class="tab-button" style="text-decoration: none; display: block;">API Keys</a>
         </div>
 
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="window.location.href='index.html'">Dashboards</button>
+            <a href="biblestudy.html" class="tab-button" style="text-decoration: none; display: block;">Seek Eternity</a>
         </div>
 
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="window.location.href='index.html'">Monitoring</button>
+            <a href="reports.html" class="tab-button" style="text-decoration: none; display: block;">Reports ▼</a>
+            <div class="dropdown-menu">
+                <a href="reports.html#HistoricFigures">Historic Figures</a>
+                <a href="reports.html#Artifacts">Artifacts</a>
+                <a href="reports.html#HistoricEvents">Historic Events</a>
+            </div>
         </div>
 
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="window.location.href='index.html'">Servers ▼</button>
+            <a href="monitoring.html" class="tab-button" style="text-decoration: none; display: block;">Monitoring ▼</a>
+            <div class="dropdown-menu">
+                <a href="monitoring.html#Dashboards">Dashboards</a>
+                <a href="https://localhost:443" target="_blank">Wazuh Manager</a>
+                <a href="monitoring.html#WazuhAgents">Wazuh Agents</a>
+                <a href="http://localhost:61208" target="_blank">Glances</a>
+                <a href="http://localhost:8001" target="_blank">Kubernetes</a>
+                <a href="http://localhost:8083" target="_blank">Snort IDS</a>
+                <a href="monitoring.html#Fail2Ban">Fail2Ban</a>
+            </div>
         </div>
 
         <div class="tab-dropdown">
-            <a href="services.html" class="tab-button active-selection"
-                style="text-decoration: none; display: block;">Services ▼</a>
+            <a href="servers.html" class="tab-button" style="text-decoration: none; display: block;">Servers ▼</a>
+            <div class="dropdown-menu">
+                <div class="dropdown-item">
+                    <a href="servers.html#ArtsServer">Arts Server ►</a>
+                    <div class="submenu">
+                        <a href="servers.html#Audacity">Audacity</a>
+                        <a href="servers.html#BibleServer">Bible Server</a>
+                        <a href="servers.html#Blender">Blender</a>
+                        <a href="servers.html#Cakewalk">Cakewalk</a>
+                        <a href="servers.html#vscode">vscode</a>
+                        <a href="servers.html#GIMP">GIMP</a>
+                        <a href="servers.html#Inkscape">Inkscape</a>
+                        <a href="servers.html#Jellyfin">Jellyfin</a>
+                        <a href="servers.html#LeonAI">Leon AI</a>
+                        <a href="servers.html#Node-RED">Node-RED</a>
+                        <a href="servers.html#UnrealEngine">Unreal Engine</a>
+                    </div>
+                </div>
+                <div class="dropdown-item">
+                    <a href="servers.html#BusinessServer">Business Server ►</a>
+                    <div class="submenu">
+                        <a href="servers.html#BoxBilling">BoxBilling</a>
+                        <a href="servers.html#ERPNext">ERPNext</a>
+                        <a href="servers.html#FireflyIII">Firefly III</a>
+                        <a href="servers.html#Huginn">Huginn</a>
+                        <a href="servers.html#Magento2">Magento 2</a>
+                        <a href="servers.html#Mautic">Mautic</a>
+                        <a href="servers.html#Odoo">Odoo</a>
+                        <a href="servers.html#OrangeHRM">OrangeHRM</a>
+                        <a href="servers.html#PartsKeeper">PartsKeeper</a>
+                        <a href="servers.html#Spree">Spree</a>
+                        <a href="servers.html#SuiteCRM">SuiteCRM</a>
+                        <a href="servers.html#TimeTrex">TimeTrex</a>
+                    </div>
+                </div>
+                <div class="dropdown-item">
+                    <a href="servers.html#CloudServer">Cloud Server ►</a>
+                    <div class="submenu">
+                        <a href="servers.html#Elasticsearch">Elasticsearch</a>
+                        <a href="servers.html#Keycloak">Keycloak</a>
+                        <a href="servers.html#Kibana">Kibana</a>
+                        <a href="servers.html#OpenVAS">OpenVAS</a>
+                    </div>
+                </div>
+                <div class="dropdown-item">
+                    <a href="servers.html#HomeServerMain">Home Server ►</a>
+                    <div class="submenu">
+                        <a href="servers.html#Fail2Ban">Fail2Ban</a>
+                        <a href="servers.html#Falco">Falco</a>
+                        <a href="servers.html#Filebeat">Filebeat</a>
+                        <a href="servers.html#Glances">Glances</a>
+                        <a href="servers.html#Jellyfin">Jellyfin</a>
+                        <a href="servers.html#LeonAI">Leon AI</a>
+                        <a href="servers.html#Motion">Motion</a>
+                        <a href="servers.html#N8N">N8N</a>
+                        <a href="servers.html#Netdata">Netdata</a>
+                        <a href="servers.html#Node-RED">Node-RED</a>
+                        <a href="servers.html#Pcsx2">Pcsx2</a>
+                        <a href="servers.html#Snort">Snort</a>
+                        <a href="servers.html#WireGuard">WireGuard</a>
+                    </div>
+                </div>
+                <div class="dropdown-item">
+                    <a href="servers.html#MailServer">Mail Server ►</a>
+                    <div class="submenu">
+                        <a href="servers.html#Chatwoot">Chatwoot</a>
+                        <a href="servers.html#Dovecot">Dovecot</a>
+                        <a href="servers.html#Matrix">Matrix</a>
+                        <a href="servers.html#Postfix">Postfix</a>
+                        <a href="servers.html#Rasa">Rasa</a>
+                        <a href="servers.html#SocioBoard">SocioBoard</a>
+                        <a href="servers.html#Synapse">Synapse</a>
+                    </div>
+                </div>
+                <div class="dropdown-item">
+                    <a href="servers.html#VirtualMachines">Virtual Machines ►</a>
+                </div>
+            </div>
         </div>
 
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="window.location.href='index.html'">Shopping ▼</button>
+            <a href="services.html" class="tab-button active-selection" style="text-decoration: none; display: block;">Services ▼</a>
+            <div class="dropdown-menu">
+                <a href="techpage.html">Tech-Sector</a>
+                <a href="cleaning-services.html">Cleaning Services</a>
+                <a href="petservices.html">Pet Services</a>
+                <a href="junkremoval.html">Junk Removal, Moving & Hauling</a>
+                <a href="#">Mobile Laundry Mat</a>
+                <a href="#">Merch & Training</a>
+            </div>
         </div>
 
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="window.location.href='index.html'">Tools ▼</button>
+            <a href="store.html" class="tab-button" style="text-decoration: none; display: block;">Shopping ▼</a>
+            <div class="dropdown-menu">
+                <a href="store.html">Store</a>
+                <a href="shopping.html#AmazonFBA">Amazon FBA Page</a>
+                <a href="shopping.html#Craigslist">Craigslist</a>
+                <a href="shopping.html#eBay">eBay</a>
+                <a href="shopping.html#FacebookStore">Facebook Store</a>
+                <a href="shopping.html#Shopify">Shopify</a>
+                <a href="product.html">Products</a>
+            </div>
         </div>
 
         <div class="tab-dropdown">
-            <button class="tab-button" onclick="window.location.href='index.html'">Contacts</button>
+            <a href="appstore.html" class="tab-button" style="text-decoration: none; display: block;">App Store ▼</a>
+            <div class="dropdown-menu">
+                <a href="flutter_app/web/index.html?app=barcode_scanner">Barcode Scanner Flutter App</a>
+                <a href="flutter_app/web/index.html?app=workorder">Work Order Flutter App</a>
+            </div>
+        </div>
+
+        <div class="tab-dropdown">
+            <a href="workorder.html" class="tab-button" style="text-decoration: none; display: block;">Tools ▼</a>
+            <div class="dropdown-menu">
+                <a href="workorder.html">Work Order Web</a>
+                <a href="#" onclick="alert('Work Order App download coming soon!')">Work Order App</a>
+                <a href="workorder.html#BarcodeScanner">Barcode Scanner</a>
+                <a href="workorder.html#ScannerDisplay">Scanner Display</a>
+            </div>
+        </div>
+
+        <div class="tab-dropdown">
+            <a href="contacts.html" class="tab-button" style="text-decoration: none; display: block;">Contacts</a>
         </div>
     </div>
 
