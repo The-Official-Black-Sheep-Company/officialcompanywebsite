@@ -12,16 +12,16 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    z-index: 0; /* Move to low index so it's behind content */
-    pointer-events: none; /* Allow clicks to pass through */
+    z-index: 0;
+    pointer-events: none;
 }
 
 /* --- Gold Cross --- */
 #gold-cross {
     position: absolute;
-    width: 60px; /* Slightly larger */
+    width: 60px;
     height: 120px;
-    z-index: 1; /* Just above shapes */
+    z-index: 1;
     pointer-events: none;
     background: none !important;
     background-color: transparent !important;
@@ -32,7 +32,7 @@
 #gold-cross::after {
     content: '';
     position: absolute;
-    background: #FFF8DC; /* Lighter gold/white for core brightness */
+    background: #FFF8DC; 
     box-shadow: 
         0 0 10px var(--gold),
         0 0 20px var(--gold),
