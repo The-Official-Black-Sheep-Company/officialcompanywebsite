@@ -1,4 +1,4 @@
-/* Extracted from index.html */
+i was/* Extracted from index.html */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 .product-grid {
@@ -168,4 +168,16 @@
     height: 12px;
     left: 0;
     top: 30px;
+}
+
+/* Blog subtab hover effects */
+.blog-subtab:hover {
+    background: #e5e7eb !important;
+    color: #111827 !important;
+}
+
+/* Active blog subtab */
+.blog-subtab.active {
+    background: #FBBF24 !important;
+    color: #000000 !important;
 }

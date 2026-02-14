@@ -7,6 +7,7 @@
     <title>The Official Black Sheep Company</title>
     <link rel="stylesheet" href="css/adminlandingpage.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/chatbot.css">
     <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png">
     <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png">
     <script src="/js/homepage.js"></script>
@@ -20,47 +21,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <img src="/media/bible/genesis/genesis1-hebrew-manuscript.jpg">
-    <style>
-        /* Custom scrollbars for chat */
-        .chat-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .chat-scrollbar::-webkit-scrollbar-thumb {
-            background-color: rgba(107, 114, 128, 0.8);
-            border-radius: 9999px;
-        }
-
-        /* Fullscreen mode for chat */
-        #chat-window.fullscreen {
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            max-width: 100vw;
-            max-height: 100vh;
-            border-radius: 0;
-            z-index: 9999;
-        }
-
-        /* Blog subtab hover effects */
-        .blog-subtab:hover {
-            background: #e5e7eb !important;
-            color: #111827 !important;
-        }
-
-        /* Active blog subtab */
-        .blog-subtab.active {
-            background: #FBBF24 !important;
-            color: #000000 !important;
-        }
-    </style>
 
 </head>
 
@@ -812,14 +772,14 @@
                         <p>Humanity in the "image of God" foreshadows covenantal relationships and Christological interpretation in the New Testament.</p>
                     `,
                     familyTree: async () => {
-                        const urls = await fetchImages("familyTree");
+                        const urls = await fetchImages('familyTree');
                         return `
                             <p>Adam → Eve → Cain, Abel, Seth → generations leading to Noah.</p>
                             ${urls.map(u => `<img class="study-image" src="${u}" alt="Family Tree">`).join('')}
                         `;
                     },
                     artifacts: async () => {
-                        const urls = await fetchImages("artifact");
+                        const urls = await fetchImages('artifact');
                         return `
                             <p>Relevant archaeological finds: Early Mesopotamian tablets, figurines, ancient art depicting creation motifs.</p>
                             ${urls.map(u => `<img class="study-image" src="${u}" alt="Artifact">`).join('')}
@@ -1031,7 +991,8 @@
     </div>
 
     <!-- Chatwoot AI Chatbot Widget -->
-    <script src="/chatwoot-widget-config.js"></script>
+    <script src="/js/chatwoot-widget-config.js"></script>
+    <script src="/js/chatbot.js"></script>
 </body>
 
-</html>\
+</html>
