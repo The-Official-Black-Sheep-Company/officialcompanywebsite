@@ -7,11 +7,11 @@
     pointer-events: none;
     background-color: #FFF8DC; /* Solid color */
     box-shadow: 
-        0 0 10px var(--gold),
-        0 0 20px var(--gold),
+        0 0 10px var(--gold, #FFD700),
+        0 0 20px var(--gold, #FFD700),
         0 0 40px #FFD700,
         0 0 60px #FFA500;
-    filter: drop-shadow(0 0 10px var(--gold));
+    filter: drop-shadow(0 0 10px var(--gold, #FFD700));
 }
 
 #gold-cross::before,
@@ -20,8 +20,8 @@
     position: absolute;
     background: #FFF8DC; /* Match the cross color */
     box-shadow: 
-        0 0 10px var(--gold),
-        0 0 20px var(--gold),
+        0 0 10px var(--gold, #FFD700),
+        0 0 20px var(--gold, #FFD700),
         0 0 40px #FFD700,
         0 0 60px #FFA500;
 }
@@ -44,15 +44,24 @@
     background-color: var(--dark-gray);
     opacity: 0.6;
     pointer-events: none;
-    animation: slow-drift 10s ease-in-out infinite alternate;
+    animation: slow-drift 20s linear infinite;
 }
 
 @keyframes slow-drift {
-    from {
+    0% {
         transform: translate(0, 0) rotate(0deg);
     }
-    to {
-        transform: translate(20px, 20px) rotate(10deg);
+    25% {
+        transform: translate(15px, 25px) rotate(5deg);
+    }
+    50% {
+        transform: translate(-10px, 10px) rotate(-5deg);
+    }
+    75% {
+        transform: translate(10px, -15px) rotate(10deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg);
     }
 }
 

@@ -2,108 +2,217 @@
 // Use proxied API path - works for both HTTP and HTTPS, no mixed content issues
 const API_BASE_URL = '/api/';
 
-import { auth } from './firebase-config.js'; // Import the auth object
+// Firebase imports
+import { auth } from './firebase-config.js';
 import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
 
-// Global reference for current user
 let currentUser = null;
 
+// --- Authentication ---
 function initFirebaseAuth() {
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
-        if (user) {
-            // User is signed in
-            console.log('User is signed in:', user.displayName || user.email);
-            if (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html')) {
-                window.location.href = './html/portal.html';
-            }
-        } else {
-            // User is signed out
-            console.log('User is signed out.');
-            if (window.location.pathname.endsWith('portal.html')) {
-                window.location.href = '../index.html';
-            }
+        updateUIVisibility();
+        if (user && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html'))) {
+            // Redirect to portal if logged in on the main page
+            window.location.href = 'html/portal.html';
         }
-        updateUI();
     });
 }
 
-function updateUI() {
-    const authButtonsContainer = document.getElementById('auth-buttons-container');
-    const userAvatarContainer = document.getElementById('user-avatar-container');
-    const userAvatarImg = document.getElementById('user-avatar-img');
+function updateUIVisibility() {
+    const authButtons = document.getElementById('auth-buttons-container');
+    const avatarContainer = document.getElementById('user-avatar-container');
+    const avatarImg = document.getElementById('user-avatar-img');
 
     if (currentUser) {
         // User is signed in
-        if (authButtonsContainer) authButtonsContainer.style.display = 'none';
-        if (userAvatarContainer) {
-            userAvatarContainer.style.display = 'block';
-            userAvatarImg.src = currentUser.photoURL || `https://ui-avatars.com/api/?name=${currentUser.displayName ? currentUser.displayName.substring(0, 2) : currentUser.email.substring(0, 2).toUpperCase()}&background=FBBF24&color=000&size=128`;
+        if (authButtons) authButtons.style.display = 'none';
+        if (avatarContainer) avatarContainer.style.display = 'block';
+        if (avatarImg) {
+            avatarImg.src = currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.displayName || currentUser.email)}&background=FBBF24&color=000&size=128`;
         }
     } else {
         // User is signed out
-        if (authButtonsContainer) authButtonsContainer.style.display = 'flex';
-        if (userAvatarContainer) userAvatarContainer.style.display = 'none';
+        if (authButtons) authButtons.style.display = 'flex';
+        if (avatarContainer) avatarContainer.style.display = 'none';
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initFirebaseAuth();
+function handleSignIn() {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then(result => console.log("Sign-in successful", result.user))
+        .catch(error => console.error("Sign-in error", error));
+}
 
-    const googleSignInButton = document.getElementById('google-signin-button');
-    if (googleSignInButton) {
-        googleSignInButton.addEventListener('click', () => {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log("Google Sign-In successful!", result.user);
-                })
-                .catch((error) => {
-                    console.error("Google Sign-In error:", error);
-                    alert(`Google Sign-In failed: ${error.message}`);
-                });
-        });
-    }
-
-    const signOutButton = document.getElementById('signout-button');
-    if (signOutButton) {
-        signOutButton.addEventListener('click', () => {
-            signOut(auth).then(() => {
-                console.log("User signed out.");
-            }).catch((error) => {
-                console.error("Sign-out error:", error);
-                alert(`Sign-out failed: ${error.message}`);
-            });
-        });
-    }
-
-    // Tab switching logic
-    const tabs = document.querySelectorAll('.tab-dropdown .tab-button');
-    tabs.forEach((tab, index) => {
-        tab.addEventListener('click', () => {
-            // Hide all sections
-            document.querySelectorAll('.server-section, .content-section').forEach(section => {
-                section.style.display = 'none';
-            });
-
-            // Show the correct section based on the tab clicked
-            const sectionId = tab.parentElement.querySelector('.dropdown-menu').children[0].getAttribute('onclick').match(/\('([^\)]+)'\)/)[1];
-            showSection(sectionId);
-        });
-    });
-});
+function handleSignOut() {
+    signOut(auth).then(() => {
+        console.log("User signed out");
+        // Redirect to home page after sign-out
+        if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('index.html')) {
+            window.location.href = '../index.html';
+        }
+    }).catch(error => console.error("Sign-out error", error));
+}
 
 
-// Show a specific server/content section
+// --- Content Section & Tab Management ---
+
 function showSection(sectionId) {
-    // Hide all sections
+    // Hide all main content sections first
     document.querySelectorAll('.server-section, .content-section').forEach(section => {
         section.style.display = 'none';
     });
 
-    // Show selected section
-    const selectedSection = document.getElementById(sectionId);
-    if (selectedSection) {
-        selectedSection.style.display = 'block';
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    } else {
+        console.warn(`Section with ID '${sectionId}' not found.`);
+    }
+
+    // Optional: Special handling for certain sections
+    if (sectionId === 'ProductsContent') {
+        loadProducts(); 
+    }
+    if (sectionId === 'APIKeys') {
+        loadEbayConfig();
+        checkEndpointStatus();
+        refreshNotifications();
     }
 }
+
+function showServiceContent(serviceName) {
+    showSection('ServicesContent'); // Show the container
+    const serviceContent = document.querySelector('#ServicesContent .service-content');
+    
+    // Your existing logic to populate serviceContent based on serviceName
+    const serviceData = {
+        'JunkRemoval': { title: 'Junk Removal', html: '<h2>Junk Removal Service</h2><p>Contact us for junk removal services.</p>' },
+        'MovingHauling': { title: 'Moving & Hauling', html: '<h2>Moving & Hauling Service</h2><p>Professional moving and hauling services.</p>' },
+        // ... add other services
+    };
+
+    if (serviceContent && serviceData[serviceName]) {
+        serviceContent.innerHTML = serviceData[serviceName].html;
+    }
+}
+
+function showShoppingContent(platformName) {
+    showSection('ShoppingContent');
+     const shoppingContent = document.querySelector('#ShoppingContent .shopping-content');
+    // Your existing logic to populate shoppingContent
+}
+
+function showProductsContent() {
+    showSection('ProductsContent');
+}
+
+function showBlogTab(tabName) {
+    showSection('Blogs'); // Show the main blog container
+    // Hide all blog content
+    document.querySelectorAll('.blog-content').forEach(content => {
+        content.style.display = 'none';
+    });
+    // Show the selected blog content
+    const selectedContent = document.getElementById(tabName);
+    if (selectedContent) {
+        selectedContent.style.display = 'block';
+    }
+
+    // Update active state for subtabs
+    document.querySelectorAll('.blog-subtab').forEach(button => {
+        button.classList.remove('active');
+    });
+    const activeButton = document.querySelector(`.blog-subtab[onclick*="${tabName}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+}
+
+
+// --- DOMContentLoaded - Main Initialization ---
+document.addEventListener('DOMContentLoaded', () => {
+    initFirebaseAuth();
+
+    // --- Auth Buttons ---
+    const loginButton = document.getElementById('login-button');
+    const signupButton = document.getElementById('signup-button');
+    const logoutLink = document.getElementById('logout-link');
+
+    if (loginButton) loginButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        window.location.href = 'html/login.html';
+    });
+    if (signupButton) signupButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'html/signup.html';
+    });
+    if (logoutLink) logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleSignOut();
+    });
+
+    // --- Tab & Dropdown Link Event Handling ---
+    document.querySelectorAll('.tab-button, .dropdown-menu a, .submenu a').forEach(link => {
+        // Avoid attaching listeners to external links
+        const href = link.getAttribute('href');
+        if (href && (href.startsWith('http') || href.startsWith('mailto'))) {
+            return;
+        }
+
+        link.addEventListener('click', function(e) {
+            // Find the correct function to call from the onclick attribute
+            const onclickAttr = this.getAttribute('onclick');
+            if (onclickAttr) {
+                e.preventDefault(); // Prevent default anchor action if onclick exists
+                e.stopPropagation(); // Stop event from bubbling up to parent dropdowns
+                
+                // Super basic parser for onclick="functionName('parameter')"
+                const match = onclickAttr.match(/([a-zA-Z_]+)\((?:'([^']*)')?\)/);
+                if (match) {
+                    const functionName = match[1];
+                    const parameter = match[2];
+
+                    // Call the function if it exists on the window object
+                    if (typeof window[functionName] === 'function') {
+                        window[functionName](parameter);
+                    } else {
+                        console.error(`Function ${functionName} not found.`);
+                    }
+                }
+                 // Close dropdowns after selection
+                if (this.closest('.dropdown-menu')) {
+                    this.closest('.dropdown-menu').style.display = 'none';
+                    setTimeout(() => {
+                         if (this.closest('.dropdown-menu')) {
+                            this.closest('.dropdown-menu').style.display = '';
+                         }
+                    }, 100);
+                }
+            }
+        });
+    });
+     // Make top-level tab buttons clickable
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const onclickAttr = this.getAttribute('onclick');
+            if (onclickAttr) {
+                 e.preventDefault();
+                 const match = onclickAttr.match(/showSection\('([^']*)'\)/);
+                 if (match && match[1]) {
+                     showSection(match[1]);
+                 }
+            }
+        });
+    });
+});
+
+// Make functions globally available so inline `onclick` attributes can find them
+window.showSection = showSection;
+window.showServiceContent = showServiceContent;
+window.showShoppingContent = showShoppingContent;
+window.showProductsContent = showProductsContent;
+window.showBlogTab = showBlogTab;
+// ... add other globally needed functions from your original index.js like loadProducts, etc.
