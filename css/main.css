@@ -1,4 +1,4 @@
-i was/* Extracted from index.html */
+/* Extracted from index.html */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
 .product-grid {
@@ -131,43 +131,21 @@ i was/* Extracted from index.html */
 #gold-cross {
     position: absolute;
     width: 60px;
-    /* Slightly larger */
     height: 120px;
     z-index: 1;
-    /* Just above shapes */
     pointer-events: none;
-    background: none !important;
-    background-color: transparent !important;
-    filter: drop-shadow(0 0 10px var(--gold));
-}
-
-#gold-cross::before,
-#gold-cross::after {
-    content: '';
-    position: absolute;
-    background: #FFF8DC; 
-    /* Lighter gold/white for core brightness */
-    box-shadow: 
+    background: #FFF8DC; /* Core color of the cross */
+    /* The glow effect */
+    box-shadow:
         0 0 10px var(--gold),
         0 0 20px var(--gold),
         0 0 40px #FFD700,
         0 0 60px #FFA500;
-}
-
-/* Vertical bar of the cross (long skinny vertical beam) */
-#gold-cross::before {
-    width: 12px;
-    height: 120px;
-    left: 24px;
-    top: 0;
-}
-
-/* Horizontal bar of the cross (shorter crossbeam near top) */
-#gold-cross::after {
-    width: 60px;
-    height: 12px;
-    left: 0;
-    top: 30px;
+    /* Create the cross shape using clip-path */
+    clip-path: polygon(
+        24px 0, 36px 0, 36px 30px, 60px 30px, 60px 42px, 36px 42px,
+        36px 120px, 24px 120px, 24px 42px, 0 42px, 0 30px, 24px 30px
+    );
 }
 
 /* Blog subtab hover effects */
