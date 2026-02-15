@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Official Black Sheep Company</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Main Content -->
+    <div class="min-h-screen">
+        <header class="bg-gray-900 text-white py-6">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold text-center">The Official Black Sheep Company</h1>
+                <p class="text-center mt-2 text-gray-300">Welcome to our website</p>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Welcome!</h2>
+                <p class="text-gray-700 mb-4">
+                    Thank you for visiting The Official Black Sheep Company. We value your privacy and want to ensure you understand how we operate.
+                </p>
+                <p class="text-gray-700">
+                    Please review our policies using the popup that appeared when you first visited this site. You can also access these policies at any time using the buttons below.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <button onclick="showPolicyModal('privacy')" class="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+                        Privacy Policy
+                    </button>
+                    <button onclick="showPolicyModal('terms')" class="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+                        Terms of Service
+                    </button>
+                    <button onclick="showPolicyModal('cookies')" class="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+                        Cookie Policy
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-gray-900 text-white py-6 mt-12">
+            <div class="container mx-auto px-4 text-center">
+                <p>&copy; 2024 The Official Black Sheep Company. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Policy Modal -->
+    <div id="policyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="bg-gray-900 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
+                <h3 id="modalTitle" class="text-2xl font-bold">Policies</h3>
+                <button onclick="closeModal()" class="text-white hover:text-gray-300 text-3xl leading-none">&times;</button>
+            </div>
+
+            <!-- Modal Tabs -->
+            <div class="flex border-b border-gray-200 px-6 pt-4">
+                <button id="tabPrivacy" onclick="switchTab('privacy')" class="px-4 py-2 font-semibold text-gray-600 border-b-2 border-transparent hover:border-gray-900 transition">
+                    Privacy Policy
+                </button>
+                <button id="tabTerms" onclick="switchTab('terms')" class="px-4 py-2 font-semibold text-gray-600 border-b-2 border-transparent hover:border-gray-900 transition">
+                    Terms of Service
+                </button>
+                <button id="tabCookies" onclick="switchTab('cookies')" class="px-4 py-2 font-semibold text-gray-600 border-b-2 border-transparent hover:border-gray-900 transition">
+                    Cookie Policy
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="overflow-y-auto flex-1 px-6 py-6">
+                <!-- Privacy Policy -->
+                <div id="contentPrivacy" class="policy-content hidden">
+                    <h4 class="text-xl font-bold text-gray-900 mb-4">Privacy Policy</h4>
+                    <p class="text-sm text-gray-500 mb-4">Last updated: January 2024</p>
+                    
+                    <div class="space-y-4 text-gray-700">
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">1. Information We Collect</h5>
+                            <p>The Official Black Sheep Company ("we," "our," or "us") collects information that you provide directly to us, including:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Personal information (name, email address, phone number)</li>
+                                <li>Account credentials</li>
+                                <li>Payment information</li>
+                                <li>Communications with us</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">2. How We Use Your Information</h5>
+                            <p>We use the information we collect to:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Provide, maintain, and improve our services</li>
+                                <li>Process transactions and send related information</li>
+                                <li>Send you technical notices and support messages</li>
+                                <li>Respond to your comments and questions</li>
+                                <li>Monitor and analyze trends and usage</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">3. Information Sharing</h5>
+                            <p>We do not sell your personal information. We may share your information only in the following circumstances:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>With your consent</li>
+                                <li>With service providers who perform services on our behalf</li>
+                                <li>To comply with legal obligations</li>
+                                <li>To protect our rights and prevent fraud</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">4. Data Security</h5>
+                            <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">5. Your Rights</h5>
+                            <p>You have the right to:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Access your personal information</li>
+                                <li>Correct inaccurate data</li>
+                                <li>Request deletion of your data</li>
+                                <li>Object to processing of your data</li>
+                                <li>Withdraw consent at any time</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">6. Contact Us</h5>
+                            <p>If you have questions about this Privacy Policy, please contact us at privacy@blacksheepcompany.com</p>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Terms of Service -->
+                <div id="contentTerms" class="policy-content hidden">
+                    <h4 class="text-xl font-bold text-gray-900 mb-4">Terms of Service</h4>
+                    <p class="text-sm text-gray-500 mb-4">Last updated: January 2024</p>
+                    
+                    <div class="space-y-4 text-gray-700">
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">1. Acceptance of Terms</h5>
+                            <p>By accessing and using The Official Black Sheep Company's website and services, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">2. Use License</h5>
+                            <p>Permission is granted to temporarily access the materials on The Official Black Sheep Company's website for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Modify or copy the materials</li>
+                                <li>Use the materials for any commercial purpose</li>
+                                <li>Attempt to reverse engineer any software</li>
+                                <li>Remove any copyright or proprietary notations</li>
+                                <li>Transfer the materials to another person</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">3. User Accounts</h5>
+                            <p>When you create an account with us, you must provide accurate and complete information. You are responsible for:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Maintaining the security of your account</li>
+                                <li>All activities that occur under your account</li>
+                                <li>Notifying us immediately of any unauthorized use</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">4. Prohibited Activities</h5>
+                            <p>You agree not to:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Violate any laws or regulations</li>
+                                <li>Infringe on intellectual property rights</li>
+                                <li>Transmit viruses or malicious code</li>
+                                <li>Engage in unauthorized framing or linking</li>
+                                <li>Interfere with or disrupt the service</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">5. Intellectual Property</h5>
+                            <p>All content, features, and functionality on our website are owned by The Official Black Sheep Company and are protected by international copyright, trademark, and other intellectual property laws.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">6. Disclaimer</h5>
+                            <p>The materials on The Official Black Sheep Company's website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">7. Limitations</h5>
+                            <p>In no event shall The Official Black Sheep Company or its suppliers be liable for any damages arising out of the use or inability to use the materials on our website.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">8. Modifications</h5>
+                            <p>We reserve the right to revise these terms of service at any time without notice. By using this website, you agree to be bound by the current version of these terms.</p>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Cookie Policy -->
+                <div id="contentCookies" class="policy-content hidden">
+                    <h4 class="text-xl font-bold text-gray-900 mb-4">Cookie Policy</h4>
+                    <p class="text-sm text-gray-500 mb-4">Last updated: January 2024</p>
+                    
+                    <div class="space-y-4 text-gray-700">
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">1. What Are Cookies</h5>
+                            <p>Cookies are small text files that are placed on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and understanding how you use our site.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">2. How We Use Cookies</h5>
+                            <p>The Official Black Sheep Company uses cookies for the following purposes:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li><strong>Essential Cookies:</strong> Required for the website to function properly</li>
+                                <li><strong>Performance Cookies:</strong> Help us understand how visitors interact with our website</li>
+                                <li><strong>Functionality Cookies:</strong> Remember your preferences and choices</li>
+                                <li><strong>Analytics Cookies:</strong> Collect information about how you use our website</li>
+                                <li><strong>Marketing Cookies:</strong> Track your browsing habits to show relevant advertisements</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">3. Types of Cookies We Use</h5>
+                            <p><strong>Session Cookies:</strong> Temporary cookies that are deleted when you close your browser.</p>
+                            <p class="mt-2"><strong>Persistent Cookies:</strong> Remain on your device until they expire or you delete them.</p>
+                            <p class="mt-2"><strong>First-Party Cookies:</strong> Set by our website.</p>
+                            <p class="mt-2"><strong>Third-Party Cookies:</strong> Set by external services we use (e.g., analytics providers).</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">4. Managing Cookies</h5>
+                            <p>You can control and manage cookies in various ways:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Browser settings: Most browsers allow you to refuse or delete cookies</li>
+                                <li>Opt-out tools: Use third-party opt-out tools for advertising cookies</li>
+                                <li>Cookie preferences: Adjust your preferences on our website</li>
+                            </ul>
+                            <p class="mt-2">Please note that disabling certain cookies may affect the functionality of our website.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">5. Third-Party Cookies</h5>
+                            <p>We may use third-party services that set cookies on our behalf, including:</p>
+                            <ul class="list-disc ml-6 mt-2 space-y-1">
+                                <li>Google Analytics for website analytics</li>
+                                <li>Social media platforms for sharing content</li>
+                                <li>Advertising networks for marketing purposes</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">6. Your Consent</h5>
+                            <p>By continuing to use our website, you consent to our use of cookies as described in this policy. You can withdraw your consent at any time by adjusting your cookie settings or deleting cookies from your browser.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">7. Updates to This Policy</h5>
+                            <p>We may update this Cookie Policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
+                        </section>
+
+                        <section>
+                            <h5 class="font-bold text-lg mb-2">8. Contact Us</h5>
+                            <p>If you have questions about our use of cookies, please contact us at cookies@blacksheepcompany.com</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="border-t border-gray-200 px-6 py-4 flex justify-between items-center">
+                <label class="flex items-center cursor-pointer">
+                    <input type="checkbox" id="acceptCheckbox" class="w-5 h-5 text-gray-900 border-gray-300 rounded focus:ring-gray-900">
+                    <span class="ml-2 text-sm text-gray-700">I have read and accept all policies</span>
+                </label>
+                <div class="flex gap-3">
+                    <button onclick="closeModal()" class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition">
+                        Close
+                    </button>
+                    <button id="acceptButton" onclick="acceptPolicies()" class="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition opacity-50 cursor-not-allowed" disabled>
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user has already accepted policies
+        function checkPolicyAcceptance() {
+            const accepted = localStorage.getItem('policiesAccepted');
+            if (!accepted) {
+                // Show modal on first visit
+                setTimeout(() => {
+                    showPolicyModal('privacy');
+                }, 500);
+            }
+        }
+
+        // Show policy modal
+        function showPolicyModal(tab) {
+            const modal = document.getElementById('policyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            switchTab(tab);
+        }
+
+        // Switch between tabs
+        function switchTab(tab) {
+            // Hide all content
+            document.querySelectorAll('.policy-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Remove active state from all tabs
+            document.querySelectorAll('[id^="tab"]').forEach(tabBtn => {
+                tabBtn.classList.remove('border-gray-900', 'text-gray-900');
+                tabBtn.classList.add('border-transparent', 'text-gray-600');
+            });
+
+            // Show selected content
+            document.getElementById('content' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+
+            // Activate selected tab
+            const activeTab = document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            activeTab.classList.remove('border-transparent', 'text-gray-600');
+            activeTab.classList.add('border-gray-900', 'text-gray-900');
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('policyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Accept policies
+        function acceptPolicies() {
+            localStorage.setItem('policiesAccepted', 'true');
+            localStorage.setItem('policiesAcceptedDate', new Date().toISOString());
+            closeModal();
+            
+            // Show confirmation message
+            const message = document.createElement('div');
+            message.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            message.textContent = 'Thank you for accepting our policies!';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+
+        // Enable accept button when checkbox is checked
+        document.getElementById('acceptCheckbox').addEventListener('change', function() {
+            const acceptBtn = document.getElementById('acceptButton');
+            if (this.checked) {
+                acceptBtn.disabled = false;
+                acceptBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                acceptBtn.disabled = true;
+                acceptBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('policyModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Check on page load
+        window.addEventListener('load', checkPolicyAcceptance);
+    </script>
+</body>
+</html>
