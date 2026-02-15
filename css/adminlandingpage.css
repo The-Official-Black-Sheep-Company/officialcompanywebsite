@@ -636,3 +636,68 @@ footer {
     letter-spacing: 0.5px;
     display: inline-block;
 }
+
+.header-link {
+    text-decoration: none;
+    display: inline;
+}
+
+.header-title-gold {
+    color: #FBBF24;
+}
+
+.header-title-grey {
+    color: #9CA3AF;
+}
+
+.header-title-black {
+    color: #000000;
+    text-shadow: 0 0 2px white;
+}
+
+.header-title-white {
+    color: white;
+}
+
+.login-button-sm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    background-image: linear-gradient(to right, #FBBF24, #F97316, #1F2937);
+    color: #FFFFFF;
+    border: 1px solid rgba(253, 224, 71, 0.6);
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+.signup-button-sm {
+    font-size: 0.75rem;
+}
+
+.tab-button-link {
+    text-decoration: none;
+    display: block;
+}
+
+.cleaning-button-container {
+    width: 600px;
+    height: 120px;
+    position: relative;
+    z-index: 2;
+}
+
+.junk-button-mover-box {
+    position:absolute;
+    bottom:5px;
+    right:30px;
+    font-size:1.5rem;
+}
+
+.junk-button-mover-female {
+    font-size: 2.5rem;
+}
