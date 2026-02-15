@@ -1,30 +1,34 @@
 /* Gold Cross solid */
 #gold-cross {
-    position: absolute;
+    position: fixed; /* Keep it fixed on the screen */
+    top: 15%; /* Position from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Fine-tune horizontal centering */
     width: 60px;
     height: 120px;
     z-index: 1;
     pointer-events: none;
-    background-color: #FFF8DC; /* Solid color */
+    background-color: #FFD700; /* Bright gold color */
     box-shadow: 
-        0 0 10px var(--gold, #FFD700),
-        0 0 20px var(--gold, #FFD700),
+        0 0 10px #FFD700,
+        0 0 20px #FFD700,
         0 0 40px #FFD700,
         0 0 60px #FFA500;
-    filter: drop-shadow(0 0 10px var(--gold, #FFD700));
+    filter: drop-shadow(0 0 10px #FFD700);
 }
 
 #gold-cross::before,
 #gold-cross::after {
     content: '';
     position: absolute;
-    background: #FFF8DC; /* Match the cross color */
+    background: #FFD700; /* Match the cross color */
     box-shadow: 
-        0 0 10px var(--gold, #FFD700),
-        0 0 20px var(--gold, #FFD700),
+        0 0 10px #FFD700,
+        0 0 20px #FFD700,
         0 0 40px #FFD700,
         0 0 60px #FFA500;
 }
+
 
 /* --- Background Shapes Container --- */
 #shape-container {
@@ -44,25 +48,7 @@
     background-color: var(--dark-gray);
     opacity: 0.6;
     pointer-events: none;
-    animation: slow-drift 20s linear infinite;
-}
-
-@keyframes slow-drift {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    25% {
-        transform: translate(15px, 25px) rotate(5deg);
-    }
-    50% {
-        transform: translate(-10px, 10px) rotate(-5deg);
-    }
-    75% {
-        transform: translate(10px, -15px) rotate(10deg);
-    }
-    100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
+    /* Animation is now handled by JavaScript */
 }
 
 .background-shape.circle { border-radius: 50%; }

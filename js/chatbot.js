@@ -10,109 +10,73 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatTextIncrease = document.getElementById('chat-text-increase');
   const chatTextDecrease = document.getElementById('chat-text-decrease');
 
+  let conversationCount = 0;
+  let suggestionGiven = false;
+
   // --- START OF CHATBOT KNOWLEDGE BASE ---
   const knowledgeBase = [
-      {
-          keywords: ['hi', 'hello', 'hey'],
-          response: "Hi! I’m your Service Hub Assistant. I can help with junk removal & moving, cleaning, server monitoring, phone repair, dog walking, mobile laundry, and your online store. What are you looking for today?"
-      },
-      {
-          keywords: ['store', 'shop', 'order'],
-          response: "About the online store:\n• Browse and order items 24/7.\n• I can answer basic questions about products, availability, and shipping.\nFor specific order help, you can tell me your order number (don’t share anything sensitive like full card numbers)."
-      },
-      {
-          keywords: ['server', 'monitor', 'uptime', 'infrastructure'],
-          response: "Server monitoring & infrastructure:\n• We offer 24/7 monitoring with alerts for downtime and performance issues.\n• We can monitor websites, APIs, servers, and key services.\n• Plans can include uptime checks, resource usage, and incident notifications.\nTell me a bit about how many servers or sites you have, and your preferred contact method for alerts."
-      },
-      {
-          keywords: ['junk', 'haul', 'hauling', 'removal', 'moving', 'move'],
-          response: (input) => {
-              if (input.includes('price') || input.includes('cost') || input.includes('how much') || input.includes('rate')) {
-                  return "Junk removal & moving pricing:\n• Pricing usually depends on load size, distance, and any special handling.\n• For a quick estimate, tell me: 1) what you need removed or moved, 2) approximate volume (e.g. a small room, full garage, 1‑bedroom apartment), and 3) pickup & drop‑off locations.";
-              }
-              if (input.includes('same day') || input.includes('today') || input.includes('urgent') || input.includes('emergency')) {
-                  return "Same‑day junk removal / moving:\n• Same-day options may be available depending on schedule.\n• Tell me your location, what you need done, and your ideal time window and we’ll confirm availability.";
-              }
-              return "Junk removal & moving services:\n• We handle household junk, furniture, appliances, and general hauling (within reasonable safety limits).\n• We can also help with local moves and loading/unloading.\nTell me what you need moved or removed and the address so we can estimate time and cost.";
-          }
-      },
-      {
-          keywords: ['clean', 'cleaning', 'housekeeping'],
-          response: (input) => {
-              if (input.includes('move out') || input.includes('move-out') || input.includes('moveout') || input.includes('deep')) {
-                  return "Move‑out / deep cleaning:\n• Focus on kitchens, bathrooms, floors, baseboards, and inside cabinets (as requested).\n• Ideal for end of lease / pre‑sale cleanups.\nShare the type of property (apartment/house, number of bedrooms/bathrooms) and your preferred date so we can give a better estimate.";
-              }
-              if (input.includes('commercial') || input.includes('office') || input.includes('business')) {
-                  return "Commercial cleaning:\n• Offices, retail spaces, and other commercial properties.\n• We can set up recurring schedules (daily/weekly) or one‑time projects.\nTell me the type of business, approximate square footage, and how often you’d like cleaning.";
-              }
-              return "Residential & commercial cleaning:\n• Options for standard, deep, move‑in/move‑out, and recurring cleanings.\n• We bring our own supplies unless you prefer specific products.\nTell me if the space is residential or commercial, how many rooms, and how often you’d like cleaning (one‑time, weekly, bi‑weekly, etc.).";
-          }
-      },
-      {
-          keywords: ['phone', 'screen', 'iphone', 'android', 'battery', 'repair'],
-          response: (input) => {
-              if (input.includes('screen') || input.includes('crack')) {
-                  return "Phone screen repair:\n• We handle most popular iPhone and Android models.\n• Turnaround time can be same‑day or next‑day for common parts.\nTell me your phone model and the issue (cracked glass only, no touch, display issues) and I can outline next steps.";
-              }
-              if (input.includes('battery')) {
-                  return "Phone battery replacement:\n• We replace worn batteries that don’t hold a charge.\n• Typical service time is around 1–2 hours, depending on the model.\nShare your phone model and any battery symptoms (shutting off, draining fast, swelling).";
-              }
-              if (input.includes('water') || input.includes('liquid')) {
-                  return "Water‑damage phone repair:\n• Power off the device and avoid charging it.\n• We can inspect and attempt recovery / repair depending on condition.\nTell me when the damage happened and the phone model, and we’ll recommend next steps.";
-              }
-              return "Cell phone repair services:\n• Screen, battery, charging port, buttons, and other common issues.\n• Many repairs can be done the same day, depending on parts.\nTell me your phone model and the problem you’re seeing so we can guide you.";
-          }
-      },
-      {
-          keywords: ['dog', 'dogs', 'walk', 'pet'],
-          response: (input) => {
-              if (input.includes('price') || input.includes('cost') || input.includes('how much') || input.includes('rate')) {
-                  return "Dog walking pricing:\n• Usually based on walk length (e.g. 20, 30, 60 minutes) and frequency (occasional vs weekly).\n• Multi‑dog households may have a small additional fee.\nTell me how many dogs you have, how often you need walks, and your general location so we can estimate.";
-              }
-              if (input.includes('schedule') || input.includes('weekly') || input.includes('daily')) {
-                  return "Dog walking schedules:\n• Options for daily, a few times per week, or occasional walks.\n• We can discuss preferred time windows (morning, mid‑day, evening).\nShare your preferred days/times and any special notes about your dog (age, energy level, anything we should watch for).";
-              }
-              return "Dog walking services:\n• Regular or occasional walks with updates after each visit.\n• We pay attention to your dog’s routine, energy level, and any special instructions.\nTell me your dog’s age, breed (optional), and how often you’d like walks.";
-          }
-      },
-      {
-          keywords: ['laundry', 'laundromat', 'wash', 'fold'],
-          response: (input) => {
-              if (input.includes('how') && (input.includes('work') || input.includes('works'))) {
-                  return "Mobile laundry service – how it works:\n1) We pick up your laundry at a scheduled time.\n2) We wash, dry, and fold it for you.\n3) We deliver it back, usually within 24–48 hours depending on volume.\nTell me your approximate number of loads per week and your area so we can plan pickup times.";
-              }
-              if (input.includes('price') || input.includes('cost') || input.includes('how much') || input.includes('rate')) {
-                  return "Mobile laundry pricing:\n• Often charged per pound or per standard laundry bag.\n• Pickup and delivery may be included above a minimum amount.\nShare roughly how many loads or pounds of laundry you have and how often you’ll use the service.";
-              }
-              return "Mobile laundry services:\n• Pickup, wash/dry/fold, and delivery included.\n• Great for busy households or small businesses.\nTell me your location and how much laundry you typically have each week.";
-          }
-      },
-      {
-          keywords: ['hour', 'time', 'open', 'close'],
-          response: "Hours & availability:\n• Core hours are typically standard business hours, with some services offering evenings or weekends.\n• Junk removal, moving, and cleaning can sometimes be scheduled outside normal hours.\nTell me which service you’re asking about and your preferred date/time so we can check availability."
-      },
-      {
-          keywords: ['where', 'located', 'location', 'area', 'serve'],
-          response: "Service area:\n• We serve local clients for in‑person services (junk removal, moving, cleaning, dog walking, laundry, phone repair).\n• Server monitoring and some online services can support clients in many locations.\nTell me your city/area and the service you need so we can confirm coverage."
-      },
-      {
-          keywords: ['whats crackin', "what's good", 'whats good', 'wassup', 'wats good', 'wats up'],
-          response: ['whats Brackin homie', 'wats poppin', 'what it do nephew', 'where dem thangs at?', 'U strait?']
-      },
-      {
-          keywords: ["who's the owne'r?", 'who ownes this company?', 'who runs the show?', 'whos the hnic?'],
-          response: "Swoop mf Geezy, view our contacts tab for more info!!"
-      },
-      {
-          keywords: ['whats your name?'],
-          response: "My name is Black the sheep, one of the blackest sheep in the flock"
-      },
-      {
-          keywords: ['book', 'schedule', 'appointment', 'quote', 'estimate'],
-          response: "Booking & quotes:\nI can capture your request so our team can follow up. Please share:\n1) Your name\n2) Service you need (junk removal, cleaning, server monitoring, phone repair, dog walking, laundry, online store help)\n3) Your general location\n4) Ideal date/time window\n(Please avoid sending highly sensitive data here.)"
-      }
+    {
+        keywords: ['hi', 'hello', 'hey'],
+        response: "Hi! I’m your Service Hub Assistant. I can help with junk removal & moving, cleaning, server monitoring, phone repair, dog walking, mobile laundry, and your online store. What are you looking for today?"
+    },
+    {
+        keywords: ['store', 'shop', 'order', 'product'],
+        response: "About our online store:\n• You can browse our products and place an order 24/7. Just head to the 'Shopping' tab and click 'Store'.\n• I can help with basic questions about products, like pricing. For example, you can ask 'How much is the Black Sheep hoodie?'."
+    },
+    {
+        keywords: ['ismm', 'social media', 'integrated social media management'],
+        response: "The Integrated Social Media Management (ISMM) platform is a powerful tool for managing all your social media accounts in one place. You can schedule posts, track engagement, and analyze your performance. You can find it under the 'Servers' tab in the 'Business Server' section."
+    },
+    {
+        keywords: ['navigate', 'find', 'go to', 'where is'],
+        response: (input) => {
+            if (input.includes('monitoring')) return "You can find our monitoring services under the 'Monitoring' tab. We have dashboards for Wazuh, Glances, and Kubernetes.";
+            if (input.includes('bible study')) return "Our 'Seek Eternity' bible study is located under its own tab. You can find the latest study there.";
+            if (input.includes('reports')) return "The 'Reports' tab contains our blogs on historic figures, artifacts, and events.";
+            if (input.includes('servers')) return "You can find our server information under the 'Servers' tab. We have sections for Arts, Business, Cloud, and Home servers.";
+            return "I can help you find what you're looking for. What section are you trying to find? For example, you can ask 'Where is the bible study?'.";
+        }
+    },
+    {
+        keywords: ['price', 'cost', 'how much'],
+        response: (input) => {
+            if (input.includes('junk removal')) return "Junk removal pricing is based on the volume of junk. A small load is typically around $125, while a full truckload can be up to $600.";
+            if (input.includes('cleaning')) return "Our residential cleaning services start at $150 for a basic cleaning of a 2-bedroom apartment. Commercial cleaning is quoted based on the size and needs of the space.";
+            if (input.includes('hoodie')) return "The Black Sheep hoodie is $45. You can find it in our online store under the 'Shopping' tab.";
+            return "I can provide pricing information for our services and products. What are you interested in?"
+        }
+    },
+    {
+        keywords: ['book', 'schedule', 'appointment'],
+        response: "To schedule an appointment, I'll need your name, the service you're interested in, and your preferred date and time. Once I have that, I can check our availability. Please note that I do not have access to Cal.com yet, but I can still help you book an appointment."
+    },
+    {
+        keywords: ['thanks', 'thank you', 'appreciate it'],
+        response: "You're welcome! Is there anything else I can help you with?"
+    },
+    {
+        keywords: ['bye', 'goodbye', 'see ya'],
+        response: "Have a great day!"
+    },
+    {
+        keywords: ['whats crackin', "what's good", 'whats good', 'wassup', 'wats good', 'wats up'],
+        response: ['whats Brackin homie', 'wats poppin', 'what it do nephew', 'where dem thangs at?', 'U strait?']
+    },
+    {
+        keywords: ["who's the owne'r?", 'who ownes this company?', 'who runs the show?', 'whos the hnic?'],
+        response: "Swoop mf Geezy, view our contacts tab for more info!!"
+    },
+    {
+        keywords: ['whats your name?'],
+        response: "My name is Black the sheep, one of the blackest sheep in the flock"
+    },
   ];
   const fallbackResponse = "I’m here to help with:\n• Junk removal, moving & hauling\n• Residential & commercial cleaning\n• Server monitoring & infrastructure\n• Cell phone repair\n• Dog walking\n• Mobile laundry services\n• Online store questions\n\nTry asking something like “How much is weekly dog walking?” or “Do you offer move‑out cleaning?”.";
+  const proactiveSuggestions = [
+    "Did you know we also offer 24/7 server monitoring? It's a great way to keep your websites and applications running smoothly.",
+    "We're running a special on our residential cleaning services this month. Get 10% off your first cleaning!",
+    "Have you checked out our blog? We have interesting articles on historic figures, artifacts, and events."
+  ];
   // --- END OF CHATBOT KNOWLEDGE BASE ---
 
   // --- Text Size Logic ---
@@ -164,6 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function botReply(text) {
       addMessage(text, 'bot');
+      conversationCount++;
+      if (conversationCount > 2 && !suggestionGiven) {
+          setTimeout(() => {
+              const suggestion = proactiveSuggestions[Math.floor(Math.random() * proactiveSuggestions.length)];
+              addMessage(suggestion, 'bot');
+              suggestionGiven = true;
+          }, 1000);
+      }
   }
 
   function buildBotResponse(rawInput) {
