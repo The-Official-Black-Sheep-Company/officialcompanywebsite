@@ -127,6 +127,11 @@
             Sign in with Google
         </button>
 
+        <div class="mt-4 text-center text-xs text-gray-500">
+            By logging in, you agree to our 
+            <a href="#" onclick="openLegalPopup(); return false;" class="text-violet-400 hover:underline">Terms of Service and Privacy Policy</a>.
+        </div>
+
         <div class="relative py-2">
             <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-t border-white/5"></div>
@@ -157,6 +162,11 @@
     <script src="../js/firebase-config.js"></script>
     <script src="../js/auth.js"></script>
 
+    <script>
+        function openLegalPopup() {
+            window.open("legal.html", "Legal", "width=800,height=600,scrollbars=yes,resizable=yes");
+        }
+    </script>
     <style>
         .animate-fade-in {
             animation: fadeIn 0.5s ease-out forwards;
