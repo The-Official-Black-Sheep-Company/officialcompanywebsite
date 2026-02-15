@@ -1,33 +1,69 @@
 document.addEventListener("DOMContentLoaded", function() {
-
     const auth = firebase.auth();
     const db = firebase.firestore();
+
+    const authButtonsContainer = document.querySelector("#auth-buttons-container");
+    const userAvatarContainer = document.querySelector("#user-avatar-container");
+    const userAvatarImg = document.querySelector("#user-avatar-img");
+    const logoutLink = document.querySelector("#logout-link");
+
+    // Monitor authentication state
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            // User is signed in
+            if (user.emailVerified) {
+                // Show avatar and hide login/signup
+                authButtonsContainer.style.display = "none";
+                userAvatarContainer.style.display = "block";
+                if (user.photoURL) {
+                    userAvatarImg.src = user.photoURL;
+                } else {
+                    // Optional: a default avatar if the user has no photo
+                    userAvatarImg.src = "https://via.placeholder.com/40"; 
+                }
+                console.log("User is logged in:", user.email);
+            } else {
+                // User is not verified, ensure they are logged out from the UI
+                authButtonsContainer.style.display = "flex";
+                userAvatarContainer.style.display = "none";
+            }
+        } else {
+            // User is signed out
+            authButtonsContainer.style.display = "flex";
+            userAvatarContainer.style.display = "none";
+            console.log("User is logged out.");
+        }
+    });
+
+    // Logout functionality
+    if (logoutLink) {
+        logoutLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            auth.signOut().then(() => {
+                window.location.href = "/index.html"; // Redirect to home page after logout
+            }).catch((error) => {
+                console.error("Logout failed:", error);
+                alert("Logout failed. Please try again.");
+            });
+        });
+    }
+
+    // Your existing form and Google sign-in logic...
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-    // Function to save user data to Firestore, checking if user already exists
+    // Function to save user data to Firestore
     const saveUserToFirestore = (user) => {
         const userRef = db.collection("users").doc(user.uid);
         userRef.get().then((doc) => {
-            if (!doc.exists) { // Only create doc if it doesn't exist from a previous sign-in
+            if (!doc.exists) {
                 userRef.set({
                     email: user.email,
                     displayName: user.displayName || null,
                     photoURL: user.photoURL || null,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    emailVerified: user.emailVerified // Store verification status
-                }).then(() => {
-                    console.log("New user data saved to Firestore!");
-                }).catch((error) => {
-                    console.error("Error saving new user to Firestore: ", error);
+                    emailVerified: user.emailVerified
                 });
-            } else {
-                 // If user exists, update their verification status if it has changed
-                if (doc.data().emailVerified !== user.emailVerified) {
-                    userRef.update({ emailVerified: user.emailVerified });
-                }
             }
-        }).catch((error) => {
-            console.error("Error checking user in Firestore: ", error);
         });
     };
 
@@ -38,29 +74,16 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             const email = signupForm["signup-email"].value;
             const password = signupForm["signup-password"].value;
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    
-                    // Send verification email
-                    user.sendEmailVerification().then(() => {
-                        alert("A verification email has been sent. Please check your inbox to activate your account before logging in.");
-                    }).catch((error) => {
-                        console.error("Error sending verification email: ", error);
-                        alert("Could not send verification email, but your account was created. Please contact support or try logging in.");
-                    });
-
-                    saveUserToFirestore(user); // Save user to DB
-                    
-                    // Sign the user out and redirect to the login page to enforce verification
+            auth.createUserWithEmailAndPassword(email, password).then(userCredential => {
+                userCredential.user.sendEmailVerification().then(() => {
+                    alert("A verification email has been sent. Please check your inbox.");
                     auth.signOut();
                     window.location.href = "login.html";
-                })
-                .catch((error) => {
-                    console.error("Error creating user:", error.code, error.message);
-                    alert("Error creating account: " + error.message);
                 });
+                saveUserToFirestore(userCredential.user);
+            }).catch(error => {
+                alert("Error creating account: " + error.message);
+            });
         });
     }
 
@@ -71,43 +94,30 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             const email = loginForm["login-email"].value;
             const password = loginForm["login-password"].value;
-
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    if (user.emailVerified) {
-                        // Email is verified, proceed to login
-                        console.log("User successfully logged in:", user.email);
-                        window.location.href = "../index.html"; // Redirect to main page
-                    } else {
-                        // Email not verified
-                        alert("Please verify your email address before logging in. Click OK to resend the verification email.");
-                        user.sendEmailVerification(); // Re-send the verification email
-                        auth.signOut(); // Log them out to prevent access
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error logging in:", error.code, error.message);
-                    alert("Error logging in: " + error.message);
-                });
+            auth.signInWithEmailAndPassword(email, password).then(userCredential => {
+                if (userCredential.user.emailVerified) {
+                    window.location.href = "/index.html";
+                } else {
+                    alert("Please verify your email first. We've sent another verification link.");
+                    userCredential.user.sendEmailVerification();
+                    auth.signOut();
+                }
+            }).catch(error => {
+                alert("Login failed: " + error.message);
+            });
         });
     }
 
-    // Google Sign-in Button (works for both login and signup)
+    // Google Sign-in
     const googleSigninButton = document.querySelector("#google-signin-button");
     if (googleSigninButton) {
         googleSigninButton.addEventListener("click", () => {
-            auth.signInWithPopup(googleProvider)
-                .then((result) => {
-                    const user = result.user;
-                    // Google provides verified emails, so we can proceed
-                    saveUserToFirestore(user); // Save/check user in DB
-                    console.log("User signed in with Google:", user.displayName);
-                    window.location.href = "../index.html"; // Redirect to main page
-                }).catch((error) => {
-                    console.error("Google sign-in failed:", error.code, error.message);
-                    alert("Google sign-in failed: " + error.message);
-                });
+            auth.signInWithPopup(googleProvider).then(result => {
+                saveUserToFirestore(result.user);
+                window.location.href = "/index.html";
+            }).catch(error => {
+                alert("Google sign-in failed: " + error.message);
+            });
         });
     }
 });
