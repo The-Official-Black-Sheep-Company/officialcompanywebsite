@@ -1,7 +1,29 @@
-@keyframes slow-drift {
-    0%   { transform: translate(0,0) rotate(var(--rotation,0deg)); }
-    50%  { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rotation,0deg)); }
-    100% { transform: translate(0,0) rotate(var(--rotation,0deg)); }
+/* Gold Cross solid */
+#gold-cross {
+    position: absolute;
+    width: 60px;
+    height: 120px;
+    z-index: 1;
+    pointer-events: none;
+    background-color: #FFF8DC; /* Solid color */
+    box-shadow: 
+        0 0 10px var(--gold),
+        0 0 20px var(--gold),
+        0 0 40px #FFD700,
+        0 0 60px #FFA500;
+    filter: drop-shadow(0 0 10px var(--gold));
+}
+
+#gold-cross::before,
+#gold-cross::after {
+    content: '';
+    position: absolute;
+    background: #FFF8DC; /* Match the cross color */
+    box-shadow: 
+        0 0 10px var(--gold),
+        0 0 20px var(--gold),
+        0 0 40px #FFD700,
+        0 0 60px #FFA500;
 }
 
 /* --- Background Shapes Container --- */
@@ -16,52 +38,22 @@
     pointer-events: none;
 }
 
-/* --- Gold Cross --- */
-#gold-cross {
-    position: absolute;
-    width: 60px;
-    height: 120px;
-    z-index: 1;
-    pointer-events: none;
-    background: none !important;
-    background-color: transparent !important;
-    filter: drop-shadow(0 0 10px var(--gold));
-}
-
-#gold-cross::before,
-#gold-cross::after {
-    content: '';
-    position: absolute;
-    background: #FFF8DC; 
-    box-shadow: 
-        0 0 10px var(--gold),
-        0 0 20px var(--gold),
-        0 0 40px #FFD700,
-        0 0 60px #FFA500;
-}
-
-/* Vertical bar of the cross (long skinny vertical beam) */
-#gold-cross::before {
-    width: 12px;
-    height: 120px;
-    left: 24px;
-    top: 0;
-}
-
-/* Horizontal bar of the cross (shorter crossbeam near top) */
-#gold-cross::after {
-    width: 60px;
-    height: 12px;
-    left: 0;
-    top: 30px;
-}
-
 /* --- Background Shapes - EDUCATIONAL GEOMETRY --- */
 .background-shape {
     position: absolute;
     background-color: var(--dark-gray);
     opacity: 0.6;
     pointer-events: none;
+    animation: slow-drift 10s ease-in-out infinite alternate;
+}
+
+@keyframes slow-drift {
+    from {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    to {
+        transform: translate(20px, 20px) rotate(10deg);
+    }
 }
 
 .background-shape.circle { border-radius: 50%; }

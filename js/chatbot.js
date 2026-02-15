@@ -1,4 +1,5 @@
 
+document.addEventListener("DOMContentLoaded", () => {
   const chatLog = document.getElementById('chat-log');
   const chatInput = document.getElementById('chat-input');
   const chatSend = document.getElementById('chat-send');
@@ -204,22 +205,8 @@
 
   // UI Interaction listeners
   if (chatToggle) {
-      // Open Chatwoot AI widget instead of old chatbot
       chatToggle.addEventListener('click', () => {
-          console.log('Chat button clicked');
-
-          // Wait for Chatwoot to load if not ready yet
-          const openChatwoot = () => {
-              if (window.$chatwoot) {
-                  console.log('Opening Chatwoot widget');
-                  window.$chatwoot.toggle();
-              } else {
-                  console.log('Chatwoot not ready, waiting...');
-                  setTimeout(openChatwoot, 100);
-              }
-          };
-
-          openChatwoot();
+          chatWindow.classList.toggle('hidden');
       });
   }
   if (chatClose) {
@@ -263,3 +250,4 @@
           }
       }, 500);
   });
+});
