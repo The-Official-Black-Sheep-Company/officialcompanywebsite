@@ -14,62 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let suggestionGiven = false;
 
   // --- START OF CHATBOT KNOWLEDGE BASE ---
-  const knowledgeBase = [
-    {
-        keywords: ['hi', 'hello', 'hey'],
-        response: "Hi! I’m your Service Hub Assistant. I can help with junk removal & moving, cleaning, server monitoring, phone repair, dog walking, mobile laundry, and your online store. What are you looking for today?"
-    },
-    {
-        keywords: ['store', 'shop', 'order', 'product'],
-        response: "About our online store:\n• You can browse our products and place an order 24/7. Just head to the 'Shopping' tab and click 'Store'.\n• I can help with basic questions about products, like pricing. For example, you can ask 'How much is the Black Sheep hoodie?'."
-    },
-    {
-        keywords: ['ismm', 'social media', 'integrated social media management'],
-        response: "The Integrated Social Media Management (ISMM) platform is a powerful tool for managing all your social media accounts in one place. You can schedule posts, track engagement, and analyze your performance. You can find it under the 'Servers' tab in the 'Business Server' section."
-    },
-    {
-        keywords: ['navigate', 'find', 'go to', 'where is'],
-        response: (input) => {
-            if (input.includes('monitoring')) return "You can find our monitoring services under the 'Monitoring' tab. We have dashboards for Wazuh, Glances, and Kubernetes.";
-            if (input.includes('bible study')) return "Our 'Seek Eternity' bible study is located under its own tab. You can find the latest study there.";
-            if (input.includes('reports')) return "The 'Reports' tab contains our blogs on historic figures, artifacts, and events.";
-            if (input.includes('servers')) return "You can find our server information under the 'Servers' tab. We have sections for Arts, Business, Cloud, and Home servers.";
-            return "I can help you find what you're looking for. What section are you trying to find? For example, you can ask 'Where is the bible study?'.";
-        }
-    },
-    {
-        keywords: ['price', 'cost', 'how much'],
-        response: (input) => {
-            if (input.includes('junk removal')) return "Junk removal pricing is based on the volume of junk. A small load is typically around $125, while a full truckload can be up to $600.";
-            if (input.includes('cleaning')) return "Our residential cleaning services start at $150 for a basic cleaning of a 2-bedroom apartment. Commercial cleaning is quoted based on the size and needs of the space.";
-            if (input.includes('hoodie')) return "The Black Sheep hoodie is $45. You can find it in our online store under the 'Shopping' tab.";
-            return "I can provide pricing information for our services and products. What are you interested in?"
-        }
-    },
-    {
-        keywords: ['book', 'schedule', 'appointment'],
-        response: "To schedule an appointment, I'll need your name, the service you're interested in, and your preferred date and time. Once I have that, I can check our availability. Please note that I do not have access to Cal.com yet, but I can still help you book an appointment."
-    },
-    {
-        keywords: ['thanks', 'thank you', 'appreciate it'],
-        response: "You're welcome! Is there anything else I can help you with?"
-    },
-    {
-        keywords: ['bye', 'goodbye', 'see ya'],
-        response: "Have a great day!"
-    },
-    {
-        keywords: ['whats crackin', "what's good", 'whats good', 'wassup', 'wats good', 'wats up'],
-        response: ['whats Brackin homie', 'wats poppin', 'what it do nephew', 'where dem thangs at?', 'U strait?']
-    },
-    {
-        keywords: ["who's the owne'r?", 'who ownes this company?', 'who runs the show?', 'whos the hnic?'],
-        response: "Swoop mf Geezy, view our contacts tab for more info!!"
-    },
-    {
-        keywords: ['whats your name?'],
-        response: "My name is Black the sheep, one of the blackest sheep in the flock"
-    },
+  // Use externalized knowledge base if available, otherwise fallback to local defaults
+  const knowledgeBase = window.chatbotKnowledge || [
+      {
+          keywords: ['hi', 'hello', 'hey'],
+          response: "Hi! I’m your Service Hub Assistant. How can I help you today?"
+      }
   ];
   const fallbackResponse = "I’m here to help with:\n• Junk removal, moving & hauling\n• Residential & commercial cleaning\n• Server monitoring & infrastructure\n• Cell phone repair\n• Dog walking\n• Mobile laundry services\n• Online store questions\n\nTry asking something like “How much is weekly dog walking?” or “Do you offer move‑out cleaning?”.";
   const proactiveSuggestions = [

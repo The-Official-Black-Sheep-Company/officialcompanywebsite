@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('shape-container');
     if (!container) return;
 
-    const shapes = [
+    const shapesList = [
         'circle', 'square', 'rectangle', 'triangle', 'quadrilateral', 'parallelogram',
         'rhombus', 'trapezoid', 'kite', 'pentagon', 'hexagon', 'heptagon', 'octagon',
         'nonagon', 'decagon', 'hendecagon', 'dodecagon', 'star', 'star6', 'star8',
@@ -10,64 +10,73 @@ document.addEventListener('DOMContentLoaded', () => {
         'cross', 'plus', 'heart', 'teardrop', 'lshape', 'tshape'
     ];
 
-    const numShapes = 35;
+    const numShapes = 40;
+    const shapeElements = [];
 
     for (let i = 0; i < numShapes; i++) {
         const shape = document.createElement('div');
-        const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
-        const size = Math.random() * 60 + 20;
-        const initialX = Math.random() * (window.innerWidth - size);
-        const initialY = Math.random() * (window.innerHeight - size);
+        const shapeType = shapesList[Math.floor(Math.random() * shapesList.length)];
+        const size = Math.random() * 50 + 15;
+        
+        // Random initial positions
+        let x = Math.random() * window.innerWidth;
+        let y = Math.random() * window.innerHeight;
 
         shape.className = `background-shape ${shapeType}`;
         shape.style.width = `${size}px`;
         shape.style.height = `${size}px`;
-        shape.style.left = `${initialX}px`;
-        shape.style.top = `${initialY}px`;
-
-        // Store animation properties in data attributes
-        shape.dataset.vx = (Math.random() - 0.5) * 0.05; // Slowed down velocity
-        shape.dataset.vy = (Math.random() - 0.5) * 0.05; // Slowed down velocity
-        shape.dataset.scale = 1;
-        shape.dataset.scaleDirection = (Math.random() > 0.5) ? 1 : -1;
-        shape.dataset.scaleSpeed = Math.random() * 0.0001 + 0.00005; // Very slow zoom
+        shape.style.position = 'absolute';
+        shape.style.opacity = (Math.random() * 0.15 + 0.05).toString();
+        
+        // Random drift velocity - subtle and consistent
+        const vx = (Math.random() - 0.5) * 0.4;
+        const vy = (Math.random() - 0.5) * 0.4;
+        const rotation = Math.random() * 360;
+        const rotationSpeed = (Math.random() - 0.5) * 0.2;
 
         container.appendChild(shape);
+        
+        shapeElements.push({
+            el: shape,
+            x,
+            y,
+            vx,
+            vy,
+            rotation,
+            rotSpeed: rotationSpeed,
+            width: size,
+            height: size
+        });
     }
 
-    function animateShapes() {
-        const allShapes = document.querySelectorAll('.background-shape');
-        allShapes.forEach(shape => {
-            let x = parseFloat(shape.style.left);
-            let y = parseFloat(shape.style.top);
-            let scale = parseFloat(shape.dataset.scale);
+    function animate() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-            // Update position based on velocity
-            x += parseFloat(shape.dataset.vx);
-            y += parseFloat(shape.dataset.vy);
+        shapeElements.forEach(item => {
+            // Update positions
+            item.x += item.vx;
+            item.y += item.vy;
+            item.rotation += item.rotSpeed;
 
-            // Update scale
-            scale += parseFloat(shape.dataset.scaleDirection) * parseFloat(shape.dataset.scaleSpeed);
-            if (scale > 1.5 || scale < 0.5) { // Change direction at scale limits
-                shape.dataset.scaleDirection *= -1;
-            }
-            shape.dataset.scale = scale;
+            // Fluid wrapping logic: if it goes off one side, it appears on the other
+            if (item.x + item.width < 0) item.x = width;
+            else if (item.x > width) item.x = -item.width;
 
-            // Bounce off the walls
-            if (x < 0 || x > window.innerWidth - shape.offsetWidth) {
-                shape.dataset.vx *= -1;
-            }
-            if (y < 0 || y > window.innerHeight - shape.offsetHeight) {
-                shape.dataset.vy *= -1;
-            }
+            if (item.y + item.height < 0) item.y = height;
+            else if (item.y > height) item.y = -item.height;
 
-            shape.style.left = `${x}px`;
-            shape.style.top = `${y}px`;
-            shape.style.transform = `scale(${scale})`
+            // Use translate3d for hardware acceleration and sub-pixel smoothness
+            item.el.style.transform = `translate3d(${item.x}px, ${item.y}px, 0) rotate(${item.rotation}deg)`;
         });
 
-        requestAnimationFrame(animateShapes);
+        requestAnimationFrame(animate);
     }
 
-    animateShapes();
+    animate();
+    
+    // Handle resize to prevent shapes getting stuck outside bounds
+    window.addEventListener('resize', () => {
+        // Just let the wrap logic handle it naturally in the next frame
+    });
 });

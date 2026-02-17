@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="css/background.css">
     <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png">
     <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png">
+    <!-- External Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Firebase SDK (Compat versions for global scope) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <script src="js/firebase-config.js"></script>
     <script src="js/homepage.js"></script>
     <script src="js/index.js"></script>
     <script src="js/biblestudy.js"></script>
@@ -19,14 +29,11 @@
     <script src="js/artifacts.js"></script>
     <script src="js/events.js"></script>
     <script src="js/hist_figures.js"></script>
-    <img src="media/bible/genesis/genesis1-hebrew-manuscript.jpg">
-
-    <!-- External Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
+    <!-- Misplaced image from head -->
+    <img src="media/bible/genesis/genesis1-hebrew-manuscript.jpg" style="display:none;">
 
     <header class="dashboard-header">
         <div class="header-content">
@@ -65,10 +72,10 @@
 
                 <!-- Login/Signup Container -->
                 <div id="auth-buttons-container" style="display: flex; gap: 15px; align-items: center;">
-                    <a href="/html/signup.html" id="signup-button" class="signup-button"
+                    <a href="html/signup.html" id="signup-button" class="signup-button"
                         style="font-size: 0.75rem; color: #9CA3AF; text-decoration: none; padding: 4px 10px; border: 1px solid #333; border-radius: 4px; transition: all 0.2s;">Sign
                         Up</a>
-                    <a href="/html/login.html" id="login-button" class="login-button shadow-lg shadow-yellow-500/30"
+                    <a href="html/login.html" id="login-button" class="login-button shadow-lg shadow-yellow-500/30"
                         style="display: flex; align-items: center; justify-content: center; padding: 6px 18px; border-radius: 9999px; font-size: 0.75rem; line-height: 1rem; font-weight: 600; background-image: linear-gradient(to right, #FBBF24, #F97316, #1F2937); color: #FFFFFF; border: 1px solid rgba(253, 224, 71, 0.6); font-family: sans-serif; text-decoration: none; transition: all 0.2s;">
                         Login</a>
                 </div>
@@ -995,7 +1002,8 @@
         </div>
     </div>
 
-    <!-- Chatwoot AI Chatbot Widget -->
+    <!-- Chatbot Knowledge Base -->
+    <script src="js/chatbot-knowledge.js"></script>
     <script src="js/chatwoot-widget-config.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/background.js"></script>

@@ -1,703 +1,697 @@
-
 :root {
-    --black: #000000;
-    --dark-gray: #1a1a1a;
-    /* Dark gray for shapes */
-    --gold: #FFD700;
-    --accent: #e17055;
-    /* Orange accent color */
-    --active-shadow: 0 0 15px 5px;
-    /* Base for green light or black shadow */
+  --black: #000000;
+  --dark-gray: #1a1a1a;
+  /* Dark gray for shapes */
+  --gold: #ffd700;
+  --accent: #e17055;
+  /* Orange accent color */
+  --active-shadow: 0 0 15px 5px;
+  /* Base for green light or black shadow */
 }
 
 body {
-    background-color: var(--black);
-    color: white;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 100vh;
+  background-color: var(--black);
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
 }
 
 #main-content {
-    position: relative;
-    /* Must have a position property */
-    z-index: 10;
-    /* Higher z-index to be on top of shapes */
-    background-color: transparent;
-    /* Allow background shapes to show through */
+  position: relative;
+  /* Must have a position property */
+  z-index: 10;
+  /* Higher z-index to be on top of shapes */
+  background-color: transparent;
+  /* Allow background shapes to show through */
 }
-
 
 /* --- Header and Search --- */
 .dashboard-header {
-    padding: 10px 20px;
-    border-bottom: 1px solid var(--dark-gray);
-    background-color: var(--black);
-    position: relative;
-    z-index: 3;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--dark-gray);
+  background-color: var(--black);
+  position: relative;
+  z-index: 100;
 }
 
 .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .dashboard-header h1 {
-    text-align: left;
-    margin: 0;
+  text-align: left;
+  margin: 0;
 }
 
 .header-buttons {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 /* Search Container */
 .search-container {
-    padding: 15px 20px;
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid var(--dark-gray);
-    background-color: var(--black);
-    position: relative;
-    z-index: 3;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--dark-gray);
+  background-color: var(--black);
+  position: relative;
+  z-index: 100;
 }
 
 #searchBar {
-    width: 500px;
-    padding: 12px 20px;
-    font-size: 1em;
-    border-radius: 25px;
-    border: 2px solid var(--gold);
-    background-color: var(--dark-gray);
-    color: white;
-    outline: none;
-    transition: all 0.3s ease;
+  width: 500px;
+  padding: 12px 20px;
+  font-size: 1em;
+  border-radius: 25px;
+  border: 2px solid var(--gold);
+  background-color: var(--dark-gray);
+  color: white;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
 #searchBar:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 10px var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
 }
 
 #searchBar::placeholder {
-    color: #888;
+  color: #888;
 }
 
 /* --- Footer --- */
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--black);
-    padding: 10px;
-    text-align: center;
-    border-top: 1px solid var(--dark-gray);
-    z-index: 3;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--black);
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid var(--dark-gray);
+  z-index: 100;
 }
 
 #bible-verse {
-    font-style: italic;
-    color: #bbb;
-    font-size: 0.85em;
+  font-style: italic;
+  color: #bbb;
+  font-size: 0.85em;
 }
 
 /* --- Tabs with Hover Dropdowns --- */
 .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 0;
-    padding: 0;
-    background-color: var(--black);
-    border-bottom: 2px solid var(--dark-gray);
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  padding: 0;
+  background-color: var(--black);
+  border-bottom: 2px solid var(--dark-gray);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 100;
 }
 
 @media (max-width: 768px) {
-    .tabs {
-        justify-content: center;
-    }
+  .tabs {
+    justify-content: center;
+  }
 
-    .tab-button {
-        padding: 8px 10px;
-        font-size: 0.7em;
-        white-space: nowrap;
-    }
+  .tab-button {
+    padding: 8px 10px;
+    font-size: 0.7em;
+    white-space: nowrap;
+  }
 
-    #searchBar {
-        width: 90%;
-        max-width: 400px;
-    }
+  #searchBar {
+    width: 90%;
+    max-width: 400px;
+  }
 
-    .button-grid {
-        padding: 10px;
-        gap: 10px;
-    }
+  .button-grid {
+    padding: 10px;
+    gap: 10px;
+  }
 
-    .app-button {
-        font-size: 0.85em;
-        padding: 10px 12px;
-    }
+  .app-button {
+    font-size: 0.85em;
+    padding: 10px 12px;
+  }
 
-    header h1 {
-        font-size: 1.3em;
-        padding: 10px;
-    }
+  header h1 {
+    font-size: 1.3em;
+    padding: 10px;
+  }
 }
 
 @media (max-width: 480px) {
-    .tab-button {
-        padding: 6px 8px;
-        font-size: 0.6em;
-    }
+  .tab-button {
+    padding: 6px 8px;
+    font-size: 0.6em;
+  }
 
-    header h1 {
-        font-size: 1em;
-    }
+  header h1 {
+    font-size: 1em;
+  }
 }
 
 .tab-dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .tab-button {
-    padding: 15px 30px;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    border-right: 1px solid var(--dark-gray);
-    background-color: var(--dark-gray);
-    color: #ccc;
-    transition: all 0.3s ease;
-    white-space: nowrap;
+  padding: 15px 30px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-right: 1px solid var(--dark-gray);
+  background-color: var(--dark-gray);
+  color: #ccc;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .tab-button:hover {
-    background-color: #2a2a2a;
-    color: var(--gold);
+  background-color: #2a2a2a;
+  color: var(--gold);
 }
 
 .tab-button.active-selection {
-    background-color: #2a2a2a;
-    color: var(--gold);
-    border-bottom: 3px solid var(--gold);
+  background-color: #2a2a2a;
+  color: var(--gold);
+  border-bottom: 3px solid var(--gold);
 }
 
 .tab-dropdown:last-child .tab-button {
-    border-right: none;
+  border-right: none;
 }
 
 /* Dropdown Menu (hidden by default) */
 .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: var(--dark-gray);
-    min-width: 220px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-    border: 1px solid var(--gold);
-    border-top: none;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--dark-gray);
+  min-width: 220px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  border: 1px solid var(--gold);
+  border-top: none;
 }
 
 /* Show dropdown on hover */
 .tab-dropdown:hover .dropdown-menu {
-    display: block;
+  display: block;
 }
 
 /* Dropdown items (for cascading menus) */
 .dropdown-item {
-    position: relative;
+  position: relative;
 }
 
 .dropdown-menu a {
-    color: #ccc;
-    padding: 12px 20px;
-    text-decoration: none;
-    display: block;
-    transition: all 0.2s ease;
-    font-size: 0.95em;
+  color: #ccc;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: block;
+  transition: all 0.2s ease;
+  font-size: 0.95em;
 }
 
 .dropdown-menu a:hover {
-    background-color: #2a2a2a;
-    color: var(--gold);
-    padding-left: 25px;
+  background-color: #2a2a2a;
+  color: var(--gold);
+  padding-left: 25px;
 }
 
 /* Submenu (cascading dropdown to the right) */
 .submenu {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: 0;
-    background-color: #2a2a2a;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
-    border: 1px solid var(--gold);
-    z-index: 1001;
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: #2a2a2a;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--gold);
+  z-index: 1001;
 }
 
 /* Show submenu on hover */
 .dropdown-item:hover .submenu {
-    display: block;
+  display: block;
 }
 
 .submenu a {
-    color: #ccc;
-    padding: 10px 18px;
-    font-size: 0.9em;
+  color: #ccc;
+  padding: 10px 18px;
+  font-size: 0.9em;
 }
 
 .submenu a:hover {
-    background-color: #333;
-    color: var(--gold);
-    padding-left: 23px;
+  background-color: #333;
+  color: var(--gold);
+  padding-left: 23px;
 }
 
 /* --- Tab Content --- */
 .tab-content {
-    display: none;
-    padding: 20px;
-    min-height: 400px;
+  display: none;
+  padding: 20px;
+  min-height: 400px;
 }
 
 .tab-content.active-tab {
-    display: block;
+  display: block;
 }
 
 /* --- Button Grid --- */
 .button-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    padding: 100px 20px 20px 20px;
-    max-width: 1225px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  padding: 100px 20px 20px 20px;
+  max-width: 1225px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
 /* --- App Buttons --- */
 .app-button {
-    position: relative;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 12px;
-    font-size: 0.95em;
-    font-weight: bold;
-    cursor: pointer;
-    border: 2px solid #333;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    text-align: center;
-    width: fit-content;
-    white-space: nowrap;
-    z-index: 10;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  font-size: 0.95em;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid #333;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-align: center;
+  width: fit-content;
+  white-space: nowrap;
+  z-index: 10;
 }
 
 .app-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
-    border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+  border-color: var(--gold);
 }
 
 .app-button.on:hover {
-    transform: translateY(-3px);
-    box-shadow:
-        0 0 35px rgba(0, 255, 136, 0.9),
-        0 0 70px rgba(0, 255, 136, 0.6),
-        0 0 100px rgba(0, 255, 136, 0.4) !important;
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 35px rgba(0, 255, 136, 0.9),
+    0 0 70px rgba(0, 255, 136, 0.6),
+    0 0 100px rgba(0, 255, 136, 0.4) !important;
 }
 
 /* --- App Button Dropdown Menu --- */
 .app-button-wrapper {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .app-button-dropdown {
-    position: absolute;
-    top: calc(100% + 5px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    z-index: 9999;
-    min-width: 140px;
-    overflow: hidden;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 9999;
+  min-width: 140px;
+  overflow: hidden;
 }
 
 .app-button-wrapper:hover .app-button-dropdown,
 .app-button-dropdown.show {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Ensure button with open dropdown is above all other buttons */
 .app-button:has(.app-button-dropdown.show) {
-    z-index: 10000;
+  z-index: 10000;
 }
 
 .app-button-dropdown-item {
-    padding: 10px 15px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85em;
-    color: #ccc;
-    transition: all 0.2s ease;
-    border-bottom: 1px solid #333;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85em;
+  color: #ccc;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #333;
 }
 
 .app-button-dropdown-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .app-button-dropdown-item:hover {
-    background: #3a3a3a;
-    color: #fff;
+  background: #3a3a3a;
+  color: #fff;
 }
 
 .app-button-dropdown-item.go-to-page:hover {
-    background: rgba(0, 150, 255, 0.2);
-    color: #00aaff;
+  background: rgba(0, 150, 255, 0.2);
+  color: #00aaff;
 }
 
 .app-button-dropdown-item.stop-service:hover {
-    background: rgba(255, 50, 50, 0.2);
-    color: #ff5555;
+  background: rgba(255, 50, 50, 0.2);
+  color: #ff5555;
 }
 
 /* Dropdown caret on app buttons */
 .app-button .caret {
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 5px solid currentColor;
-    opacity: 0.6;
-    transition: transform 0.2s ease;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  opacity: 0.6;
+  transition: transform 0.2s ease;
 }
 
 .app-button:hover .caret {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* Port number badge in top-left corner */
 .app-button .port-badge {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    font-size: 10px;
-    padding: 0px 4px;
-    background: rgba(0, 0, 0, 0.4);
-    color: #999;
-    border-radius: 3px;
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-style: italic;
-    font-weight: 300;
-    line-height: 0.9;
-    opacity: 0.8;
-    pointer-events: none;
-    letter-spacing: 0.5px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 10px;
+  padding: 0px 4px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #999;
+  border-radius: 3px;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 0.9;
+  opacity: 0.8;
+  pointer-events: none;
+  letter-spacing: 0.5px;
 }
 
 .app-button.on .port-badge {
-    background: rgba(0, 255, 136, 0.25);
-    color: #00ff88;
-    font-weight: 400;
+  background: rgba(0, 255, 136, 0.25);
+  color: #00ff88;
+  font-weight: 400;
 }
 
 .app-button.pressed {
-    transform: scale(0.95);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 /* OFF State - Random Grey Variants */
 .app-button.off {
-    box-shadow: none;
-    border-color: #333;
+  box-shadow: none;
+  border-color: #333;
 }
 
 /* Dark grey background with grey text */
 .app-button.off.grey-variant-1 {
-    background-color: #1a1a1a;
-    color: #888;
+  background-color: #1a1a1a;
+  color: #888;
 }
 
 /* Grey background with dark grey text */
 .app-button.off.grey-variant-2 {
-    background-color: #555;
-    color: #1a1a1a;
+  background-color: #555;
+  color: #1a1a1a;
 }
 
 .app-button.off:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 /* ON State - Will have random colors applied via JS */
 .app-button.on {
-    color: white;
-    animation: pulseGlow 2s ease-in-out infinite;
+  color: white;
+  animation: pulseGlow 2s ease-in-out infinite;
 }
 
 /* Pulsing glow animation */
 @keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(0, 255, 136, 0.6),
+      0 0 40px rgba(0, 255, 136, 0.4),
+      0 0 60px rgba(0, 255, 136, 0.2),
+      inset 0 0 20px rgba(0, 255, 136, 0.1);
+  }
 
-    0%,
-    100% {
-        box-shadow:
-            0 0 20px rgba(0, 255, 136, 0.6),
-            0 0 40px rgba(0, 255, 136, 0.4),
-            0 0 60px rgba(0, 255, 136, 0.2),
-            inset 0 0 20px rgba(0, 255, 136, 0.1);
-    }
-
-    50% {
-        box-shadow:
-            0 0 30px rgba(0, 255, 136, 0.8),
-            0 0 60px rgba(0, 255, 136, 0.5),
-            0 0 90px rgba(0, 255, 136, 0.3),
-            inset 0 0 30px rgba(0, 255, 136, 0.15);
-    }
+  50% {
+    box-shadow:
+      0 0 30px rgba(0, 255, 136, 0.8),
+      0 0 60px rgba(0, 255, 136, 0.5),
+      0 0 90px rgba(0, 255, 136, 0.3),
+      inset 0 0 30px rgba(0, 255, 136, 0.15);
+  }
 }
 
 /* Status indicator dot */
 .app-button .status-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    transition: all 0.3s ease;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  transition: all 0.3s ease;
 }
 
 .app-button.off .status-indicator {
-    background: #444;
-    box-shadow: none;
+  background: #444;
+  box-shadow: none;
 }
 
 .app-button.on .status-indicator {
-    background: #00ff88;
-    box-shadow: 0 0 8px #00ff88;
-    animation: blink 1.5s ease-in-out infinite;
+  background: #00ff88;
+  box-shadow: 0 0 8px #00ff88;
+  animation: blink 1.5s ease-in-out infinite;
 }
 
 @keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
 
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.4;
-    }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .app-button span {
-    margin-top: 8px;
-    z-index: 1;
+  margin-top: 8px;
+  z-index: 1;
 }
-
 
 /* --- Dropdown Container --- */
 .dropdown-container {
-    padding: 20px;
-    text-align: center;
+  padding: 20px;
+  text-align: center;
 }
 
 .dropdown-container label {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-right: 15px;
-    color: var(--gold);
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-right: 15px;
+  color: var(--gold);
 }
 
 .dropdown-container select {
-    padding: 10px 20px;
-    font-size: 1em;
-    border-radius: 8px;
-    border: 2px solid var(--gold);
-    background-color: var(--dark-gray);
-    color: white;
-    cursor: pointer;
-    min-width: 250px;
-    outline: none;
-    transition: all 0.3s ease;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 2px solid var(--gold);
+  background-color: var(--dark-gray);
+  color: white;
+  cursor: pointer;
+  min-width: 250px;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
 .dropdown-container select:hover {
-    background-color: #2a2a2a;
-    box-shadow: 0 0 10px var(--gold);
+  background-color: #2a2a2a;
+  box-shadow: 0 0 10px var(--gold);
 }
 
 .dropdown-container select:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 15px var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 15px var(--gold);
 }
 
 /* --- Server Sections --- */
 .server-section,
 .content-section {
-    margin-top: 20px;
-    position: relative;
-    z-index: 1;
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .server-section h2 {
-    text-align: center;
-    color: var(--gold);
-    margin-bottom: 20px;
-    font-size: 1.5em;
+  text-align: center;
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-size: 1.5em;
 }
 
 /* --- Service and Shopping Content --- */
 .service-content,
 .shopping-content {
-    padding: 40px;
-    text-align: center;
-    min-height: 300px;
+  padding: 40px;
+  text-align: center;
+  min-height: 300px;
 }
 
 .service-content h2,
 .shopping-content h2 {
-    color: var(--gold);
-    margin-bottom: 20px;
+  color: var(--gold);
+  margin-bottom: 20px;
 }
 
 .service-content p,
 .shopping-content p {
-    font-size: 1.1em;
-    color: #ccc;
+  font-size: 1.1em;
+  color: #ccc;
 }
 
 .service-content a,
 .shopping-content a {
-    color: var(--gold);
-    text-decoration: none;
-    font-size: 1.2em;
-    font-weight: bold;
-    transition: all 0.3s ease;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 .service-content a:hover,
 .shopping-content a:hover {
-    text-shadow: 0 0 10px var(--gold);
+  text-shadow: 0 0 10px var(--gold);
 }
-
 
 /* --- New Header Button Styles --- */
 .login-button {
-    font-size: 1em;
-    padding: 10px 20px;
-    background-color: var(--dark-gray);
-    color: white;
-    border: 1px solid var(--gold);
-    border-radius: 10px;
-    text-decoration: none;
+  font-size: 1em;
+  padding: 10px 20px;
+  background-color: var(--dark-gray);
+  color: white;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  text-decoration: none;
 }
 
 .signup-button {
-    font-weight: 900;
-    font-size: 1.3em;
-    padding: 10px 20px;
-    border: none;
-    text-decoration: none;
-    background-image: linear-gradient(to right, #FFD700, #FFA500);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.5px;
-    display: inline-block;
+  font-weight: 900;
+  font-size: 1.3em;
+  padding: 10px 20px;
+  border: none;
+  text-decoration: none;
+  background-image: linear-gradient(to right, #ffd700, #ffa500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+  display: inline-block;
 }
 
 .header-link {
-    text-decoration: none;
-    display: inline;
+  text-decoration: none;
+  display: inline;
 }
 
 .header-title-gold {
-    color: #FBBF24;
+  color: #fbbf24;
 }
 
 .header-title-grey {
-    color: #9CA3AF;
+  color: #9ca3af;
 }
 
 .header-title-black {
-    color: #000000;
-    text-shadow: 0 0 2px white;
+  color: #000000;
+  text-shadow: 0 0 2px white;
 }
 
 .header-title-white {
-    color: white;
+  color: white;
 }
 
 .login-button-sm {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px 12px;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 600;
-    background-image: linear-gradient(to right, #FBBF24, #F97316, #1F2937);
-    color: #FFFFFF;
-    border: 1px solid rgba(253, 224, 71, 0.6);
-    font-family: sans-serif;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  background-image: linear-gradient(to right, #fbbf24, #f97316, #1f2937);
+  color: #ffffff;
+  border: 1px solid rgba(253, 224, 71, 0.6);
+  font-family: sans-serif;
+  text-decoration: none;
 }
 
 .signup-button-sm {
-    font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 
 .tab-button-link {
-    text-decoration: none;
-    display: block;
+  text-decoration: none;
+  display: block;
 }
 
 .cleaning-button-container {
-    width: 600px;
-    height: 120px;
-    position: relative;
-    z-index: 2;
+  width: 600px;
+  height: 120px;
+  position: relative;
+  z-index: 2;
 }
 
 .junk-button-mover-box {
-    position:absolute;
-    bottom:5px;
-    right:30px;
-    font-size:1.5rem;
+  position: absolute;
+  bottom: 5px;
+  right: 30px;
+  font-size: 1.5rem;
 }
 
 .junk-button-mover-female {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 }
