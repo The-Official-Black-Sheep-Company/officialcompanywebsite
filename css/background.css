@@ -38,17 +38,16 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    z-index: 0;
+    z-index: -1; /* Behind everything */
     pointer-events: none;
 }
 
 /* --- Background Shapes - EDUCATIONAL GEOMETRY --- */
 .background-shape {
     position: absolute;
-    background-color: var(--dark-gray);
-    opacity: 0.6;
+    background-color: var(--gold); /* Use gold for visibility */
+    opacity: 0.15; /* Increased opacity */
     pointer-events: none;
-    /* Animation is now handled by JavaScript */
 }
 
 .background-shape.circle { border-radius: 50%; }

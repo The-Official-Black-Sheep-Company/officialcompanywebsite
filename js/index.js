@@ -84,6 +84,11 @@ function showSection(sectionId) {
     if (targetSection) {
         targetSection.style.display = 'block';
 
+        // Reposition gold cross on new tab/section
+        if (typeof window.repositionGoldCross === 'function') {
+            window.repositionGoldCross();
+        }
+
         // Update active classes for tabs
         document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-selection'));
         
@@ -105,6 +110,12 @@ function showSection(sectionId) {
 
 function showServiceContent(serviceName) {
     showSection('ServicesContent');
+    
+    // Reposition gold cross when service content changes as well
+    if (typeof window.repositionGoldCross === 'function') {
+        window.repositionGoldCross();
+    }
+
     const serviceContent = document.querySelector('#ServicesContent .service-content');
     const serviceData = {
         'JunkRemoval': { title: 'Junk Removal', html: '<h2>Junk Removal Service</h2><p>Call swoop geezy at 555-black-sheep for rates!!</p>' },

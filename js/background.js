@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('shape-container');
+    const goldCross = document.getElementById('gold-cross');
     if (!container) return;
 
     const shapesList = [
@@ -10,15 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'cross', 'plus', 'heart', 'teardrop', 'lshape', 'tshape'
     ];
 
-    const numShapes = 40;
+    const numShapes = 45;
     const shapeElements = [];
 
     for (let i = 0; i < numShapes; i++) {
         const shape = document.createElement('div');
         const shapeType = shapesList[Math.floor(Math.random() * shapesList.length)];
-        const size = Math.random() * 50 + 15;
+        const size = Math.random() * 60 + 20;
         
-        // Random initial positions
         let x = Math.random() * window.innerWidth;
         let y = Math.random() * window.innerHeight;
 
@@ -26,13 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
         shape.style.width = `${size}px`;
         shape.style.height = `${size}px`;
         shape.style.position = 'absolute';
-        shape.style.opacity = (Math.random() * 0.15 + 0.05).toString();
-        
-        // Random drift velocity - subtle and consistent
+        // Random subtle drift velocity for background shapes
         const vx = (Math.random() - 0.5) * 0.4;
         const vy = (Math.random() - 0.5) * 0.4;
         const rotation = Math.random() * 360;
-        const rotationSpeed = (Math.random() - 0.5) * 0.2;
+        const rotationSpeed = (Math.random() - 0.5) * 0.15;
 
         container.appendChild(shape);
         
@@ -49,34 +47,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Gold Cross Logic
+    function repositionGoldCross() {
+        if (!goldCross) return;
+        const x = Math.random() * (window.innerWidth - 60);
+        const y = Math.random() * (window.innerHeight - 120);
+        goldCross.style.position = 'fixed';
+        goldCross.style.left = '0';
+        goldCross.style.top = '0';
+        goldCross.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    }
+
+    // Initial position
+    repositionGoldCross();
+
+    // Expose to window for tab changes
+    window.repositionGoldCross = repositionGoldCross;
+
     function animate() {
         const width = window.innerWidth;
         const height = window.innerHeight;
 
         shapeElements.forEach(item => {
-            // Update positions
             item.x += item.vx;
             item.y += item.vy;
             item.rotation += item.rotSpeed;
 
-            // Fluid wrapping logic: if it goes off one side, it appears on the other
             if (item.x + item.width < 0) item.x = width;
             else if (item.x > width) item.x = -item.width;
 
             if (item.y + item.height < 0) item.y = height;
             else if (item.y > height) item.y = -item.height;
 
-            // Use translate3d for hardware acceleration and sub-pixel smoothness
             item.el.style.transform = `translate3d(${item.x}px, ${item.y}px, 0) rotate(${item.rotation}deg)`;
         });
 
+        // The Gold Cross no longer drifts in the animate loop
         requestAnimationFrame(animate);
     }
 
     animate();
-    
-    // Handle resize to prevent shapes getting stuck outside bounds
-    window.addEventListener('resize', () => {
-        // Just let the wrap logic handle it naturally in the next frame
-    });
 });
