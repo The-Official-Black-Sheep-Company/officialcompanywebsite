@@ -156,54 +156,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Tab & Dropdown Link Event Handling ---
     document.querySelectorAll('.tab-button, .dropdown-menu a, .submenu a').forEach(link => {
-        // Avoid attaching listeners to external links
-        const href = link.getAttribute('href');
-        if (href && (href.startsWith('http') || href.startsWith('mailto'))) {
-            return;
-        }
-
         link.addEventListener('click', function(e) {
-            // Find the correct function to call from the onclick attribute
-            const onclickAttr = this.getAttribute('onclick');
-            if (onclickAttr) {
-                e.preventDefault(); // Prevent default anchor action if onclick exists
-                e.stopPropagation(); // Stop event from bubbling up to parent dropdowns
-                
-                // Super basic parser for onclick="functionName('parameter')"
-                const match = onclickAttr.match(/([a-zA-Z_]+)\((?:'([^']*)')?\)/);
-                if (match) {
-                    const functionName = match[1];
-                    const parameter = match[2];
-
-                    // Call the function if it exists on the window object
-                    if (typeof window[functionName] === 'function') {
-                        window[functionName](parameter);
-                    } else {
-                        console.error(`Function ${functionName} not found.`);
-                    }
-                }
-                 // Close dropdowns after selection
-                if (this.closest('.dropdown-menu')) {
-                    this.closest('.dropdown-menu').style.display = 'none';
-                    setTimeout(() => {
-                         if (this.closest('.dropdown-menu')) {
-                            this.closest('.dropdown-menu').style.display = '';
-                         }
-                    }, 100);
-                }
+            // Only handle supplemental UI logic, let the browser handle the onclick attribute
+            
+            // Close dropdowns after selection
+            if (this.closest('.dropdown-menu')) {
+                const menu = this.closest('.dropdown-menu');
+                menu.style.display = 'none';
+                setTimeout(() => {
+                    menu.style.display = '';
+                }, 100);
             }
-        });
-    });
-     // Make top-level tab buttons clickable
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const onclickAttr = this.getAttribute('onclick');
-            if (onclickAttr) {
-                 e.preventDefault();
-                 const match = onclickAttr.match(/showSection\('([^']*)'\)/);
-                 if (match && match[1]) {
-                     showSection(match[1]);
-                 }
+
+            // Update active state for top-level tabs
+            if (this.classList.contains('tab-button')) {
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active-selection');
+                });
+                this.classList.add('active-selection');
             }
         });
     });

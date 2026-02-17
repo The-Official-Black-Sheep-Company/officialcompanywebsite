@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         shape.style.top = `${initialY}px`;
 
         // Store animation properties in data attributes
-        shape.dataset.vx = (Math.random() - 0.5) * 0.1; // Slowed down velocity
-        shape.dataset.vy = (Math.random() - 0.5) * 0.1; // Slowed down velocity
+        shape.dataset.vx = (Math.random() - 0.5) * 0.05; // Slowed down velocity
+        shape.dataset.vy = (Math.random() - 0.5) * 0.05; // Slowed down velocity
         shape.dataset.scale = 1;
         shape.dataset.scaleDirection = (Math.random() > 0.5) ? 1 : -1;
         shape.dataset.scaleSpeed = Math.random() * 0.0001 + 0.00005; // Very slow zoom
