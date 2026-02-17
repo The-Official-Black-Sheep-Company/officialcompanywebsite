@@ -26,25 +26,23 @@ document.addEventListener('DOMContentLoaded', () => {
         shape.style.width = `${size}px`;
         shape.style.height = `${size}px`;
         shape.style.position = 'absolute';
-        // Random subtle drift velocity for background shapes
-        const vx = (Math.random() - 0.5) * 0.4;
-        const vy = (Math.random() - 0.5) * 0.4;
-        const rotation = Math.random() * 360;
-        const rotationSpeed = (Math.random() - 0.5) * 0.15;
+        
+        // --- Random positioning and movement ---
+        shape.style.left = `${Math.random() * 100}vw`;
+        shape.style.top = `${Math.random() * 100}vh`;
+
+        // --- Subtle slow drift via CSS variables ---
+        const dx = (Math.random() * 40 - 20).toFixed(2) + 'px';
+        const dy = (Math.random() * 40 - 20).toFixed(2) + 'px';
+        const rotation = (Math.random() * 360).toFixed(2) + 'deg';
+        const duration = (Math.random() * 240 + 240).toFixed(2) + 's'; // 4-8 minutes
+
+        shape.style.setProperty('--dx', dx);
+        shape.style.setProperty('--dy', dy);
+        shape.style.setProperty('--rotation', rotation);
+        shape.style.setProperty('--duration', duration);
 
         container.appendChild(shape);
-        
-        shapeElements.push({
-            el: shape,
-            x,
-            y,
-            vx,
-            vy,
-            rotation,
-            rotSpeed: rotationSpeed,
-            width: size,
-            height: size
-        });
     }
 
     // Gold Cross Logic
@@ -63,28 +61,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Expose to window for tab changes
     window.repositionGoldCross = repositionGoldCross;
-
-    function animate() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-
-        shapeElements.forEach(item => {
-            item.x += item.vx;
-            item.y += item.vy;
-            item.rotation += item.rotSpeed;
-
-            if (item.x + item.width < 0) item.x = width;
-            else if (item.x > width) item.x = -item.width;
-
-            if (item.y + item.height < 0) item.y = height;
-            else if (item.y > height) item.y = -item.height;
-
-            item.el.style.transform = `translate3d(${item.x}px, ${item.y}px, 0) rotate(${item.rotation}deg)`;
-        });
-
-        // The Gold Cross no longer drifts in the animate loop
-        requestAnimationFrame(animate);
-    }
-
-    animate();
 });

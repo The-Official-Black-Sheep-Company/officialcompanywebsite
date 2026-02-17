@@ -45,9 +45,19 @@
 /* --- Background Shapes - EDUCATIONAL GEOMETRY --- */
 .background-shape {
     position: absolute;
-    background-color: var(--gold); /* Use gold for visibility */
-    opacity: 0.15; /* Increased opacity */
+    background-color: var(--dark-gray);
+    opacity: 0.6;
     pointer-events: none;
+    animation: slow-drift var(--duration, 20s) linear infinite;
+}
+
+@keyframes slow-drift {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate3d(var(--dx, 20px), var(--dy, 20px), 0) rotate(var(--rotation, 360deg));
+    }
 }
 
 .background-shape.circle { border-radius: 50%; }
