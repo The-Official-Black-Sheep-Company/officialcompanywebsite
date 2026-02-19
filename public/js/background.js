@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
         shape.style.top = `${Math.random() * 100}vh`;
 
         // --- Subtle slow drift via CSS variables ---
-        const dx = (Math.random() * 40 - 20).toFixed(2) + 'px';
-        const dy = (Math.random() * 40 - 20).toFixed(2) + 'px';
+        const dx = (Math.random() * 300 - 150).toFixed(2) + 'px';
+        const dy = (Math.random() * 300 - 150).toFixed(2) + 'px';
         const rotation = (Math.random() * 360).toFixed(2) + 'deg';
         const duration = (Math.random() * 240 + 240).toFixed(2) + 's'; // 4-8 minutes
 
