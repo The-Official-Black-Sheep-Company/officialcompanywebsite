@@ -3,24 +3,21 @@ stages:
 
 pages:
   stage: deploy
-  image: alpine:latest  # Lightweight image
+  image: alpine:latest
   script:
-    - mkdir -p public
-    # Copy all HTML files
-    - cp *.html public/
-    # Copy CSS folder
-    - cp -r css public/
-    # Copy JS folder
-    - cp -r js public/
-    # Copy other assets
-    - cp -r few-verses.txt public/ || true
-    - cp -r chatwoot-widget-config.js public/ || true
-    - cp -r api public/ || true
-    - cp adminlandingpage.css public/ || true
-    # Copy Flutter web app
-    - cp -r flutter_app/build/web public/flutter_workorder || true
-    # Copy images folder if it exists
-    - cp -r images public/ || true
+    # 1. Create a temporary deployment directory
+    - mkdir -p deploy_public
+    # 2. Copy the contents of our 'public' folder into it
+    - if [ -d "public" ]; then cp -rn public/* deploy_public/; fi
+    # 3. Copy root-level assets that should be in the deployment
+    - cp few-verses.txt deploy_public/ || true
+    - cp chatwoot-widget-config.js deploy_public/ || true
+    - if [ -d "api" ]; then cp -rn api deploy_public/; fi
+    # 4. Ensure CSS has the latest adminlandingpage.css if it's in root
+    - if [ -f "adminlandingpage.css" ]; then cp adminlandingpage.css deploy_public/css/ || true; fi
+    # 5. Clean up the 'public' folder and replace it with our deployment bundle
+    - rm -rf public
+    - mv deploy_public public
   artifacts:
     paths:
       - public

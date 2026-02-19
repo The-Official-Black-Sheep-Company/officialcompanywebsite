@@ -186,6 +186,55 @@
     margin-bottom: 20px;
 }
 
+/* Contacts Section Styling */
+.contacts-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.contacts-container {
+    background: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.contacts-container h3 {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.contacts-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.contacts-card p {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.legal-grid {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.legal-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.legal-item p {
+    color: #333;
+    margin: 0;
+}
+
 /* --- Hero Slideshow --- */
 .slideshow-container {
     max-width: 1000px;
