@@ -58,5 +58,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expose to window for tab changes
     window.repositionGoldCross = repositionGoldCross;
 });
-
-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
