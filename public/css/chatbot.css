@@ -25,3 +25,18 @@
     border-radius: 0;
     z-index: 9999;
 }
+
+/* Chat window specific containers and positioning */
+.chat-window-container {
+    background-color: rgba(0, 0, 0, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.chat-log-container {
+    background: linear-gradient(to bottom, #000000, #27272a, #52525b);
+}
+
+.chat-input-area {
+    background-color: rgba(24, 24, 27, 0.9);
+}

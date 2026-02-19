@@ -14,8 +14,8 @@ function initFirebaseAuth() {
             checkAccess(); // RBAC check
             
             if (user && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html'))) {
-                // Redirect to portal if logged in on the main page
-                window.location.href = 'html/portal.html';
+                console.log("User is authenticated:", user.email || "No email");
+                // Redirect REMOVED - allow using landing page with slideshow
             }
         });
     }
@@ -89,13 +89,13 @@ function checkAccess() {
 
 function showSection(sectionId) {
     // Hide all sections
-    document.querySelectorAll('.server-section, .content-section').forEach(section => {
-        section.style.display = 'none';
+    document.querySelectorAll('.server-section, .content-section, .blog-content').forEach(section => {
+        section.classList.add('hidden');
     });
 
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
-        targetSection.style.display = 'block';
+        targetSection.classList.remove('hidden');
 
         // Reposition gold cross on new tab/section
         if (typeof window.repositionGoldCross === 'function') {
@@ -116,12 +116,12 @@ function showSection(sectionId) {
         // HeroSlideshow is treated as the default view
         if (sectionId !== 'HeroSlideshow') {
             const hero = document.getElementById('HeroSlideshow');
-            if (hero) hero.style.display = 'none';
+            if (hero) hero.classList.add('hidden');
         }
     } else if (!sectionId) {
         // Default to Hero if no section selected
         const hero = document.getElementById('HeroSlideshow');
-        if (hero) hero.style.display = 'block';
+        if (hero) hero.classList.remove('hidden');
     }
 
     if (sectionId === 'ProductsContent') loadProducts();
@@ -170,16 +170,18 @@ function showShoppingContent(platformName) {
 function showBlogTab(tabName) {
     showSection('Blogs');
     document.querySelectorAll('.blog-content').forEach(content => {
-        content.style.display = 'none';
+        content.classList.add('hidden');
     });
     const selectedContent = document.getElementById(tabName);
     if (selectedContent) {
-        selectedContent.style.display = 'block';
+        selectedContent.classList.remove('hidden');
     }
     document.querySelectorAll('.blog-subtab').forEach(button => {
         button.classList.remove('active');
+        if (button.getAttribute('onclick').includes(tabName)) {
+            button.classList.add('active');
+        }
     });
-    // This assumes the text content matches somewhat or use classes
 }
 
 // --- Status & Control Logic ---

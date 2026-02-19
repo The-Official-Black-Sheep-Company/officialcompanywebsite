@@ -7,8 +7,9 @@
     <title>The Official Black Sheep Company</title>
     <link rel="stylesheet" href="css/adminlandingpage.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/chatbot.css">
     <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/biblestudy.css">
+    <link rel="stylesheet" href="css/chatbot.css">
     <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
     <link rel="icon" href="favicon.png" sizes="16x16" type="image/png">
     <!-- External Scripts -->
@@ -777,57 +778,55 @@
 
     <!-- BLOGS SECTION -->
     <div id="Blogs" class="content-section" style="display:none; padding-bottom: 300px; margin-bottom: 100px;">
+<div id="Blogs" class="content-section" style="display:none; padding-bottom: 300px; margin-bottom: 100px;">
         <h2 style="color: #333; margin-bottom: 20px;">Blogs</h2>
 
         <!-- Nested Tabs Row -->
         <div class="blog-subtabs"
             style="display: flex; gap: 5px; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
-            <button class="blog-subtab active" onclick="showBlogTab('HistoricFigures')"
-                style="padding: 10px 20px; background: #f3f4f6; border: none; border-radius: 6px 6px 0 0; cursor: pointer; font-weight: 500; color: #374151;">
+            <button class="blog-subtab active" onclick="showBlogTab('HistoricFigures')">
                 Historic Figures
             </button>
-            <button class="blog-subtab" onclick="showBlogTab('Artifacts')"
-                style="padding: 10px 20px; background: #f3f4f6; border: none; border-radius: 6px 6px 0 0; cursor: pointer; font-weight: 500; color: #374151;">
+            <button class="blog-subtab" onclick="showBlogTab('Artifacts')">
                 Artifacts
             </button>
-            <button class="blog-subtab" onclick="showBlogTab('HistoricEvents')"
-                style="padding: 10px 20px; background: #f3f4f6; border: none; border-radius: 6px 6px 0 0; cursor: pointer; font-weight: 500; color: #374151;">
+            <button class="blog-subtab" onclick="showBlogTab('HistoricEvents')">
                 Historic Events
             </button>
         </div>
 
         <!-- Historic Figures Content -->
-        <div id="HistoricFigures" class="blog-content" style="display: block;">
-            <div style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
-                <h3 style="color: #666; margin-bottom: 15px;">Historic Figures</h3>
-                <div style="background: white; padding: 20px; border-radius: 8px;">
-                    <p style="color: #333; margin-bottom: 15px;">Explore the lives and contributions of influential
+        <div id="HistoricFigures" class="blog-content hidden">
+            <div class="blog-content-container">
+                <h3 class="blog-content-header">Historic Figures</h3>
+                <div class="blog-card">
+                    <p>Explore the lives and contributions of influential
                         historical figures throughout time.</p>
-                    <p style="color: #666; font-style: italic;">Content coming soon...</p>
+                    <p class="blog-coming-soon">Content coming soon...</p>
                 </div>
             </div>
         </div>
 
         <!-- Artifacts Content -->
-        <div id="Artifacts" class="blog-content" style="display: none;">
-            <div style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
-                <h3 style="color: #666; margin-bottom: 15px;">Artifacts</h3>
-                <div style="background: white; padding: 20px; border-radius: 8px;">
-                    <p style="color: #333; margin-bottom: 15px;">Discover ancient and historic artifacts that have
+        <div id="Artifacts" class="blog-content hidden">
+            <div class="blog-content-container">
+                <h3 class="blog-content-header">Artifacts</h3>
+                <div class="blog-card">
+                    <p>Discover ancient and historic artifacts that have
                         shaped our understanding of the past.</p>
-                    <p style="color: #666; font-style: italic;">Content coming soon...</p>
+                    <p class="blog-coming-soon">Content coming soon...</p>
                 </div>
             </div>
         </div>
 
         <!-- Historic Events Content -->
-        <div id="HistoricEvents" class="blog-content" style="display: none;">
-            <div style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
-                <h3 style="color: #666; margin-bottom: 15px;">Historic Events</h3>
-                <div style="background: white; padding: 20px; border-radius: 8px;">
-                    <p style="color: #333; margin-bottom: 15px;">Learn about significant events that have changed the
+        <div id="HistoricEvents" class="blog-content hidden">
+            <div class="blog-content-container">
+                <h3 class="blog-content-header">Historic Events</h3>
+                <div class="blog-card">
+                    <p>Learn about significant events that have changed the
                         course of history.</p>
-                    <p style="color: #666; font-style: italic;">Content coming soon...</p>
+                    <p class="blog-coming-soon">Content coming soon...</p>
                 </div>
             </div>
         </div>
@@ -853,7 +852,7 @@
 
         <!-- Chat window -->
         <div id="chat-window"
-            class="hidden mt-3 w-[340px] max-w-[90vw] border border-zinc-800 rounded-3xl bg-black/95 backdrop-blur shadow-xl shadow-black/80 flex flex-col overflow-hidden">
+            class="hidden mt-3 w-[340px] max-w-[90vw] border border-zinc-800 rounded-3xl chat-window-container shadow-xl shadow-black/80 flex flex-col overflow-hidden">
             <div class="px-4 py-3 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/90">
                 <div class="flex items-center gap-2">
                     <div
@@ -877,7 +876,7 @@
 
             <!-- Chat log -->
             <div id="chat-log"
-                class="flex-1 overflow-y-auto chat-scrollbar px-3 py-3 space-y-3 text-xs bg-gradient-to-b from-black via-zinc-800 to-zinc-600">
+                class="flex-1 overflow-y-auto chat-scrollbar px-3 py-3 space-y-3 text-xs chat-log-container">
             </div>
 
             <!-- Quick suggestions -->

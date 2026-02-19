@@ -44,13 +44,14 @@
 
 /* --- Background Shapes - EDUCATIONAL GEOMETRY --- */
 .background-shape {
+    --dark-gray: #333333;
     position: absolute;
     width: var(--shape-size, 40px);
     height: var(--shape-size, 40px);
     background-color: var(--dark-gray);
     opacity: var(--opacity, 0.6);
     pointer-events: none;
-    animation: slow-drift var(--duration, 20s) linear infinite;
+    animation: slow-drift var(--duration, 60s) ease-in-out infinite alternate;
 }
 
 @keyframes slow-drift {

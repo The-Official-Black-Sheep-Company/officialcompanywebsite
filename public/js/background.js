@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
         shape.style.left = `${Math.random() * 100}vw`;
         shape.style.top = `${Math.random() * 100}vh`;
 
-        // --- Subtle slow drift via CSS variables ---
-        const dx = (Math.random() * 1000 - 500).toFixed(2) + 'px'; // Increase drift range
-        const dy = (Math.random() * 1000 - 500).toFixed(2) + 'px'; // Increase drift range
-        const rotation = (Math.random() * 720 - 360).toFixed(2) + 'deg';
-        const duration = (Math.random() * 400 + 40).toFixed(2) + 's'; // 40s - 440s
-        const opacity = (Math.random() * 0.5 + 0.05).toFixed(2); // Lower opacity for more subtlety
+        // --- Subtle VERY SLOW drift (barely visible) ---
+        const dx = (Math.random() * 60 - 30).toFixed(2) + 'px'; 
+        const dy = (Math.random() * 60 - 30).toFixed(2) + 'px'; 
+        const rotation = (Math.random() * 40 - 20).toFixed(2) + 'deg';
+        const duration = (Math.random() * 420 + 180).toFixed(2) + 's'; // 180s - 600s (Extremely slow)
+        const opacity = (Math.random() * 0.2 + 0.05).toFixed(2); 
 
         shape.style.setProperty('--dx', dx);
         shape.style.setProperty('--dy', dy);
@@ -53,20 +53,5 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(shape);
     }
 
-    // Gold Cross Logic
-    function repositionGoldCross() {
-        if (!goldCross) return;
-        const x = Math.random() * (window.innerWidth - 60);
-        const y = Math.random() * (window.innerHeight - 120);
-        goldCross.style.position = 'fixed';
-        goldCross.style.left = '0';
-        goldCross.style.top = '0';
-        goldCross.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    }
-
-    // Initial position
-    repositionGoldCross();
-
-    // Expose to window for tab changes
-    window.repositionGoldCross = repositionGoldCross;
+    // Gold Cross is handled purely by CSS for a static position as requested.
 });
