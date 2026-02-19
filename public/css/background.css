@@ -48,7 +48,7 @@
     width: var(--shape-size, 40px);
     height: var(--shape-size, 40px);
     background-color: var(--dark-gray);
-    opacity: 0.6;
+    opacity: var(--opacity, 0.6);
     pointer-events: none;
     animation: slow-drift var(--duration, 20s) linear infinite;
 }
