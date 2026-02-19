@@ -67,8 +67,12 @@ const chatbotKnowledge = [
         response: "I'd love to get you on the schedule! Please provide your name, the service you need, and your preferred date/time, and our team will reach out to confirm."
     },
     {
-        keywords: ['bible', 'study', 'scripture', 'eternity', 'seek'],
-        response: "Our 'Seek Eternity' bible study is a core part of what we do. Check the dedicated tab for narrative deep dives, Hebrew word analysis, and archeological context!"
+        keywords: ['bible', 'study', 'scripture', 'eternity', 'seek', 'history', 'lessons'],
+        response: "Our 'Seek Eternity' bible study is a core part of what we do. Join our study and learn history and lessons from this incredible history book! Check the dedicated tab for narrative deep dives, Hebrew word analysis, and archeological context!"
+    },
+    {
+        keywords: ['blue', 'pitbull', 'bluenose', 'dog mascot'],
+        response: "Have you had the opportunity to check out Blue the bluenose pitbull? Go to the Blue tab and check out his social media! He's the heart and soul of Black Sheep Company."
     },
     {
         keywords: ['report', 'blog', 'history', 'artifact'],

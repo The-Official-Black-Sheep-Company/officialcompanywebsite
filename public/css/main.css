@@ -159,3 +159,26 @@
     background: #FBBF24 !important;
     color: #000000 !important;
 }
+
+/* Seek Eternity (Bible Study) Section Styling */
+#BibleStudy h2, 
+#BibleStudy h3, 
+#BibleStudy h4,
+.study-header {
+    color: #FBBF24 !important; /* Yellow */
+}
+
+#BibleStudy p,
+#BibleStudy div {
+    color: #F97316; /* Orange */
+}
+
+#BibleStudy strong {
+    color: #FBBF24; /* Yellow for emphasis within paragraphs */
+}
+
+.verse-section {
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}

@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   const fallbackResponse = "I’m here to help with:\n• Junk removal, moving & hauling\n• Residential & commercial cleaning\n• Server monitoring & infrastructure\n• Cell phone repair\n• Dog walking\n• Mobile laundry services\n• Online store questions\n\nTry asking something like “How much is weekly dog walking?” or “Do you offer move‑out cleaning?”.";
   const proactiveSuggestions = [
-    "Did you know we also offer 24/7 server monitoring? It's a great way to keep your websites and applications running smoothly.",
-    "We're running a special on our residential cleaning services this month. Get 10% off your first cleaning!",
-    "Have you checked out our blog? We have interesting articles on historic figures, artifacts, and events."
+    "Have you checked out our blog? We have interesting articles on historic figures, artifacts, and events.",
+    "Have you had the opportunity to check out Blue the bluenose pitbull? Go to the Blue tab and check out his social media!",
+    "Join our Bible study and learn history and lessons from this incredible history book."
   ];
   // --- END OF CHATBOT KNOWLEDGE BASE ---
 

@@ -11,22 +11,29 @@
     <link rel="stylesheet" href="css/background.css">
     <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png">
     <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png">
+    <!-- External Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Firebase SDK (Compat versions for global scope) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <script src="js/firebase-config.js"></script>
     <script src="js/homepage.js"></script>
     <script src="js/index.js"></script>
     <script src="js/biblestudy.js"></script>
     <script src="js/biblestudy-menu.js"></script>
-    <!-- External Scripts -->
     <script src="js/aahist.js"></script>
     <script src="js/artifacts.js"></script>
     <script src="js/events.js"></script>
     <script src="js/hist_figures.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <img src="media/bible/genesis/genesis1-hebrew-manuscript.jpg">
-
 </head>
 
 <body>
+    <!-- Misplaced image from head -->
+    <img src="media/bible/genesis/genesis1-hebrew-manuscript.jpg" style="display:none;">
 
     <header class="dashboard-header">
         <div class="header-content">
@@ -53,21 +60,22 @@
                     <!-- Dropdown for Avatar -->
                     <div class="absolute right-0 mt-2 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl py-2 hidden group-hover:block"
                         style="z-index: 50;">
-                        <a href="/html/portal.html"
+                        <a href="html/portal.html"
                             class="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white">Portal</a>
-                        <a href="/html/portal.html#settings"
+                        <a href="html/portal.html#settings"
                             class="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white">Settings</a>
                         <div class="border-t border-zinc-700 my-1"></div>
-                            <a href="#" id="logout-link" class="block px-4 py-2 text-sm text-red-400 hover:bg-zinc-800 hover:text-red-300">Logout</a>
+                        <a href="#" id="logout-link"
+                            class="block px-4 py-2 text-sm text-red-400 hover:bg-zinc-800 hover:text-red-300">Logout</a>
                     </div>
                 </div>
 
                 <!-- Login/Signup Container -->
                 <div id="auth-buttons-container" style="display: flex; gap: 15px; align-items: center;">
-                    <a href="/html/signup.html" id="signup-button" class="signup-button"
+                    <a href="./html/signup.html" id="signup-button" class="signup-button"
                         style="font-size: 0.75rem; color: #9CA3AF; text-decoration: none; padding: 4px 10px; border: 1px solid #333; border-radius: 4px; transition: all 0.2s;">Sign
                         Up</a>
-                    <a href="/html/login.html" id="login-button" class="login-button shadow-lg shadow-yellow-500/30"
+                    <a href="./html/login.html" id="login-button" class="login-button shadow-lg shadow-yellow-500/30"
                         style="display: flex; align-items: center; justify-content: center; padding: 6px 18px; border-radius: 9999px; font-size: 0.75rem; line-height: 1rem; font-weight: 600; background-image: linear-gradient(to right, #FBBF24, #F97316, #1F2937); color: #FFFFFF; border: 1px solid rgba(253, 224, 71, 0.6); font-family: sans-serif; text-decoration: none; transition: all 0.2s;">
                         Login</a>
                 </div>
@@ -83,12 +91,12 @@
 
 
 
- <!-- api keys -->
+    <!-- api keys -->
     <div class="tabs">
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('APIKeys')">API Keys</button>
         </div>
-       <!-- bible study -->
+        <!-- bible study -->
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('BibleStudy')">Seek Eternity</button>
         </div>
@@ -196,7 +204,7 @@
         </div>
 
         <div class="tab-dropdown">
-            <a href="/services.html" class="tab-button" style="text-decoration: none; display: block;">Services ▼</a>
+            <a href="services.html" class="tab-button" style="text-decoration: none; display: block;">Services ▼</a>
             <div class="dropdown-menu">
                 <a href="#" onclick="showServiceContent('CellphoneRepair'); return false;">Tech-Sector</a>
                 <a href="#" onclick="showServiceContent('CleaningCommercial'); return false;">Cleaning Services -
@@ -244,6 +252,10 @@
 
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('Contacts')">Contacts</button>
+        </div>
+
+        <div class="tab-dropdown">
+            <a href="html/blue.html" class="tab-button" style="text-decoration: none; display: block;">Blue</a>
         </div>
 
     </div>
@@ -516,7 +528,8 @@
             <h2 style="color: #333; margin-bottom: 20px;">App Store</h2>
             <div class="button-grid">
                 <div class="app-button off">
-                    <a href="/flutter_app/web/index.html?app=barcode_scanner" style="text-decoration: none; color: inherit;">
+                    <a href="/flutter_app/web/index.html?app=barcode_scanner"
+                        style="text-decoration: none; color: inherit;">
                         <span>Barcode Scanner Flutter App</span>
                     </a>
                 </div>
@@ -694,17 +707,18 @@
     <!-- BIBLE STUDY SECTION -->
     <div id="BibleStudy" class="content-section" style="display:none; padding-bottom: 300px; margin-bottom: 100px;">
         <h2 style="color: #333; margin-bottom: 20px;">Bible Study</h2>
-                    <div id="bibleStudyContent" style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
-         <div id="biblical-study"></div>
+        <div id="bibleStudyContent" style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
+            <div id="biblical-study"></div>
             <div id="bible-study-container"></div>
             <script src="biblestudy.js"></script>
             <script src="biblestudy-menu.js"></script>
-          <div class="study-images">
-           <img src="/media/bible/genesis/placeholder1.jpg">
-           <img src="/media/bible/genesis/placeholder2.jpg">
-          </div>
-                        <!-- Content will be dynamically loaded here by JavaScript -->
-                    </div>        <script>
+            <div class="study-images">
+                <img src="/media/bible/genesis/placeholder1.jpg">
+                <img src="/media/bible/genesis/placeholder2.jpg">
+            </div>
+            <!-- Content will be dynamically loaded here by JavaScript -->
+        </div>
+        <script>
             async function initializeBibleStudyContent() {
                 const container = document.getElementById('bibleStudyContent');
                 if (!container) {
@@ -798,7 +812,7 @@
                     h3.onclick = () => { contentDiv.style.display = contentDiv.style.display === "block" ? "none" : "block"; };
                     const contentDiv = document.createElement("div");
                     contentDiv.className = "study-content";
-                    if(typeof content === "function") {
+                    if (typeof content === "function") {
                         contentDiv.innerHTML = await content();
                     } else {
                         contentDiv.innerHTML = content;
@@ -819,7 +833,7 @@
                     { title: "Artifacts & Archaeology", content: study.artifacts }
                 ];
 
-                for(const sec of sections) {
+                for (const sec of sections) {
                     container.appendChild(await createSection(sec.title, sec.content));
                 }
             }
@@ -992,7 +1006,8 @@
         </div>
     </div>
 
-    <!-- Chatwoot AI Chatbot Widget -->
+    <!-- Chatbot Knowledge Base -->
+    <script src="js/chatbot-knowledge.js"></script>
     <script src="js/chatwoot-widget-config.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/background.js"></script>
