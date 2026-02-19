@@ -11,20 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
         'cross', 'plus', 'heart', 'teardrop', 'lshape', 'tshape'
     ];
 
-    const numShapes = 45;
+    const numShapes = Math.floor(Math.random() * 41) + 40; // 40-80 shapes
     const shapeElements = [];
 
     for (let i = 0; i < numShapes; i++) {
         const shape = document.createElement('div');
         const shapeType = shapesList[Math.floor(Math.random() * shapesList.length)];
-        const size = Math.random() * 60 + 20;
-        
-        let x = Math.random() * window.innerWidth;
-        let y = Math.random() * window.innerHeight;
+        const size = Math.random() * 60 + 20; // 20px - 80px
 
         shape.className = `background-shape ${shapeType}`;
-        shape.style.width = `${size}px`;
-        shape.style.height = `${size}px`;
+        shape.style.setProperty('--shape-size', `${size}px`);
         shape.style.position = 'absolute';
         
         // --- Random positioning and movement ---
@@ -62,3 +58,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expose to window for tab changes
     window.repositionGoldCross = repositionGoldCross;
 });
+
+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

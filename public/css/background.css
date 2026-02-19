@@ -45,6 +45,8 @@
 /* --- Background Shapes - EDUCATIONAL GEOMETRY --- */
 .background-shape {
     position: absolute;
+    width: var(--shape-size, 40px);
+    height: var(--shape-size, 40px);
     background-color: var(--dark-gray);
     opacity: 0.6;
     pointer-events: none;
@@ -53,23 +55,23 @@
 
 @keyframes slow-drift {
     0% {
-        transform: translate3d(0, 0, 0) rotate(0deg);
+        transform: var(--base-transform, scale(1)) translate3d(0, 0, 0) rotate(0deg);
     }
     100% {
-        transform: translate3d(var(--dx, 20px), var(--dy, 20px), 0) rotate(var(--rotation, 360deg));
+        transform: var(--base-transform, scale(1)) translate3d(var(--dx, 20px), var(--dy, 20px), 0) rotate(var(--rotation, 360deg));
     }
 }
 
 .background-shape.circle { border-radius: 50%; }
 .background-shape.square { border-radius: 5px; }
-.background-shape.rectangle { border-radius: 3px; transform: scaleX(1.6); }
+.background-shape.rectangle { border-radius: 3px; --base-transform: scaleX(1.6); }
 .background-shape.triangle {
     width: 0 !important;
     height: 0 !important;
     background-color: transparent !important;
-    border-left: 40px solid transparent;
-    border-right: 40px solid transparent;
-    border-bottom: 69px solid var(--dark-gray);
+    border-left: calc(var(--shape-size, 40px) / 2) solid transparent;
+    border-right: calc(var(--shape-size, 40px) / 2) solid transparent;
+    border-bottom: calc(var(--shape-size, 40px) * 0.866) solid var(--dark-gray);
     opacity: 0.25;
 }
 .background-shape.quadrilateral { clip-path: polygon(15% 10%, 85% 5%, 90% 90%, 10% 95%); }
@@ -88,16 +90,16 @@
 .background-shape.star { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
 .background-shape.star6 { clip-path: polygon(50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%); }
 .background-shape.star8 { clip-path: polygon(50% 0%, 58% 30%, 85% 15%, 70% 42%, 100% 50%, 70% 58%, 85% 85%, 58% 70%, 50% 100%, 42% 70%, 15% 85%, 30% 58%, 0% 50%, 30% 42%, 15% 15%, 42% 30%); }
-.background-shape.ellipse { border-radius: 50%; transform: scaleX(1.7); }
-.background-shape.oval { border-radius: 50%; transform: scaleY(1.4); }
+.background-shape.ellipse { border-radius: 50%; --base-transform: scaleX(1.7); }
+.background-shape.oval { border-radius: 50%; --base-transform: scaleY(1.4); }
 .background-shape.crescent { border-radius: 50%; box-shadow: inset 20px 0 0 0 var(--black); }
 .background-shape.semicircle { border-radius: 100% 100% 0 0; }
-.background-shape.diamond { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); transform: rotate(45deg); }
+.background-shape.diamond { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); --base-transform: rotate(45deg); }
 .background-shape.arrow { clip-path: polygon(0% 30%, 70% 30%, 70% 0%, 100% 50%, 70% 100%, 70% 70%, 0% 70%); }
 .background-shape.chevron { clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%); }
 .background-shape.cross { clip-path: polygon(33% 0%, 67% 0%, 67% 33%, 100% 33%, 100% 67%, 67% 67%, 67% 100%, 33% 100%, 33% 67%, 0% 67%, 0% 33%, 33% 33%); }
 .background-shape.plus { clip-path: polygon(40% 0%, 60% 0%, 60% 40%, 100% 40%, 100% 60%, 60% 60%, 60% 100%, 40% 100%, 40% 60%, 0% 60%, 0% 40%, 40% 40%); }
 .background-shape.heart { clip-path: path('M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z'); }
-.background-shape.teardrop { border-radius: 50% 0 50% 50%; transform: rotate(-45deg); }
+.background-shape.teardrop { border-radius: 50% 0 50% 50%; --base-transform: rotate(-45deg); }
 .background-shape.lshape { clip-path: polygon(0% 0%, 40% 0%, 40% 60%, 100% 60%, 100% 100%, 0% 100%); }
 .background-shape.tshape { clip-path: polygon(0% 0%, 100% 0%, 100% 40%, 60% 40%, 60% 100%, 40% 100%, 40% 40%, 0% 40%); }
