@@ -33,33 +33,32 @@
 
 <body>
     <!-- Misplaced image from head -->
-    <img src="media/bible/genesis/genesis1-hebrew-manuscript.jpg" style="display:none;">
+    <img src="media/bible/genesis/genesis1-hebrew-manuscript.jpg" class="hidden" alt="Genesis Manuscript">
 
     <header class="dashboard-header">
         <div class="header-content">
             <h1>
-                <a href="index.html" style="text-decoration: none; display: inline;">
-                    <span style="color: white;">THE</span>
-                    <span style="color: #FBBF24;">OFFICIAL</span>
-                    <span style="color: #9CA3AF;">BLACK</span>
-                    <span style="color: #000000; text-shadow: 0 0 2px white;">SHEEP</span>
-                    <span style="color: #FBBF24;">COMPANY</span>
+                <a href="index.html" class="no-underline inline">
+                    <span class="text-white">THE</span>
+                    <span class="text-[#FBBF24]">OFFICIAL</span>
+                    <span class="text-gray-400">BLACK</span>
+                    <span class="text-black text-shadow-white">SHEEP</span>
+                    <span class="text-[#FBBF24]">COMPANY</span>
                 </a>
             </h1>
-            <div class="header-buttons" style="display: flex; align-items: center; gap: 15px;">
+            <div class="header-buttons flex items-center gap-[15px]">
                 <!-- Avatar Container (Hidden by default) -->
-                <div id="user-avatar-container" class="relative group" style="display: none;">
+                <div id="user-avatar-container" class="relative group hidden">
                     <button id="user-avatar-btn"
-                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        class="bg-none border-none cursor-pointer flex items-center justify-center">
                         <div
-                            style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(to right, #FBBF24, #F97316); padding: 2px;">
+                            class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 p-[2px]">
                             <img id="user-avatar-img" src="https://via.placeholder.com/40" alt="Profile"
-                                style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #1F2937;">
+                                class="w-full h-full rounded-full object-cover border-2 border-gray-800">
                         </div>
                     </button>
                     <!-- Dropdown for Avatar -->
-                    <div class="absolute right-0 mt-2 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl py-2 hidden group-hover:block"
-                        style="z-index: 50;">
+                    <div class="absolute right-0 mt-2 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl py-2 hidden group-hover:block z-50">
                         <a href="html/portal.html"
                             class="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white">Portal</a>
                         <a href="html/portal.html#settings"
@@ -71,12 +70,10 @@
                 </div>
 
                 <!-- Login/Signup Container -->
-                <div id="auth-buttons-container" style="display: flex; gap: 15px; align-items: center;">
-                    <a href="./html/signup.html" id="signup-button" class="signup-button"
-                        style="font-size: 0.75rem; color: #9CA3AF; text-decoration: none; padding: 4px 10px; border: 1px solid #333; border-radius: 4px; transition: all 0.2s;">Sign
+                <div id="auth-buttons-container" class="flex gap-[15px] items-center">
+                    <a href="./html/signup.html" id="signup-button" class="signup-button text-xs text-gray-400 no-underline px-[10px] py-[4px] border border-[#333] rounded transition-all">Sign
                         Up</a>
-                    <a href="./html/login.html" id="login-button" class="login-button shadow-lg shadow-yellow-500/30"
-                        style="display: flex; align-items: center; justify-content: center; padding: 6px 18px; border-radius: 9999px; font-size: 0.75rem; line-height: 1rem; font-weight: 600; background-image: linear-gradient(to right, #FBBF24, #F97316, #1F2937); color: #FFFFFF; border: 1px solid rgba(253, 224, 71, 0.6); font-family: sans-serif; text-decoration: none; transition: all 0.2s;">
+                    <a href="./html/login.html" id="login-button" class="login-button shadow-lg shadow-yellow-500/30 flex items-center justify-center px-[18px] py-[6px] rounded-full text-xs font-semibold bg-gradient-to-r from-amber-400 via-orange-500 to-gray-800 text-white border border-yellow-300/60 font-sans no-underline transition-all">
                         Login</a>
                 </div>
             </div>
@@ -113,11 +110,11 @@
             <button class="tab-button" onclick="showSection('Monitoring')">Monitoring ▼</button>
             <div class="dropdown-menu">
                 <a href="#" onclick="showSection('Dashboards'); return false;">Dashboards</a>
-                <a href="https://localhost:443" target="_blank">Wazuh Manager</a>
+                <a href="https://localhost:443" target="_blank" rel="noopener">Wazuh Manager</a>
                 <a href="#" onclick="showSection('Monitoring'); return false;">Wazuh Agents</a>
-                <a href="http://localhost:61208" target="_blank">Glances</a>
-                <a href="http://localhost:8001" target="_blank">Kubernetes</a>
-                <a href="http://localhost:8083" target="_blank">Snort IDS</a>
+                <a href="http://localhost:61208" target="_blank" rel="noopener">Glances</a>
+                <a href="http://localhost:8001" target="_blank" rel="noopener">Kubernetes</a>
+                <a href="http://localhost:8083" target="_blank" rel="noopener">Snort IDS</a>
                 <a href="#" onclick="showSection('Monitoring'); return false;">Fail2Ban</a>
             </div>
         </div>
@@ -204,7 +201,7 @@
         </div>
 
         <div class="tab-dropdown">
-            <a href="services.html" class="tab-button" style="text-decoration: none; display: block;">Services ▼</a>
+            <a href="html/services.html" class="tab-button no-underline block">Services ▼</a>
             <div class="dropdown-menu">
                 <a href="#" onclick="showServiceContent('CellphoneRepair'); return false;">Tech-Sector</a>
                 <a href="#" onclick="showServiceContent('CleaningCommercial'); return false;">Cleaning Services -
@@ -255,15 +252,15 @@
         </div>
 
         <div class="tab-dropdown">
-            <a href="html/blue.html" class="tab-button" style="text-decoration: none; display: block;">Blue</a>
+            <a href="html/blue.html" class="tab-button no-underline block">Blue</a>
         </div>
 
     </div>
 
 
     <!-- SEARCH RESULTS (moved below tabs) -->
-    <div id="searchResults" class="server-section" style="display:none;">
-        <h2 style="color: #333; margin-bottom: 20px;">Search Results</h2>
+    <div id="searchResults" class="server-section hidden">
+        <h2 class="text-[#333] mb-5">Search Results</h2>
         <div class="button-grid"></div>
     </div>
 
@@ -274,7 +271,7 @@
     <div id="main-content">
 
         <!-- Home Server Main Section -->
-        <div id="HomeServerMain" class="server-section" style="display:none;">
+        <div id="HomeServerMain" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="Fail2Ban" data-port="">
                     <span>Fail2Ban</span>
@@ -319,7 +316,7 @@
         </div>
 
         <!-- Mail Server Section -->
-        <div id="MailServer" class="server-section" style="display:none;">
+        <div id="MailServer" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="Chatwoot" data-port="3000">
                     <span>Chatwoot</span>
@@ -346,7 +343,7 @@
         </div>
 
         <!-- Cloud Server Section -->
-        <div id="CloudServer" class="server-section" style="display:none;">
+        <div id="CloudServer" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="Elasticsearch" data-port="9200">
                     <span>Elasticsearch</span>
@@ -361,7 +358,7 @@
         </div>
 
         <!-- Business Server Section -->
-        <div id="BusinessServer" class="server-section" style="display:none;">
+        <div id="BusinessServer" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="BoxBilling" data-port="7808">
                     <span>BoxBilling</span>
@@ -403,7 +400,7 @@
         </div>
 
         <!-- Arts Server Section -->
-        <div id="ArtsServer" class="server-section" style="display:none;">
+        <div id="ArtsServer" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="Audacity" data-port="8088">
                     <span>Audacity</span>
@@ -436,7 +433,7 @@
         </div>
 
         <!-- Home Assistant Section -->
-        <div id="HomeAssistantServer" class="server-section" style="display:none;">
+        <div id="HomeAssistantServer" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="HomeAssistant" data-port="8123">
                     <span>Home Assistant</span>
@@ -445,7 +442,7 @@
         </div>
 
         <!-- pfSense Section -->
-        <div id="pfSenseServer" class="server-section" style="display:none;">
+        <div id="pfSenseServer" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="pfSense" data-port="443">
                     <span>pfSense</span>
@@ -454,7 +451,7 @@
         </div>
 
         <!-- OMV Section -->
-        <div id="OMVServer" class="server-section" style="display:none;">
+        <div id="OMVServer" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="OMV" data-port="80">
                     <span>OMV</span>
@@ -463,7 +460,7 @@
         </div>
 
         <!-- Virtual Machines Section -->
-        <div id="VirtualMachines" class="server-section" style="display:none;">
+        <div id="VirtualMachines" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="DebianServer" data-port=""
                     onclick="startVM('DebianServer', '')">
@@ -485,56 +482,55 @@
         </div>
 
         <!-- Services Content Area -->
-        <div id="ServicesContent" class="content-section" style="display:none;">
+        <div id="ServicesContent" class="content-section hidden">
             <div class="service-content">
                 <p>Hover over Services tab and select a service</p>
             </div>
         </div>
 
         <!-- Shopping Content Area -->
-        <div id="ShoppingContent" class="content-section" style="display:none;">
+        <div id="ShoppingContent" class="content-section hidden">
             <div class="shopping-content">
                 <p>Hover over Shopping tab and select a platform</p>
             </div>
         </div>
 
         <!-- Products Content Area -->
-        <div id="ProductsContent" class="content-section" style="display:none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div id="ProductsContent" class="content-section hidden">
+            <div class="flex justify-between items-center mb-5">
                 <h2>Our Products</h2>
-                <div id="product-count" style="font-size: 1.2em; font-weight: bold; color: #333;">
+                <div id="product-count" class="text-xl font-bold text-[#333]">
                     Loading...
                 </div>
             </div>
 
             <!-- Featured Products Carousel -->
-            <div id="featured-section" style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 15px; color: #F97316;">✨ Featured Products</h3>
-                <div class="featured-carousel"
-                    style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; scroll-snap-type: x mandatory;">
+            <div id="featured-section" class="mb-[30px]">
+                <h3 class="mb-[15px] text-orange-500">✨ Featured Products</h3>
+                <div class="featured-carousel flex gap-[15px] overflow-x-auto py-2 snap-x snap-mandatory">
                     <!-- Featured products will be loaded here dynamically -->
                 </div>
             </div>
 
             <!-- All Products Grid -->
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">All Products</h3>
+            <h3 class="mt-[30px] mb-[15px]">All Products</h3>
             <div id="product-grid" class="product-grid">
                 <!-- Products will be loaded here dynamically -->
             </div>
         </div>
 
         <!-- APP STORE CONTENT SECTION -->
-        <div id="AppStoreContent" class="content-section" style="display:none;">
+        <div id="AppStoreContent" class="content-section hidden">
             <h2 style="color: #333; margin-bottom: 20px;">App Store</h2>
             <div class="button-grid">
                 <div class="app-button off">
                     <a href="/flutter_app/web/index.html?app=barcode_scanner"
-                        style="text-decoration: none; color: inherit;">
+                        class="app-store-link">
                         <span>Barcode Scanner Flutter App</span>
                     </a>
                 </div>
                 <div class="app-button off">
-                    <a href="/flutter_app/web/index.html?app=workorder" style="text-decoration: none; color: inherit;">
+                    <a href="/flutter_app/web/index.html?app=workorder" class="app-store-link">
                         <span>Work Order Flutter App</span>
                     </a>
                 </div>
@@ -542,17 +538,17 @@
         </div>
 
         <!-- Barcode Scanner Content Area -->
-        <div id="BarcodeScannerContent" class="content-section" style="display:none;">
+        <div id="BarcodeScannerContent" class="content-section hidden">
             <!-- scanner.html content will be loaded here -->
         </div>
 
         <!-- Scanner Display Content Area -->
-        <div id="ScannerDisplayContent" class="content-section" style="display:none;">
+        <div id="ScannerDisplayContent" class="content-section hidden">
             <!-- scannerdisplay.html content will be loaded here -->
         </div>
 
         <!-- SERVICE DASHBOARD SECTION -->
-        <div id="ServiceDashboard" class="server-section" style="display:none;">
+        <div id="ServiceDashboard" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="BarcodeScanner" data-port="8444">
                     <span>Barcode Scanner</span>
@@ -564,71 +560,71 @@
         </div>
 
         <!-- API KEYS SECTION -->
-        <div id="APIKeys" class="content-section" style="display:none; padding-bottom: 300px; margin-bottom: 100px;">
-            <h2 style="color: #333; margin-bottom: 20px;">eBay Marketplace Account Deletion Notifications</h2>
+        <div id="APIKeys" class="content-section hidden pb-[300px] mb-[100px]">
+            <h2 class="text-[#333] mb-5">eBay Marketplace Account Deletion Notifications</h2>
 
-            <div style="background: #f5f5f5; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
-                <h3 style="color: #666; margin-bottom: 15px;">Configuration</h3>
-                <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+            <div class="bg-[#f5f5f5] rounded-xl p-5 mb-5">
+                <h3 class="text-[#666] mb-[15px]">Configuration</h3>
+                <div class="bg-white p-[15px] rounded-lg mb-[10px]">
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <span style="font-weight: 600; color: #666;">Verification Token:</span>
+                        class="flex justify-between items-center mb-[10px]">
+                        <span class="font-semibold text-[#666]">Verification Token:</span>
                         <button onclick="copyToClipboard(document.getElementById('verificationToken').textContent)"
-                            style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Copy
+                            class="py-2 px-4 bg-blue-500 text-white border-none rounded cursor-pointer">Copy
                             Token</button>
                     </div>
                     <div id="verificationToken"
-                        style="background: #000; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; word-break: break-all;">
+                        class="bg-black text-[#00ff00] p-[15px] rounded font-mono break-all">
                         Loading...</div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div style="background: white; padding: 15px; border-radius: 8px;">
-                        <span style="font-weight: 600; color: #666;">Endpoint ID:</span>
-                        <div id="endpointId" style="color: #333; margin-top: 5px;">Loading...</div>
+                <div class="grid grid-cols-2 gap-[10px]">
+                    <div class="bg-white p-[15px] rounded-lg">
+                        <span class="font-semibold text-[#666]">Endpoint ID:</span>
+                        <div id="endpointId" class="text-[#333] mt-[5px]">Loading...</div>
                     </div>
-                    <div style="background: white; padding: 15px; border-radius: 8px;">
-                        <span style="font-weight: 600; color: #666;">Port:</span>
-                        <div id="apiPort" style="color: #333; margin-top: 5px;">Loading...</div>
+                    <div class="bg-white p-[15px] rounded-lg">
+                        <span class="font-semibold text-[#666]">Port:</span>
+                        <div id="apiPort" class="text-[#333] mt-[5px]">Loading...</div>
                     </div>
                 </div>
             </div>
 
-            <div style="background: #f5f5f5; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
-                <h3 style="color: #666; margin-bottom: 15px;">Endpoint Information</h3>
-                <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+            <div class="bg-[#f5f5f5] rounded-xl p-5 mb-5">
+                <h3 class="text-[#666] mb-[15px]">Endpoint Information</h3>
+                <div class="bg-white p-[15px] rounded-lg mb-[10px]">
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <span style="font-weight: 600; color: #666;">Endpoint URL:</span>
+                        class="flex justify-between items-center mb-[10px]">
+                        <span class="font-semibold text-[#666]">Endpoint URL:</span>
                         <button onclick="copyToClipboard(getEbayEndpoint())"
-                            style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Copy
+                            class="py-2 px-4 bg-blue-500 text-white border-none rounded cursor-pointer">Copy
                             URL</button>
                     </div>
                     <div id="ebayEndpointUrl"
-                        style="background: #000; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; word-break: break-all;">
+                        class="bg-black text-[#00ff00] p-[15px] rounded font-mono break-all">
                         Loading...</div>
                 </div>
 
-                <div style="background: white; padding: 15px; border-radius: 8px;">
-                    <span style="font-weight: 600; color: #666;">Status:</span>
-                    <span id="endpointStatus" style="color: #28a745; margin-left: 10px;">Checking...</span>
+                <div class="bg-white p-[15px] rounded-lg">
+                    <span class="font-semibold text-[#666]">Status:</span>
+                    <span id="endpointStatus" class="text-green-500 ml-[10px]">Checking...</span>
                 </div>
             </div>
 
-            <div style="background: #f5f5f5; border-radius: 10px; padding: 20px; margin-bottom: 200px;">
-                <h3 style="color: #666; margin-bottom: 15px;">Recent Notifications</h3>
+            <div class="bg-[#f5f5f5] rounded-xl p-5 mb-[200px]">
+                <h3 class="text-[#666] mb-[15px]">Recent Notifications</h3>
                 <button onclick="refreshNotifications()"
-                    style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Refresh</button>
+                    class="py-2 px-4 bg-green-500 text-white border-none rounded cursor-pointer mb-[15px]">Refresh</button>
                 <div id="notificationLog"
-                    style="background: #000; color: #0f0; padding: 15px; border-radius: 8px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.9em;">
-                    <p style="color: #888;">No notifications yet. Waiting for eBay verification token or account
+                    class="bg-black text-[#0f0] p-[15px] rounded-lg max-h-[400px] overflow-y-auto font-mono text-[0.9em]">
+                    <p class="text-[#888]">No notifications yet. Waiting for eBay verification token or account
                         deletion notifications...</p>
                 </div>
             </div>
         </div>
 
         <!-- MONITORING SECTION -->
-        <div id="Monitoring" class="server-section" style="display:none;">
+        <div id="Monitoring" class="server-section hidden">
             <div class="button-grid">
                 <div class="app-button off" data-app-name="WazuhManager" data-port="443">
                     <div class="status-indicator"></div>
@@ -700,7 +696,7 @@
     </div>
 
     <!-- DASHBOARDS SECTION -->
-    <div id="Dashboards" class="content-section" style="display:none;">
+    <div id="Dashboards" class="content-section hidden">
         <div class="button-grid">
             <div class="app-button off" data-app-name="Cockpit" data-port="9090" data-ip="172.234.229.103">
                 <div class="status-indicator"></div>
@@ -738,9 +734,9 @@
     </div>
 
     <!-- BIBLE STUDY SECTION -->
-    <div id="BibleStudy" class="content-section" style="display:none; padding-bottom: 300px; margin-bottom: 100px;">
-        <h2 style="color: #333; margin-bottom: 20px;">Bible Study</h2>
-        <div id="bibleStudyContent" style="background: #f5f5f5; border-radius: 10px; padding: 20px;">
+    <div id="BibleStudy" class="content-section hidden pb-[300px] mb-[100px]">
+        <h2 class="text-[#333] mb-5">Bible Study</h2>
+        <div id="bibleStudyContent" class="bg-[#f5f5f5] rounded-xl p-5">
             <div id="biblical-study"></div>
             <div id="bible-study-container"></div>
             <script src="biblestudy.js"></script>
