@@ -2,7 +2,7 @@ services:
   frontend:
     build: .
     volumes:
-      - .:/usr/local/apache2/htdocs/
+      - ./public:/usr/local/apache2/htdocs/
     networks:
       - proxy
     labels:
