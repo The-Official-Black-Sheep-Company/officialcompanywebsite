@@ -29,6 +29,7 @@
     <script src="js/artifacts.js"></script>
     <script src="js/events.js"></script>
     <script src="js/hist_figures.js"></script>
+    <script src="js/legal.js"></script>
 </head>
 
 <body>
@@ -889,11 +890,20 @@
                     Support@theofficialblacksheepcompany.com</p>
                 <p style="color: #333; margin-bottom: 10px;"><strong>Phone:</strong> (425) 517-9528</p>
             </div>
-            <h3 style="color: #666; margin-bottom: 15px;">Pricavy Policy</h3>
-            <div style="background: white; padding: 20px; border-radius: 8px;">
-                <p style="color: #333; margin-bottom: 10px;"><strong>Privacy Policy:</strong></p>
-                <p style="color: #333; margin-bottom: 10px;"><strong>Terms & Conditions:</strong></p>
-                <p style="color: #333; margin-bottom: 10px;"><strong>Cookies & Consent:</strong></p>
+            <h3 style="color: #666; margin-bottom: 15px;">Privacy Policy</h3>
+            <div style="background: white; padding: 20px; border-radius: 8px; display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <p style="color: #333; margin: 0;"><strong>Privacy Policy:</strong> Our standards for your data.</p>
+                    <button class="api-btn" onclick="window.legalModal.showContent('privacy'); window.legalModal.open();">View</button>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <p style="color: #333; margin: 0;"><strong>Terms & Conditions:</strong> Usage agreement for our services.</p>
+                    <button class="api-btn" onclick="window.legalModal.showContent('terms'); window.legalModal.open();">View</button>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <p style="color: #333; margin: 0;"><strong>Cookies & Consent:</strong> How we use tracking technology.</p>
+                    <button class="api-btn" onclick="window.legalModal.showContent('disclaimer'); window.legalModal.open();">View</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1040,6 +1050,26 @@
     <script src="js/chatwoot-widget-config.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/background.js"></script>
+
+    <!-- Legal Modal -->
+    <div id="legal-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-sidebar">
+                <div class="legal-nav-item active" data-section="privacy">Privacy Policy</div>
+                <div class="legal-nav-item" data-section="terms">Terms of Service</div>
+                <div class="legal-nav-item" data-section="disclaimer">Disclaimer</div>
+                <div class="modal-close-sidebar">✕ Close</div>
+            </div>
+            <div class="modal-content-area">
+                <div class="modal-body">
+                    <!-- Content injected by legal.js -->
+                </div>
+                <div class="modal-footer">
+                    <button id="legal-approve-btn" class="api-btn">I Understand & Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

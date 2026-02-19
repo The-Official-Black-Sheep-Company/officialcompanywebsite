@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Genesis 1: Ultimate Reference</title>
+<style>
+body {
+    background-color: #0f0f0f;
+    color: #e6e6e6;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 40px;
+}
+h1, h2, h3 {
+    color: #f5c542;
+}
+.section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+}
+button {
+    background: #f5c542;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.timeline-wrapper {
+    position: relative;
+    height: 120px;
+    margin-top: 20px;
+}
+.timeline-line {
+    position: absolute;
+    top: 60px;
+    left: 5%;
+    width: 90%;
+    height: 4px;
+    background: #f5c542;
+}
+.timeline-marker {
+    position: absolute;
+    top: 52px;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border: 3px solid #f5c542;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.tooltip {
+    position: absolute;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    display: none;
+    font-size: 14px;
+    pointer-events: none;
+    white-space: nowrap;
+}
+.tree ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+.tree li {
+    margin: 10px 0;
+}
+.artifact-card {
+    background: #262626;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+.artifact-card img {
+    max-width: 100%;
+    border-radius: 4px;
+}
+</style>
+</head>
+<body>
+
+<h1 id="title"></h1>
+<h2 id="passage"></h2>
+
+<div class="section" id="abstract"></div>
+<div class="section" id="translation"></div>
+<div class="section">
+    <h2>Textual-Critical Notes</h2>
+    <div id="textual"></div>
+</div>
+<div class="section" id="historical"></div>
+
+<div class="section">
+    <h2>Original Language Analysis</h2>
+    <button onclick="toggleHebrew()">Toggle Hebrew Details</button>
+    <div id="language" style="display:none;"></div>
+</div>
+
+<div class="section" id="cosmology"></div>
+<div class="section" id="literary"></div>
+<div class="section" id="theology"></div>
+<div class="section" id="canonical"></div>
+<div class="section" id="reception"></div>
+<div class="section" id="scholarly"></div>
+<div class="section" id="science"></div>
+
+<div class="section">
+    <h2>Timeline</h2>
+    <div class="timeline-wrapper">
+        <div class="timeline-line"></div>
+        <div id="timeline-markers"></div>
+        <div id="timeline-tooltip" class="tooltip"></div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Genealogy</h2>
+    <div class="tree" id="genealogy"></div>
+</div>
+
+<div class="section">
+    <h2>Artifacts & Images</h2>
+    <div id="artifacts"></div>
+</div>
+
+<script>
+// SAMPLE DATA
+const deepDive = {
+    title: "Genesis 1: A Comprehensive Scholarly Reference",
+    passage: "Genesis 1:1–31",
+    abstract: "<h2>Abstract</h2><p>This entry provides a full scholarly treatment of Genesis 1, engaging the Hebrew text, textual criticism, ANE parallels, cosmology, literary structure, theology, reception history, and scholarly debate. Suitable for citation by researchers and theologians.</p>",
+    translation: "<h2>Translation</h2><p><strong>Bereshit bara Elohim et hashamayim ve'et ha'aretz.</strong> – 'In the beginning, God created the heavens and the earth.' <em>Note:</em> This is a direct translation emphasizing divine agency and sovereignty.</p>",
+    textual: "<p>Masoretic Text (MT) standard; LXX includes minor order variation; Samaritan Pentateuch shows orthographic differences.</p>",
+    historical: "<h2>Ancient Near Eastern Context</h2><p>Contrasts with Enuma Elish and Atrahasis; no divine conflict, emphasizes functional creation.</p>",
+    language: "<p><strong>Bereshit</strong> – beginning/absolute origin<br><strong>Bara</strong> – divine creation verb<br><strong>Elohim</strong> – singular majestic plural</p>",
+    cosmology: "<h2>Cosmology & Temple Theory</h2><p>Discussion of raqia (firmament), phenomenological language, temple inauguration hypothesis, and solid dome theory.</p>",
+    literary: "<h2>Literary Structure</h2><p>7-day symmetry, forming/filling, repeated divine speech, numerical patterns.</p>",
+    theology: "<h2>Theological Architecture</h2><p>Doctrine of God, creation, anthropology, Sabbath theology.</p>",
+    canonical: "<h2>Canonical Thread</h2><p>Cross-references: Psalm 104, Isaiah 40, John 1, Colossians 1, Hebrews 1, Revelation 21–22.</p>",
+    reception: "<h2>Reception History</h2><p>Patristic, Medieval, Reformers interpretations summarized.</p>",
+    scholarly: "<h2>Scholarly Positions</h2><p>Walton (functional creation), Wenham (literal/structured), Waltke (theological), von Rad (literary), others.</p>",
+    science: "<h2>Science & Faith Dialogue</h2><p>Young Earth, Old Earth, Framework hypothesis, analogical days, day-age theories.</p>",
+    timeline: [
+        { year: -2000, label: "Patriarchal Era" },
+        { year: -1800, label: "Babylonian Creation Texts" },
+        { year: -1446, label: "Traditional Exodus Date" }
+    ],
+    genealogy: {
+        name: "Adam",
+        children: [
+            { name: "Seth", children: [{ name: "Enosh", children: [] }] }
+        ]
+    },
+    artifacts: [
+        { name: "Enuma Elish Tablet", image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Enuma_Elish.jpg", description: "Babylonian creation epic tablet." },
+        { name: "Masoretic Scroll Fragment", image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Dead_Sea_Scrolls_4QGenesis.jpg", description: "Earliest Hebrew text fragment of Genesis 1." }
+    ]
+};
+
+// LOAD CONTENT
+document.getElementById("title").innerText = deepDive.title;
+document.getElementById("passage").innerText = deepDive.passage;
+document.getElementById("abstract").innerHTML = deepDive.abstract;
+document.getElementById("translation").innerHTML = deepDive.translation;
+document.getElementById("textual").innerHTML = deepDive.textual;
+document.getElementById("historical").innerHTML = deepDive.historical;
+document.getElementById("language").innerHTML = deepDive.language;
+document.getElementById("cosmology").innerHTML = deepDive.cosmology;
+document.getElementById("literary").innerHTML = deepDive.literary;
+document.getElementById("theology").innerHTML = deepDive.theology;
+document.getElementById("canonical").innerHTML = deepDive.canonical;
+document.getElementById("reception").innerHTML = deepDive.reception;
+document.getElementById("scholarly").innerHTML = deepDive.scholarly;
+document.getElementById("science").innerHTML = deepDive.science;
+
+// TOGGLE HEBREW
+function toggleHebrew() {
+    const el = document.getElementById("language");
+    el.style.display = el.style.display === "none" ? "block" : "none";
+}
+
+// TIMELINE RENDER
+const markerContainer = document.getElementById("timeline-markers");
+const tooltip = document.getElementById("timeline-tooltip");
+const minYear = Math.min(...deepDive.timeline.map(e => e.year));
+const maxYear = Math.max(...deepDive.timeline.map(e => e.year));
+deepDive.timeline.forEach(event => {
+    const marker = document.createElement("div");
+    marker.className = "timeline-marker";
+    const percent = ((event.year - minYear) / (maxYear - minYear)) * 90 + 5;
+    marker.style.left = percent + "%";
+    marker.addEventListener("mouseenter", (e) => {
+        tooltip.style.display = "block";
+        tooltip.innerHTML = `<strong>${event.year}</strong><br>${event.label}`;
+        tooltip.style.left = e.pageX - 50 + "px";
+        tooltip.style.top = e.pageY - 70 + "px";
+    });
+    marker.addEventListener("mouseleave", () => { tooltip.style.display = "none"; });
+    markerContainer.appendChild(marker);
+});
+
+// GENEALOGY
+function renderTree(node) {
+    let html = `<li>${node.name}`;
+    if (node.children && node.children.length > 0) {
+        html += "<ul>";
+        node.children.forEach(child => { html += renderTree(child); });
+        html += "</ul>";
+    }
+    html += "</li>";
+    return html;
+}
+document.getElementById("genealogy").innerHTML = `<ul>${renderTree(deepDive.genealogy)}</ul>`;
+
+// ARTIFACTS
+deepDive.artifacts.forEach(artifact => {
+    const card = document.createElement("div");
+    card.className = "artifact-card";
+    card.innerHTML = `<img src="${artifact.image}"><h4>${artifact.name}</h4><p>${artifact.description}</p>`;
+    document.getElementById("artifacts").appendChild(card);
+});
+</script>
+</body>
+</html>

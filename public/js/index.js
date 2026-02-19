@@ -296,6 +296,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Logout listener
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleSignOut();
+        });
+    }
+
     // Periodic status checks
     checkAllStatuses();
     setInterval(checkAllStatuses, 5000);
