@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         shape.className = `background-shape ${shapeType}`;
         shape.style.setProperty('--shape-size', `${size}px`);
+        shape.style.width = `${size}px`;
+        shape.style.height = `${size}px`;
         shape.style.position = 'absolute';
         
         // --- Random positioning and movement ---

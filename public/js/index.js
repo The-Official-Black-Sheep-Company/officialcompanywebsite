@@ -63,8 +63,20 @@ function checkAccess() {
     const isEmployee = isAuthenticated; // Simplified RBAC
 
     const tabs = document.querySelectorAll('.tabs .tab-dropdown');
-    // Restricted tabs: API Keys (0), Monitoring (2), Servers (3), Tools (6)
-    const restrictedIndices = [0, 2, 3, 6];
+    // New Indices (after moving Blue to 0):
+    // 0: Blue (All)
+    // 1: API Keys (Restricted)
+    // 2: Seek Eternity (All)
+    // 3: Reports (Restricted)
+    // 4: Monitoring (Restricted)
+    // 5: Servers (Restricted)
+    // 6: Services (All)
+    // 7: Shopping (Restricted)
+    // 8: App Store (All)
+    // 9: Tools (Restricted)
+    // 10: Contacts (All)
+    
+    const restrictedIndices = [1, 3, 4, 5, 7, 9];
 
     tabs.forEach((tab, index) => {
         if (restrictedIndices.includes(index)) {
@@ -76,6 +88,7 @@ function checkAccess() {
 // --- Content Section & Tab Management ---
 
 function showSection(sectionId) {
+    // Hide all sections
     document.querySelectorAll('.server-section, .content-section').forEach(section => {
         section.style.display = 'none';
     });
@@ -94,16 +107,21 @@ function showSection(sectionId) {
         
         // Match section to tab (finding by index as a fallback)
         const tabs = document.querySelectorAll('.tab-button');
-        if (sectionId === 'APIKeys') tabs[0]?.classList.add('active-selection');
-        if (sectionId === 'BibleStudy') tabs[1]?.classList.add('active-selection');
-        if (sectionId === 'Blogs') tabs[2]?.classList.add('active-selection');
-        if (sectionId === 'ProductsContent') tabs[3]?.classList.add('active-selection');
+        // Indices updated for new "Blue" position
+        if (sectionId === 'APIKeys') tabs[1]?.classList.add('active-selection');
+        if (sectionId === 'BibleStudy') tabs[2]?.classList.add('active-selection');
+        if (sectionId === 'Blogs') tabs[3]?.classList.add('active-selection');
+        if (sectionId === 'ProductsContent') tabs[7]?.classList.add('active-selection'); // Shopping index
         
-        // Hide HeroSlideshow if another section is shown
+        // HeroSlideshow is treated as the default view
         if (sectionId !== 'HeroSlideshow') {
             const hero = document.getElementById('HeroSlideshow');
             if (hero) hero.style.display = 'none';
         }
+    } else if (!sectionId) {
+        // Default to Hero if no section selected
+        const hero = document.getElementById('HeroSlideshow');
+        if (hero) hero.style.display = 'block';
     }
 
     if (sectionId === 'ProductsContent') loadProducts();
@@ -284,6 +302,11 @@ async function refreshNotifications() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initFirebaseAuth();
+    
+    // Ensure slideshow is visible if starting on index.html
+    if (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html')) {
+        showSection('HeroSlideshow');
+    }
 
     // Support for inline onclick and UI cleanup
     document.querySelectorAll('.tab-button, .dropdown-menu a, .submenu a').forEach(link => {
