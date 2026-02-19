@@ -183,26 +183,23 @@
         </main>
     </div>
 
-    <!-- Firebase -->
-    <script src="/__/firebase/10.12.2/firebase-app-compat.js"></script>
-    <script src="/__/firebase/10.12.2/firebase-auth-compat.js"></script>
-    <script src="/__/firebase/init.js?useEmulator=true"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
     
-    <script type="module">
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-        const auth = getAuth();
-
+    <script>
+        // auth is already initialized in firebase-config.js and available globally
         const sidebarUserSection = document.getElementById('user-info-sidebar');
         const welcomeName = document.getElementById('welcome-name');
         const headerWelcome = document.getElementById('header-welcome');
         const logoutButton = document.getElementById('logout-button');
 
-        onAuthStateChanged(auth, (user) => {
+        auth.onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in
                 console.log('Authenticated user:', user);
-                const displayName = user.displayName || 'User';
+                const displayName = user.displayName || user.email.split('@')[0];
                 const email = user.email;
                 const photoURL = user.photoURL;
 
@@ -210,7 +207,7 @@
                 sidebarUserSection.innerHTML = `
                     <div class="flex items-center gap-3 mb-3">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold">
-                            ${photoURL ? `<img src="${photoURL}" class="rounded-full">` : displayName.charAt(0)}
+                            ${photoURL ? `<img src="${photoURL}" class="rounded-full">` : displayName.charAt(0).toUpperCase()}
                         </div>
                         <div class="flex-1">
                             <p class="text-sm font-medium text-white">${displayName}</p>
@@ -224,8 +221,6 @@
                  if (headerWelcome) {
                         headerWelcome.innerHTML = `Welcome back, <span class="text-orange-400 font-bold">${displayName}</span>!`;
                     }
-
-
             } else {
                 // User is signed out
                 console.log('User is not authenticated');
@@ -234,8 +229,9 @@
         });
 
         logoutButton.addEventListener('click', () => {
-            signOut(auth).then(() => {
+            auth.signOut().then(() => {
                 console.log('User signed out');
+                window.location.href = '../index.html';
             }).catch((error) => {
                 console.error('Sign out error', error);
             });
