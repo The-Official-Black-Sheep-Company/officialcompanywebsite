@@ -49,10 +49,17 @@ function updateUIVisibility() {
     const avatarImg = document.getElementById('user-avatar-img');
 
     if (currentUser) {
-        if (authButtons) authButtons.style.display = 'none';
-        if (avatarContainer) avatarContainer.style.display = 'block';
-        if (avatarImg) {
-            avatarImg.src = currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.displayName || currentUser.email)}&background=FBBF24&color=000&size=128`;
+        // Only show logged-in UI if verified
+        if (currentUser.emailVerified) {
+            if (authButtons) authButtons.style.display = 'none';
+            if (avatarContainer) avatarContainer.style.display = 'block';
+            if (avatarImg) {
+                avatarImg.src = currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.displayName || currentUser.email)}&background=FBBF24&color=000&size=128`;
+            }
+        } else {
+            // Logged in but unverified - show buttons (or a separate indicator)
+            if (authButtons) authButtons.style.display = 'flex';
+            if (avatarContainer) avatarContainer.style.display = 'none';
         }
     } else {
         if (authButtons) authButtons.style.display = 'flex';
@@ -63,44 +70,38 @@ function updateUIVisibility() {
 function handleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider)
-        .then(result => console.log("Sign-in successful", result.user))
+        .then(result => {
+            console.log("Nexus connected:", result.user.email);
+            // Google users are pre-verified
+            updateUIVisibility();
+        })
         .catch(error => {
-            console.error("Sign-in error", error);
-            alert(`Sign-In failed: ${error.message}`);
+            console.error("Connection failed:", error);
+            alert(`Nexus Handshake Failed: ${error.message}`);
         });
 }
 
 function handleSignOut() {
     auth.signOut().then(() => {
-        console.log("User signed out");
+        console.log("De-authorized");
+        currentUser = null;
+        updateUIVisibility();
+        checkAccess();
         if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('index.html')) {
             window.location.href = '../index.html';
         }
-    }).catch(error => console.error("Sign-out error", error));
+    }).catch(error => console.error("Disconnect error:", error));
 }
 
 // Role-Based Access Control
 function checkAccess() {
-    const isAuthenticated = currentUser !== null;
-    const isEmployee = isAuthenticated; // Currently, any logged-in user is treated as an employee
+    const isVerified = currentUser && currentUser.emailVerified;
+    const isEmployee = isVerified; // Only verified users get access
 
     const tabsContainer = document.querySelector('.tabs-container');
     if (!tabsContainer) return;
 
     const tabs = tabsContainer.querySelectorAll('.tab-dropdown');
-    
-    // Restricted Indices (target non-public tabs)
-    // 0: Blue (All)
-    // 1: API Keys (Restricted)
-    // 2: Seek Eternity (All)
-    // 3: Reports (Restricted)
-    // 4: Monitoring (Restricted)
-    // 5: Servers (Restricted)
-    // 6: Services (All)
-    // 7: Shopping (Restricted)
-    // 8: App Store (All)
-    // 9: Tools (Restricted)
-    // 10: Contacts (All)
     
     const restrictedIndices = [1, 3, 4, 5, 7, 9];
 

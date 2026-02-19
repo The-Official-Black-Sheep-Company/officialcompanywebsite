@@ -195,45 +195,69 @@
         const headerWelcome = document.getElementById('header-welcome');
         const logoutButton = document.getElementById('logout-button');
 
+        let initialLoad = true;
         auth.onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in
-                console.log('Authenticated user:', user);
+                if (!user.emailVerified) {
+                    console.warn('Unverified access attempt');
+                    // In a production app, we'd redirect to a "Verify your email" page
+                    // For now, we sign out and redirect to home if not verified
+                    auth.signOut().then(() => {
+                        window.location.href = '../index.html';
+                    });
+                    return;
+                }
+
+                console.log('Authenticated member:', user.email);
                 const displayName = user.displayName || user.email.split('@')[0];
                 const email = user.email;
                 const photoURL = user.photoURL;
 
                 // Update sidebar
-                sidebarUserSection.innerHTML = `
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold">
-                            ${photoURL ? `<img src="${photoURL}" class="rounded-full">` : displayName.charAt(0).toUpperCase()}
+                if (sidebarUserSection) {
+                    sidebarUserSection.innerHTML = `
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold overflow-hidden">
+                                ${photoURL ? `<img src="${photoURL}" class="w-full h-full object-cover">` : displayName.charAt(0).toUpperCase()}
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-white line-clamp-1">${displayName}</p>
+                                <p class="text-[10px] text-gray-500 line-clamp-1 uppercase tracking-tighter">${email}</p>
+                            </div>
                         </div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-white">${displayName}</p>
-                            <p class="text-xs text-gray-500">${email}</p>
-                        </div>
-                    </div>
-                `;
+                    `;
+                }
 
                 // Update header
-                if(welcomeName) welcomeName.textContent = displayName;
-                 if (headerWelcome) {
-                        headerWelcome.innerHTML = `Welcome back, <span class="text-orange-400 font-bold">${displayName}</span>!`;
-                    }
+                if (welcomeName) welcomeName.textContent = displayName;
+                if (headerWelcome) {
+                    headerWelcome.innerHTML = `Welcome back, <span class="text-orange-400 font-bold">${displayName}</span>!`;
+                }
             } else {
                 // User is signed out
-                console.log('User is not authenticated');
-                window.location.href = '../index.html'; // Redirect to login page
+                console.log('No authenticated identity');
+                if (!initialLoad) {
+                    window.location.href = '../index.html';
+                } else {
+                    // Give Firebase a small window to potentially recover session on slow connections
+                    setTimeout(() => {
+                        if (!auth.currentUser) {
+                             window.location.href = '../index.html';
+                        }
+                    }, 1000);
+                }
             }
+            initialLoad = false;
         });
 
-        logoutButton.addEventListener('click', () => {
+        logoutButton.addEventListener('click', (e) => {
+            e.preventDefault();
             auth.signOut().then(() => {
-                console.log('User signed out');
+                console.log('Identity logged out');
                 window.location.href = '../index.html';
             }).catch((error) => {
-                console.error('Sign out error', error);
+                console.error('Logout signal failure:', error);
             });
         });
 

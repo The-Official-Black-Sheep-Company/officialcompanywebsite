@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const sizeOptions = [
             Math.floor(Math.random() * 5) + 1,      // Micro: 1-6px
             Math.floor(Math.random() * 15) + 8,     // Tiny: 8-23px
-            Math.floor(Math.random() * 40) + 25,    // Small: 25-65px
-            Math.floor(Math.random() * 80) + 70,    // Medium: 70-150px
-            Math.floor(Math.random() * 150) + 160,  // Large: 160-310px
-            Math.floor(Math.random() * 300) + 310   // X-Large: 310-610px
+            Math.floor(Math.random() * 40) + 5,    // Small: 25-65px
+            Math.floor(Math.random() * 80) + 20,    // Medium: 70-150px
+            Math.floor(Math.random() * 150) + 60,  // Large: 160-310px
+            Math.floor(Math.random() * 300) + 50   // X-Large: 310-610px
         ];
         const size = sizeOptions[Math.floor(Math.random() * sizeOptions.length)];
         

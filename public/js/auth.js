@@ -16,11 +16,20 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log('Logged in as:', user.email);
-                    window.location.href = 'portal.html';
+                    if (user.emailVerified) {
+                        console.log('Logged in as:', user.email);
+                        window.location.href = 'portal.html';
+                    } else {
+                        // User not verified - show alert and sign out to prevent auto-portal-redirect
+                        alert('Identity not yet verified. Please check your inbox for the activation protocol.');
+                        user.sendEmailVerification().then(() => {
+                           console.log('Resent verification email');
+                        });
+                        auth.signOut();
+                    }
                 })
                 .catch((error) => {
-                    alert(`Error: ${error.message}`);
+                    alert(`Authorization Failed: ${error.message}`);
                 });
         });
     }
@@ -31,10 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider)
                 .then((result) => {
-                    console.log('Google sign-in successful:', result.user.displayName);
+                    console.log('Google identity verified:', result.user.displayName);
+                    // Google users are automatically verified
                     window.location.href = 'portal.html';
                 }).catch((error) => {
-                    alert(`Google sign-in error: ${error.message}`);
+                    alert(`Nexus Connection Error: ${error.message}`);
                 });
         });
     }
@@ -49,11 +59,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    console.log('Signed up as:', userCredential.user.email);
-                    window.location.href = 'portal.html';
+                    const user = userCredential.user;
+                    console.log('Identity Created:', user.email);
+                    
+                    // Send verification email
+                    user.sendEmailVerification().then(() => {
+                        alert('Success! Registration initiated. Please check your inbox for the activation link.');
+                        auth.signOut().then(() => {
+                            window.location.href = 'login.html';
+                        });
+                    }).catch(err => {
+                        console.error('Signal Error:', err);
+                        alert('Account created, but failed to send verification signal. Please try logging in.');
+                    });
                 })
                 .catch((error) => {
-                    alert(`Signup error: ${error.message}`);
+                    alert(`Recruitment Failed: ${error.message}`);
                 });
         });
     }
@@ -61,14 +82,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Observer for auth state changes
     auth.onAuthStateChanged((user) => {
         if (user) {
-            console.log('User is signed in:', user.email);
+            console.log('Authorized Identity detected:', user.email);
             if (userEmailElement) {
                 userEmailElement.textContent = user.email;
             }
-            // Auto-redirect if on login or signup pages
-            const path = window.location.pathname;
-            if (path.includes('login.html') || path.includes('signup.html')) {
-                window.location.href = 'portal.html';
+
+            // Redirect if verified and on auth pages
+            if (user.emailVerified) {
+                const path = window.location.pathname;
+                if (path.includes('login.html') || path.includes('signup.html')) {
+                    window.location.href = 'portal.html';
+                }
             }
         }
     });
@@ -79,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.signOut().then(() => {
                 window.location.href = '../index.html';
             }).catch((error) => {
-                console.error('Logout error:', error);
+                console.error('De-authorization failed:', error);
             });
         });
     }
