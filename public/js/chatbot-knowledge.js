@@ -20,7 +20,11 @@ const chatbotKnowledge = [
     },
     {
         keywords: ['location', 'area', 'serve', 'where'],
-        response: "For in-person services like cleaning, junk removal, and dog walking, we serve the local area. For server monitoring and our online store, we support clients nationwide! Tell me your city and I'll confirm if we can help."
+        response: "south puget sound, south seattle to Federal Way!! but we will come to you!!"
+    },
+    {
+        keywords: ['website', 'design', 'webpage', 'purchase', 'buy a website'],
+        response: "well yes we can design a website for you that you can purchase. go to our tech page and fill out the basics of what you want on your website or webpage and swoop will get back with you shortly!"
     },
     {
         keywords: ['hours', 'open', 'time', 'when'],
@@ -72,7 +76,7 @@ const chatbotKnowledge = [
     },
     {
         keywords: ['blue', 'pitbull', 'bluenose', 'dog mascot'],
-        response: "Have you had the opportunity to check out Blue the bluenose pitbull? Go to the Blue tab and check out his social media! He's the heart and soul of Black Sheep Company."
+        response: "blue is a blue nose pitbull 4 months old. visit his page check him out!!"
     },
     {
         keywords: ['report', 'blog', 'history', 'artifact'],

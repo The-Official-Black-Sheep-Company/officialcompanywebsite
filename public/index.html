@@ -89,14 +89,14 @@
 
 
 
-    <!-- api keys -->
+    <div class="tabs-container flex flex-wrap gap-2 mb-6">
+        <!-- Blue is ALWAYS first -->
         <div class="tab-dropdown">
-            <a href="html/blue.html" class="tab-button no-underline block">Blue</a>
+            <a href="html/blue.html" class="tab-button no-underline block bg-blue-600/20 border-blue-500/50">Blue</a>
         </div>
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('APIKeys')">API Keys</button>
         </div>
-        <!-- bible study -->
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('BibleStudy')">Seek Eternity</button>
         </div>
@@ -207,13 +207,10 @@
             <a href="html/services.html" class="tab-button no-underline block">Services ▼</a>
             <div class="dropdown-menu">
                 <a href="#" onclick="showServiceContent('CellphoneRepair'); return false;">Tech-Sector</a>
-                <a href="#" onclick="showServiceContent('CleaningCommercial'); return false;">Cleaning Services -
-                    Commercial</a>
-                <a href="#" onclick="showServiceContent('CleaningResidential'); return false;">Cleaning Services -
-                    Residential</a>
+                <a href="#" onclick="showServiceContent('CleaningCommercial'); return false;">Cleaning Services - Commercial</a>
+                <a href="#" onclick="showServiceContent('CleaningResidential'); return false;">Cleaning Services - Residential</a>
                 <a href="html/petservices.html">Pet Services</a>
-                <a href="#" onclick="showServiceContent('JunkRemoval'); return false;">Junk Removal, Moving &
-                    Hauling</a>
+                <a href="#" onclick="showServiceContent('JunkRemoval'); return false;">Junk Removal, Moving & Hauling</a>
                 <a href="#" onclick="showServiceContent('MobileLaundryMat'); return false;">Mobile Laundry Mat</a>
                 <a href="#" onclick="showServiceContent('MovingHauling'); return false;">Merch & Training</a>
             </div>
@@ -253,6 +250,7 @@
         <div class="tab-dropdown">
             <button class="tab-button" onclick="showSection('Contacts')">Contacts</button>
         </div>
+    </div>
 
 
     </div>
@@ -750,28 +748,87 @@
 
     <!-- CONTACTS SECTION -->
     <div id="Contacts" class="content-section contacts-section" style="display:none; padding-bottom: 300px; margin-bottom: 100px;">
-        <h2>Contacts</h2>
-        <div class="contacts-container">
-            <h3>Contact Information</h3>
-            <div class="contacts-card">
-                <p><strong>Company:</strong> The Official Black Sheep Company</p>
-                <p><strong>Email:</strong> Support@theofficialblacksheepcompany.com</p>
-                <p><strong>Phone:</strong> (425) 517-9528</p>
+        <h2 class="text-[#FBBF24] text-4xl font-black italic uppercase tracking-tighter mb-8 bg-zinc-900/50 p-6 rounded-2xl border-l-8 border-amber-500 inline-block">Contact Us</h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Left Side: Contact Info -->
+            <div class="contacts-info-panel bg-zinc-900/60 backdrop-blur-xl p-8 rounded-3xl border border-zinc-700/50">
+                <h3 class="text-2xl font-bold text-white mb-6">Reach Out Directly</h3>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all">
+                            <i data-lucide="mail"></i>
+                        </div>
+                        <div>
+                            <p class="text-zinc-500 text-sm uppercase tracking-widest font-bold">Email</p>
+                            <p class="text-white font-medium">Support@theofficialblacksheepcompany.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-black transition-all">
+                            <i data-lucide="phone"></i>
+                        </div>
+                        <div>
+                            <p class="text-zinc-500 text-sm uppercase tracking-widest font-bold">Phone</p>
+                            <p class="text-white font-medium">(425) 517-9528</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <h3 class="text-xl font-bold text-white mb-6">Legal Documentation</h3>
+                    <div class="grid grid-cols-1 gap-3">
+                        <button class="flex items-center justify-between p-4 bg-zinc-800/50 hover:bg-zinc-700/50 rounded-xl border border-zinc-700/30 transition-all text-left" onclick="window.legalModal.showContent('privacy'); window.legalModal.open();">
+                            <span class="text-zinc-300">Privacy Policy</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-500"></i>
+                        </button>
+                        <button class="flex items-center justify-between p-4 bg-zinc-800/50 hover:bg-zinc-700/50 rounded-xl border border-zinc-700/30 transition-all text-left" onclick="window.legalModal.showContent('terms'); window.legalModal.open();">
+                            <span class="text-zinc-300">Terms & Conditions</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-500"></i>
+                        </button>
+                        <button class="flex items-center justify-between p-4 bg-zinc-800/50 hover:bg-zinc-700/50 rounded-xl border border-zinc-700/30 transition-all text-left" onclick="window.legalModal.showContent('disclaimer'); window.legalModal.open();">
+                            <span class="text-zinc-300">Cookies & Consent</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-500"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <h3>Privacy Policy</h3>
-            <div class="legal-grid">
-                <div class="legal-item">
-                    <p><strong>Privacy Policy:</strong> Our standards for your data.</p>
-                    <button class="api-btn" onclick="window.legalModal.showContent('privacy'); window.legalModal.open();">View</button>
-                </div>
-                <div class="legal-item">
-                    <p><strong>Terms & Conditions:</strong> Usage agreement for our services.</p>
-                    <button class="api-btn" onclick="window.legalModal.showContent('terms'); window.legalModal.open();">View</button>
-                </div>
-                <div class="legal-item">
-                    <p><strong>Cookies & Consent:</strong> How we use tracking technology.</p>
-                    <button class="api-btn" onclick="window.legalModal.showContent('disclaimer'); window.legalModal.open();">View</button>
-                </div>
+
+            <!-- Right Side: Contact Form -->
+            <div class="contact-form-panel bg-zinc-900/60 backdrop-blur-xl p-8 rounded-3xl border border-zinc-700/50">
+                <h3 class="text-2xl font-bold text-white mb-6">Send a Message</h3>
+                <form id="mainContactForm" class="space-y-6">
+                    <div class="space-y-2">
+                        <label for="name" class="text-zinc-400 text-sm font-medium">Full Name</label>
+                        <input type="text" id="name" name="name" class="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all" placeholder="Enter your name" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label for="email" class="text-zinc-400 text-sm font-medium">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all" placeholder="your@email.com" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label for="message" class="text-zinc-400 text-sm font-medium">Message</label>
+                        <textarea id="message" name="message" rows="4" class="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all" placeholder="How can we help?" required></textarea>
+                    </div>
+
+                    <!-- Legal Checkboxes -->
+                    <div class="space-y-4 pt-4 border-t border-zinc-800">
+                        <label class="flex items-start gap-3 cursor-pointer group">
+                            <input type="checkbox" required class="mt-1 w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500 focus:ring-offset-zinc-900">
+                            <span class="text-zinc-400 text-sm group-hover:text-zinc-300 transition-colors">I agree to the <a href="#" class="text-amber-500 hover:underline" onclick="window.legalModal.showContent('privacy'); window.legalModal.open(); return false;">Privacy Policy</a> and <a href="#" class="text-amber-500 hover:underline" onclick="window.legalModal.showContent('terms'); window.legalModal.open(); return false;">Terms of Service</a>. *</span>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer group">
+                            <input type="checkbox" required class="mt-1 w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500 focus:ring-offset-zinc-900">
+                            <span class="text-zinc-400 text-sm group-hover:text-zinc-300 transition-colors">I consent to being contacted regarding my inquiry. *</span>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer group">
+                            <input type="checkbox" class="mt-1 w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-amber-500 focus:ring-amber-500 focus:ring-offset-zinc-900">
+                            <span class="text-zinc-400 text-sm group-hover:text-zinc-300 transition-colors">Keep me updated on Black Sheep Company news and offers.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-black font-black uppercase tracking-widest py-4 rounded-xl shadow-lg shadow-amber-500/20 active:scale-[0.98] transition-all">Submit Inquiry</button>
+                </form>
             </div>
         </div>
     </div>

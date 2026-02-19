@@ -16,8 +16,30 @@ function initFirebaseAuth() {
             if (user && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html'))) {
                 console.log("User is authenticated:", user.email || "No email");
                 // Redirect REMOVED - allow using landing page with slideshow
+                
+                // --- Handle Hash Navigation on Login/Load ---
+                handleHashNavigation();
             }
         });
+    }
+}
+
+// Add event listener for hash changes
+window.addEventListener('hashchange', handleHashNavigation);
+
+function handleHashNavigation() {
+    const hash = window.location.hash.substring(1); // Remove #
+    if (hash) {
+        // Special mapping if needed, otherwise use hash directly
+        const sectionId = hash;
+        if (typeof showSection === 'function') {
+            showSection(sectionId);
+            // Scroll to content for better UX
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     }
 }
 
@@ -60,10 +82,14 @@ function handleSignOut() {
 // Role-Based Access Control
 function checkAccess() {
     const isAuthenticated = currentUser !== null;
-    const isEmployee = isAuthenticated; // Simplified RBAC
+    const isEmployee = isAuthenticated; // Currently, any logged-in user is treated as an employee
 
-    const tabs = document.querySelectorAll('.tabs .tab-dropdown');
-    // New Indices (after moving Blue to 0):
+    const tabsContainer = document.querySelector('.tabs-container');
+    if (!tabsContainer) return;
+
+    const tabs = tabsContainer.querySelectorAll('.tab-dropdown');
+    
+    // Restricted Indices (target non-public tabs)
     // 0: Blue (All)
     // 1: API Keys (Restricted)
     // 2: Seek Eternity (All)
@@ -81,6 +107,8 @@ function checkAccess() {
     tabs.forEach((tab, index) => {
         if (restrictedIndices.includes(index)) {
             tab.style.display = isEmployee ? 'block' : 'none';
+        } else {
+            tab.style.display = 'block'; // Always show public tabs
         }
     });
 }

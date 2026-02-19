@@ -235,6 +235,64 @@
     margin: 0;
 }
 
+/* --- CONTACTS SECTION ENHANCEMENTS --- */
+.contacts-section {
+    position: relative;
+    z-index: 5;
+}
+
+.contact-form-panel input:focus, 
+.contact-form-panel textarea:focus {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+}
+
+.contact-form-panel input::placeholder, 
+.contact-form-panel textarea::placeholder {
+    color: #52525b;
+}
+
+/* Custom Checkbox Styling if needed beyond standard tailwind classes */
+.contacts-section input[type="checkbox"] {
+    cursor: pointer;
+    appearance: none;
+    background-color: #27272a;
+    border: 1px solid #3f3f46;
+    padding: 9px;
+    border-radius: 6px;
+    display: inline-block;
+    position: relative;
+}
+
+.contacts-section input[type="checkbox"]:checked {
+    background-color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.contacts-section input[type="checkbox"]:checked::after {
+    content: '\2714';
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 4px;
+    color: #000;
+}
+
+.contact-form-panel {
+    background: linear-gradient(180deg, rgba(24, 24, 27, 0.8) 0%, rgba(9, 9, 11, 0.9) 100%);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.contacts-info-panel {
+    background: linear-gradient(180deg, rgba(24, 24, 27, 0.6) 0%, rgba(9, 9, 11, 0.7) 100%);
+}
+
+.tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
 /* --- Hero Slideshow --- */
 .slideshow-container {
     max-width: 1000px;

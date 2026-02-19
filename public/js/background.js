@@ -18,13 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const shape = document.createElement('div');
         const shapeType = shapesList[Math.floor(Math.random() * shapesList.length)];
         
-        // --- VASTLY DIVERSIFIED SIZES ---
-        // Range from 2px (dust) to 400px (giant atmospheric shapes)
+        // --- MAXIMUM DIVERSIFIED SIZES ---
+        // Range from 1px (dust) to 600px (giant background elements)
         const sizeOptions = [
-            Math.floor(Math.random() * 10) + 2,    // Tiny: 2-12px
-            Math.floor(Math.random() * 40) + 15,   // Small: 15-55px
-            Math.floor(Math.random() * 100) + 60,  // Medium: 60-160px
-            Math.floor(Math.random() * 250) + 150  // Large: 150-400px
+            Math.floor(Math.random() * 5) + 1,      // Micro: 1-6px
+            Math.floor(Math.random() * 15) + 8,     // Tiny: 8-23px
+            Math.floor(Math.random() * 40) + 25,    // Small: 25-65px
+            Math.floor(Math.random() * 80) + 70,    // Medium: 70-150px
+            Math.floor(Math.random() * 150) + 160,  // Large: 160-310px
+            Math.floor(Math.random() * 300) + 310   // X-Large: 310-610px
         ];
         const size = sizeOptions[Math.floor(Math.random() * sizeOptions.length)];
         
