@@ -97,7 +97,13 @@ function showSection(sectionId) {
         if (sectionId === 'APIKeys') tabs[0]?.classList.add('active-selection');
         if (sectionId === 'BibleStudy') tabs[1]?.classList.add('active-selection');
         if (sectionId === 'Blogs') tabs[2]?.classList.add('active-selection');
-        if (sectionId === 'ShoppingContent' || sectionId === 'ProductsContent') tabs[3]?.classList.add('active-selection');
+        if (sectionId === 'ProductsContent') tabs[3]?.classList.add('active-selection');
+        
+        // Hide HeroSlideshow if another section is shown
+        if (sectionId !== 'HeroSlideshow') {
+            const hero = document.getElementById('HeroSlideshow');
+            if (hero) hero.style.display = 'none';
+        }
     }
 
     if (sectionId === 'ProductsContent') loadProducts();
