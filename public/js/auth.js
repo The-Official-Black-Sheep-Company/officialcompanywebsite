@@ -55,7 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = 'portal.html';
                 }).catch((error) => {
                     console.error('Google Nexus Error:', error.code, error.message);
-                    alert(`Nexus Connection Error: ${error.message}`);
+                    if (error.code === 'auth/popup-blocked') {
+                        alert("Nexus Connection Blocked: Please enable popups to sign in with Google.");
+                    } else if (error.code === 'auth/cancelled-popup-request') {
+                        console.log('Popup closed by user.');
+                    } else {
+                        alert(`Nexus Connection Error: ${error.message}`);
+                    }
                 });
         });
     }

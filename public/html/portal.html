@@ -196,13 +196,14 @@
         const logoutButton = document.getElementById('logout-button');
 
         let initialLoad = true;
+        let authSettled = false;
+
         auth.onAuthStateChanged((user) => {
+            authSettled = true;
             if (user) {
                 // User is signed in
                 if (!user.emailVerified) {
                     console.warn('Unverified access attempt');
-                    // In a production app, we'd redirect to a "Verify your email" page
-                    // For now, we sign out and redirect to home if not verified
                     auth.signOut().then(() => {
                         window.location.href = '../index.html';
                     });
@@ -237,19 +238,20 @@
             } else {
                 // User is signed out
                 console.log('No authenticated identity');
-                if (!initialLoad) {
-                    window.location.href = '../index.html';
-                } else {
-                    // Give Firebase a small window to potentially recover session on slow connections
-                    setTimeout(() => {
-                        if (!auth.currentUser) {
-                             window.location.href = '../index.html';
-                        }
-                    }, 1000);
-                }
+                window.location.href = '../index.html';
             }
             initialLoad = false;
         });
+
+        // Safety fallback if Firebase fails to respond at all
+        setTimeout(() => {
+            if (!authSettled) {
+                console.warn('Auth handshake timeout - verifying session...');
+                if (!auth.currentUser) {
+                    window.location.href = '../index.html';
+                }
+            }
+        }, 3000);
 
         logoutButton.addEventListener('click', (e) => {
             e.preventDefault();

@@ -74,10 +74,15 @@ function handleSignIn() {
             console.log("Nexus connected:", result.user.email);
             // Google users are pre-verified
             updateUIVisibility();
+            checkAccess(); // Ensure RBAC updates immediately
         })
         .catch(error => {
             console.error("Connection failed:", error);
-            alert(`Nexus Handshake Failed: ${error.message}`);
+            if (error.code === 'auth/popup-blocked') {
+                alert("Nexus Handshake Blocked: Please enable popups for this site to connect.");
+            } else {
+                alert(`Nexus Handshake Failed: ${error.message}`);
+            }
         });
 }
 
