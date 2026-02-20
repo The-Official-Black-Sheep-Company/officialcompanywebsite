@@ -15,8 +15,21 @@
     <!-- Babel for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- Firebase SDK (Compat versions for global scope) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/index.js"></script>
+
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initFirebaseAuth === 'function') initFirebaseAuth();
+        });
+    </script>
 </head>
 
 <body>
@@ -32,10 +45,18 @@
                     <span class="header-title-gold">COMPANY</span>
                 </a>
             </h1>
-            <div class="header-buttons">
+            <div class="header-buttons" id="auth-buttons-container">
                 <a href="signup.html" class="signup-button signup-button-sm">Sign Up</a>
                 <a href="login.html"
                     class="login-button-sm shadow-lg shadow-yellow-500/30">Login</a>
+            </div>
+            <!-- USER AVATAR (Matches index.html logic) -->
+            <div id="user-avatar-container" class="relative group" style="display: none;">
+                <button class="flex items-center gap-2 p-1 rounded-full border border-violet-500/30 bg-violet-500/10 hover:bg-violet-500/20 transition-all duration-300">
+                    <img id="user-avatar-img" src="" alt="User Identity" class="w-8 h-8 rounded-full border border-violet-400/50 object-cover">
+                    <span id="user-email-display" class="hidden md:inline text-[10px] text-violet-300 font-['Orbitron'] tracking-widest px-2"></span>
+                </button>
+                <!-- Tooltip/Menu could go here -->
             </div>
         </div>
     </header>

@@ -119,6 +119,12 @@ footer {
   z-index: 100;
 }
 
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 768px) {
   .tabs {
     justify-content: center;

@@ -9,9 +9,18 @@ var firebaseConfig = {
   appId: "1:942333760970:web:97d41b2b7ce699b81c6b33"
 };
 
+console.log('Firebase Protocol: Initializing for project', firebaseConfig.projectId);
+
 // Initialize Firebase (assuming compat SDKs are loaded in HTML)
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+try {
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+        console.log('Firebase Core: Initialized successfully.');
+    } else {
+        console.log('Firebase Core: Already active.');
+    }
+} catch (error) {
+    console.error('Firebase Core: Initialization failure!', error);
 }
 
 var auth = firebase.auth();

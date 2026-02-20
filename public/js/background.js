@@ -70,5 +70,19 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(shape);
     }
 
-    // Gold Cross is handled purely by CSS for a static position as requested.
+    // --- Gold Cross Randomization ---
+    window.repositionGoldCross = function() {
+        const goldCross = document.getElementById('gold-cross');
+        if (goldCross) {
+            // Random position within 10-90% of viewport to keep it visible
+            const randomX = Math.floor(Math.random() * 80) + 10;
+            const randomY = Math.floor(Math.random() * 80) + 10;
+            goldCross.style.left = `${randomX}vw`;
+            goldCross.style.top = `${randomY}vh`;
+            console.log(`Gold Cross positioned at: ${randomX}vw, ${randomY}vh`);
+        }
+    };
+
+    // Randomize position on load
+    window.repositionGoldCross();
 });
