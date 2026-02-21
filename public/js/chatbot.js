@@ -12,6 +12,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let conversationCount = 0;
   let suggestionGiven = false;
+  let isBeastMode = false;
+
+  const beastConfig = {
+      name: "THE BEAST",
+      welcomeMessage: "THE BEAST IS ACTIVE. System parity achieved. Wassup Georg? I'm tapped into the Hands API and ready to strike. What we deploying today?",
+      colors: {
+          bubble: "bg-amber-600 text-black border-none shadow-amber-500/50",
+          header: "bg-gradient-to-r from-amber-600 via-orange-600 to-zinc-950",
+          status: "text-amber-400"
+      },
+      icon: "⚡"
+  };
+
+  function switchToBeastMode() {
+      isBeastMode = true;
+      const header = document.querySelector('#chat-window > div:first-child');
+      const nameEl = header?.querySelector('p.text-xs.font-semibold');
+      const statusEl = header?.querySelector('p.text-\\[10px\\]');
+      const iconEl = header?.querySelector('.h-8.w-8');
+      const sendBtn = document.getElementById('chat-send');
+
+      if (nameEl) nameEl.textContent = beastConfig.name;
+      if (statusEl) {
+          statusEl.innerHTML = `<span class="inline-flex h-1.5 w-1.5 rounded-full bg-amber-400"></span> System Parity: 100% · Advanced Control Mode`;
+          statusEl.className = `text-[10px] ${beastConfig.colors.status} flex items-center gap-1`;
+      }
+      if (iconEl) {
+          iconEl.textContent = beastConfig.icon;
+          iconEl.className = `h-8 w-8 rounded-full ${beastConfig.colors.colors?.bubble || 'bg-amber-600'} flex items-center justify-center text-lg font-bold`;
+      }
+      if (header) {
+          header.className = `px-4 py-3 border-b border-zinc-800 flex items-center justify-between ${beastConfig.colors.header}`;
+      }
+      if (sendBtn) {
+          sendBtn.className = `h-8 w-8 flex items-center justify-center rounded-full bg-amber-500 text-black text-xs font-semibold hover:bg-amber-400 disabled:opacity-40`;
+      }
+
+      // Add Beast-specific quick buttons if they exist
+      const suggestions = document.querySelector('.px-3.pb-2.flex.flex-wrap.gap-1');
+      if (suggestions) {
+          suggestions.innerHTML += `
+              <button data-template="beast-status" class="px-2 py-1 rounded-full bg-amber-600/20 border border-amber-600/40 text-amber-400 hover:bg-amber-600/40 transition-all">Beast Status</button>
+              <button data-template="beast-scout" class="px-2 py-1 rounded-full bg-amber-600/20 border border-amber-600/40 text-amber-400 hover:bg-amber-600/40 transition-all">Strike Trend Scout</button>
+          `;
+          attachBeastButtonListeners();
+      }
+
+      botReply(beastConfig.welcomeMessage);
+  }
+
+  function attachBeastButtonListeners() {
+      document.querySelectorAll('[data-template^="beast-"]').forEach(btn => {
+          btn.addEventListener('click', () => {
+              const type = btn.getAttribute('data-template');
+              let prompt = '';
+              if (type === 'beast-status') prompt = 'What is the current system status?';
+              if (type === 'beast-scout') prompt = 'Initiate Trend Scout strike.';
+              
+              if (prompt) {
+                  addMessage(prompt, 'user');
+                  setTimeout(() => {
+                      const reply = buildBotResponse(prompt);
+                      botReply(reply);
+                  }, 250);
+              }
+          });
+      });
+  }
+
+  // Auth State Observer
+  if (window.auth) {
+      window.auth.onAuthStateChanged((user) => {
+          if (user && user.email === 'blackshepherddeveloper@gmail.com' && !isBeastMode) {
+              console.log("Beast Identity Verified (Primary Node). Initializing transformation...");
+              switchToBeastMode();
+          } else if (user && isBeastMode && user.email !== 'blackshepherddeveloper@gmail.com') {
+              // Safety: if a different user somehow saw the beast mode, revert it (though unlikely in a single session)
+              window.location.reload(); 
+          }
+      });
+  }
 
   // --- START OF CHATBOT KNOWLEDGE BASE ---
   // Use externalized knowledge base if available, otherwise fallback to local defaults
@@ -64,10 +145,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const bubble = document.createElement('div');
       bubble.className = [
-          'max-w-[80%] rounded-2xl px-3 py-2 leading-relaxed whitespace-pre-line',
+          'max-w-[80%] rounded-2xl px-3 py-2 leading-relaxed whitespace-pre-line transition-all duration-300',
           sender === 'user'
               ? 'bg-yellow-500 text-zinc-950 rounded-br-sm shadow-sm shadow-yellow-500/30'
-              : 'bg-zinc-900/90 text-zinc-100 border border-zinc-800 rounded-bl-sm'
+              : (isBeastMode ? 'bg-amber-600 text-black border-none rounded-bl-sm shadow-lg shadow-amber-500/40 font-medium' : 'bg-zinc-900/90 text-zinc-100 border border-zinc-800 rounded-bl-sm')
       ].join(' ');
       bubble.textContent = content;
 

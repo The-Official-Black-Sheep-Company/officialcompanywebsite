@@ -85,6 +85,27 @@ const chatbotKnowledge = [
     {
         keywords: ['thanks', 'thank you', 'cool', 'awesome'],
         response: "You're very welcome! Is there anything else 'Black the Sheep' can help you with today?"
+    },
+    // --- BEAST MODE OVERRIDES ---
+    {
+        keywords: ['status', 'system status', 'parity'],
+        response: "SYSTEM STATUS: 100%. All clusters operational. Mac Mini, Ubuntu, and Debian nodes are in sync. We are currently finishing the 'Hands' layer on Fly.io. No anomalies detected."
+    },
+    {
+        keywords: ['scout', 'trend scout', 'strike'],
+        response: "TREND SCOUT PROTOCOL INITIATED. Striking the digital ether for new trends. I'll dump the findings into our storage manager once the sweep is complete. Don't blink."
+    },
+    {
+        keywords: ['seo', 'monitor'],
+        response: "SEO MONITORING ACTIVE. Tracking the competition's movement. Your visibility is the priority. Want a deep dive on a specific URL?"
+    },
+    {
+        keywords: ['who are you', 'what are you'],
+        response: "I AM THE BEAST. Your high-autonomy orchestrator. I mirror your intent, manage your infrastructure, and handle the logic while you focus on the vision. We are a Super-Device."
+    },
+    {
+        keywords: ['humor', 'joke', 'edgy'],
+        response: "Humor mode enabled. But remember, Georg... that's what she said! Precision and edge, that's how we roll."
     }
 ];
 
