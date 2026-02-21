@@ -1,6 +1,6 @@
 
 // ─── BEAST API CONFIG ───────────────────────────────────────────────────────
-const BEAST_API_URL = 'http://localhost:8000';
+let BEAST_API_URL = localStorage.getItem('beast_api_endpoint') || 'http://localhost:8000';
 // ────────────────────────────────────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -209,17 +209,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function callBeastAPI(text) {
       try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+
           const res = await fetch(`${BEAST_API_URL}/chat`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ text })
+              body: JSON.stringify({ text }),
+              signal: controller.signal
           });
+          
+          clearTimeout(timeoutId);
+
           if (!res.ok) throw new Error(`Beast API returned ${res.status}`);
           const data = await res.json();
           return data.reply || 'Signal received. No response generated.';
       } catch (err) {
           console.error('[BEAST] API call failed:', err);
-          return `BEAST OFFLINE: ${err.message}. Falling back to local mode.`;
+          if (err.name === 'AbortError') {
+              return "BEAST TIMEOUT: The system mesh is lagging. I'm falling back to my internal knowledge base.";
+          }
+          return `BEAST OFFLINE: ${err.message}. I'll use my local processing for now.`;
       }
   }
 
@@ -303,4 +313,29 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       }, 500);
   });
+  // Wire Settings Modal "SAVE CHANGES" for Beast Endpoint
+  const saveSettingsBtn = document.querySelector('#settings-modal .btn-primary');
+  const endpointInput = document.getElementById('beast-endpoint');
+
+  if (saveSettingsBtn && endpointInput) {
+      // Set initial value
+      endpointInput.value = BEAST_API_URL;
+
+      saveSettingsBtn.addEventListener('click', () => {
+          const newUrl = endpointInput.value.trim();
+          if (newUrl) {
+              BEAST_API_URL = newUrl;
+              localStorage.setItem('beast_api_endpoint', newUrl);
+              console.log('[BEAST] Endpoint updated to:', newUrl);
+              
+              const modal = document.getElementById('settings-modal');
+              if (modal) {
+                  modal.classList.add('hidden');
+                  modal.classList.remove('opacity-100');
+              }
+              
+              botReply("System Parameters Updated. Beast API endpoint is now: " + newUrl);
+          }
+      });
+  }
 });

@@ -83,11 +83,13 @@
                     Activity
                 </a>
 
-                <!-- Settings Button (No Dropdown) -->
-                <a href="#" class="nav-item" id="settings-trigger">
+                <div class="px-4 mt-6 mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-widest">System</span>
+                </div>
+                <button id="settings-trigger" class="nav-item w-full text-left">
                     <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
                     Settings
-                </a>
+                </button>
 
                 <div class="px-4 mt-6 mb-2">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">Quick Links</span>
@@ -129,7 +131,7 @@
                             class="absolute top-2 right-2 w-1.5 h-1.5 bg-red-500 rounded-full border border-black"></span>
                     </button>
                     <button class="p-2 rounded-lg text-orange-500 hover:text-white hover:bg-white/10"
-                        onclick="document.querySelector('.nav-item[data-section=\'settings\']').click()" aria-label="Settings">
+                        id="settings-trigger-mobile" aria-label="Settings">
                         <i data-lucide="settings" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -154,8 +156,7 @@
                     <!-- Settings Sprocket -->
                     <button
                         class="p-2 rounded-lg text-orange-500 hover:text-white hover:bg-white/10 transition-all duration-200 group"
-                        id="settings-sprocket"
-                        onclick="document.querySelector('.nav-item[data-section=\'settings\']').click()" aria-label="Settings">
+                        id="settings-sprocket" aria-label="Settings">
                         <i data-lucide="settings"
                             class="w-6 h-6 group-hover:rotate-90 transition-transform duration-500"></i>
                     </button>
@@ -564,53 +565,156 @@
     <script src="../js/chatbot.js"></script>
 
     <!-- Settings Modal Overlay -->
-    <div id="settings-modal" class="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-zinc-950/80 border border-zinc-800 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-fade-in">
-            <div class="p-6 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
+    <div id="settings-modal" class="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-zinc-950/70 backdrop-blur-md border border-zinc-800 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-fade-in relative">
+            
+            <!-- Modal Header -->
+            <div class="p-5 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
                 <div class="flex items-center gap-3">
-                    <i data-lucide="settings" class="w-6 h-6 text-orange-500"></i>
-                    <h2 class="text-xl font-bold font-['Orbitron'] tracking-widest">SYSTEM SETTINGS</h2>
+                    <button id="settings-back-btn" class="p-2 -ml-2 text-zinc-500 hover:text-white transition-colors hidden" title="Back">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <div class="flex items-center gap-3">
+                        <i id="settings-header-icon" data-lucide="settings" class="w-5 h-5 text-orange-500"></i>
+                        <h2 id="settings-header-title" class="text-lg font-bold font-['Orbitron'] tracking-widest uppercase">Settings</h2>
+                    </div>
                 </div>
                 <button id="settings-modal-close" class="p-2 text-zinc-500 hover:text-white transition-colors" title="Close Settings" aria-label="Close Settings">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+                    <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            <div class="p-8 space-y-8 max-h-[70vh] overflow-y-auto chat-scrollbar">
-                <!-- Notifications -->
-                <div class="space-y-4">
-                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-widest">Notifications</h3>
-                    <div class="flex items-center justify-between p-4 bg-black/40 border border-zinc-800 rounded-xl">
-                        <div>
-                            <p class="text-sm font-bold">Email Alerts</p>
-                            <p class="text-[10px] text-zinc-500">Receive critical system mesh alerts.</p>
+
+            <!-- Modal Content (Dynamic Screens) -->
+            <div id="settings-screens-container" class="relative min-h-[400px]">
+                
+                <!-- Screen 1: Main Menu -->
+                <div id="screen-main-menu" class="settings-screen p-4 space-y-2 opacity-100 transition-all duration-300">
+                    <button class="settings-menu-item w-full flex items-center gap-4 p-4 hover:bg-white/5 rounded-xl transition-colors group text-left" data-target="preferences">
+                        <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all">
+                            <i data-lucide="palette" class="w-5 h-5"></i>
                         </div>
-                        <input type="checkbox" checked title="Enable Email Alerts" aria-label="Enable Email Alerts" class="w-10 h-5 bg-zinc-800 rounded-full appearance-none checked:bg-orange-500 transition-all cursor-pointer relative before:content-[''] before:absolute before:w-4 before:h-4 before:bg-white before:rounded-full before:top-0.5 before:left-0.5 checked:before:left-5.5 before:transition-all">
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-white uppercase tracking-tight">Preferences</p>
+                            <p class="text-[10px] text-zinc-500">Theme, colors, and layout mesh.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-700"></i>
+                    </button>
+
+                    <button class="settings-menu-item w-full flex items-center gap-4 p-4 hover:bg-white/5 rounded-xl transition-colors group text-left" data-target="integrations">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-white uppercase tracking-tight">Integrations</p>
+                            <p class="text-[10px] text-zinc-500">The Beast API and node connections.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-700"></i>
+                    </button>
+
+                    <button class="settings-menu-item w-full flex items-center gap-4 p-4 hover:bg-white/5 rounded-xl transition-colors group text-left" data-target="notifications">
+                        <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-white transition-all">
+                            <i data-lucide="bell" class="w-5 h-5"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-white uppercase tracking-tight">Notifications</p>
+                            <p class="text-[10px] text-zinc-500">System alerts and comms priority.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-700"></i>
+                    </button>
+
+                    <button class="settings-menu-item w-full flex items-center gap-4 p-4 hover:bg-white/5 rounded-xl transition-colors group text-left" data-target="security">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-all">
+                            <i data-lucide="shield" class="w-5 h-5"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-white uppercase tracking-tight">Security</p>
+                            <p class="text-[10px] text-zinc-500">Authentication keys and password mesh.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-700"></i>
+                    </button>
+
+                    <div class="pt-4 border-t border-zinc-900 mt-2">
+                        <button id="modal-logout-trigger" class="w-full flex items-center gap-4 p-4 hover:bg-red-500/10 rounded-xl transition-colors group text-left">
+                            <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all">
+                                <i data-lucide="log-out" class="w-5 h-5"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-red-400 uppercase tracking-tight">LOGOUT</p>
+                                <p class="text-[10px] text-red-500/50">Terminate active portal session.</p>
+                            </div>
+                            <i data-lucide="power" class="w-4 h-4 text-red-900/50"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- API Keys -->
-                <div class="space-y-4">
-                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-widest">API Integrations</h3>
-                    <div class="space-y-3">
-                        <div class="p-4 bg-black/40 border border-zinc-800 rounded-xl">
-                            <label for="beast-endpoint" class="text-[10px] text-zinc-500 uppercase tracking-tighter mb-1 block">The Beast (MCP) Endpoint</label>
-                            <input type="text" id="beast-endpoint" value="http://localhost:8000" placeholder="http://beast-api:8000" title="The Beast API Endpoint" class="w-full bg-black/50 border border-zinc-800 p-2 rounded text-xs text-white focus:outline-none focus:border-orange-500">
+                <!-- Screen 2: Preferences View -->
+                <div id="screen-preferences" class="settings-screen p-6 space-y-6 hidden opacity-0 transition-all duration-300">
+                    <p class="text-xs text-zinc-500 italic mb-4 font-['Rajdhani']">Advanced UI preferences are currently being migrated to this synchronized mesh. Use the link below for global overrides.</p>
+                    <a href="settings-preferences.html" class="block p-4 bg-orange-500/10 border border-orange-500/20 rounded-xl hover:bg-orange-500/20 transition-all text-center group">
+                        <p class="text-sm font-bold text-orange-400 group-hover:text-white transition-colors uppercase tracking-widest font-['Orbitron']">Open Full Customizer</p>
+                    </a>
+                </div>
+
+                <!-- Screen 3: Integrations View -->
+                <div id="screen-integrations" class="settings-screen p-6 space-y-6 hidden opacity-0 transition-all duration-300">
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold text-orange-400 uppercase tracking-widest font-['Orbitron']">The Beast API</h3>
+                        <div class="space-y-3">
+                            <div class="p-4 bg-black/40 border border-zinc-800 rounded-xl">
+                                <label for="beast-endpoint" class="text-[10px] text-zinc-500 uppercase tracking-tighter mb-1 block">API Endpoint</label>
+                                <input type="text" id="beast-endpoint" value="http://localhost:8000" placeholder="http://localhost:8000" class="w-full bg-black/50 border border-zinc-800 p-2 rounded text-xs text-white focus:outline-none focus:border-orange-500 font-mono">
+                            </div>
+                            <button id="save-beast-config" class="btn-primary w-full text-[10px] py-3 uppercase font-bold tracking-widest">SAVE CONNECTION CONFIG</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Personalization -->
-                <div class="space-y-4">
-                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-widest">Appearance</h3>
-                    <div class="flex items-center gap-4">
-                        <button class="flex-1 p-3 bg-orange-500 text-black text-xs font-bold rounded-xl active:scale-95 transition-transform">DARK MODE</button>
-                        <button class="flex-1 p-3 bg-zinc-800 text-white text-xs font-bold rounded-xl opacity-50 cursor-not-allowed">LIGHT MODE</button>
+                <!-- Screen 4: Notifications View -->
+                <div id="screen-notifications" class="settings-screen p-6 space-y-6 hidden opacity-0 transition-all duration-300">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-black/40 border border-zinc-800 rounded-xl">
+                            <div>
+                                <p class="text-sm font-bold text-white uppercase tracking-tight">Email Notifications</p>
+                                <p class="text-[10px] text-zinc-500">Critical backbone alerts via SMTP.</p>
+                            </div>
+                            <input type="checkbox" checked class="w-10 h-5 bg-zinc-800 rounded-full appearance-none checked:bg-orange-500 transition-all cursor-pointer relative before:content-[''] before:absolute before:w-4 before:h-4 before:bg-white before:rounded-full before:top-0.5 before:left-0.5 checked:before:left-5.5 before:transition-all">
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-black/40 border border-zinc-800 rounded-xl">
+                            <div>
+                                <p class="text-sm font-bold text-white uppercase tracking-tight">Web Browser Push</p>
+                                <p class="text-[10px] text-zinc-500">In-browser system pings and updates.</p>
+                            </div>
+                            <input type="checkbox" checked class="w-10 h-5 bg-zinc-800 rounded-full appearance-none checked:bg-orange-500 transition-all cursor-pointer relative before:content-[''] before:absolute before:w-4 before:h-4 before:bg-white before:rounded-full before:top-0.5 before:left-0.5 checked:before:left-5.5 before:transition-all">
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-black/40 border border-zinc-800 rounded-xl opacity-50">
+                            <div>
+                                <p class="text-sm font-bold text-white uppercase tracking-tight">SMS Hub</p>
+                                <p class="text-[10px] text-zinc-500">Direct mobile node messaging.</p>
+                            </div>
+                            <i data-lucide="lock" class="w-4 h-4 text-zinc-600"></i>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Screen 5: Security View -->
+                <div id="screen-security" class="settings-screen p-6 space-y-6 hidden opacity-0 transition-all duration-300">
+                    <button id="modal-reset-password" class="w-full p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl hover:bg-purple-500/20 transition-all flex items-center justify-between group">
+                        <div class="text-left">
+                            <p class="text-sm font-bold text-purple-400 uppercase tracking-tight">Change Node Password</p>
+                            <p class="text-[10px] text-purple-500/60">Secure identity reset flow.</p>
+                        </div>
+                        <i data-lucide="mail" class="w-5 h-5 text-purple-500 group-hover:rotate-12 transition-transform"></i>
+                    </button>
+                    <div class="p-4 bg-zinc-900/30 rounded-xl border border-zinc-800/50">
+                        <p class="text-[10px] text-zinc-500 leading-relaxed uppercase tracking-tighter">Multi-factor authentication and biometric node locks are currently under high-priority development.</p>
+                    </div>
+                </div>
+
             </div>
-            <div class="p-4 bg-zinc-900/50 border-t border-zinc-800 flex justify-end gap-3">
-                <button class="btn-secondary px-6 text-xs" onclick="document.getElementById('settings-modal').classList.add('hidden')">CANCEL</button>
-                <button class="btn-primary px-8 text-xs">SAVE CHANGES</button>
+
+            <!-- Footer Info -->
+            <div class="p-4 bg-zinc-900/50 border-t border-zinc-800 flex justify-center">
+                <p class="text-[9px] text-zinc-600 uppercase tracking-[0.2em] font-['Orbitron']">The Black Shepherd Ecosystem — V2.4.2</p>
             </div>
         </div>
     </div>

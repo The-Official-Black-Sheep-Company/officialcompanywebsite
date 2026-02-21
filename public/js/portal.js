@@ -40,6 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', e => {
             const id = item.dataset.section;
             if (!id) return;
+            
+            // If the item has an href that points to an .html file, let the browser navigate
+            const href = item.getAttribute('href');
+            if (href && href.includes('.html')) {
+                return; // Normal browser navigation
+            }
+            
             e.preventDefault();
             navItems.forEach(i => i.classList.remove('active'));
             item.classList.add('active');
@@ -322,6 +329,175 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* =========================================================
+       SETTINGS MODAL (Multi-level Drill-down)
+    ========================================================= */
+    class SettingsManager {
+        constructor() {
+            this.modal = document.getElementById('settings-modal');
+            this.screens = document.getElementById('settings-screens-container');
+            this.backBtn = document.getElementById('settings-back-btn');
+            this.headerTitle = document.getElementById('settings-header-title');
+            this.headerIcon = document.getElementById('settings-header-icon');
+            this.closeBtn = document.getElementById('settings-modal-close');
+            
+            this.history = ['main-menu'];
+            this.init();
+        }
+
+        init() {
+            // Main menu triggers
+            document.querySelectorAll('.settings-menu-item').forEach(btn => {
+                btn.addEventListener('click', () => this.navigateTo(btn.dataset.target));
+            });
+
+            // Back button
+            if (this.backBtn) {
+                this.backBtn.addEventListener('click', () => this.goBack());
+            }
+
+            // Close logic
+            if (this.closeBtn) {
+                this.closeBtn.addEventListener('click', () => this.close());
+            }
+
+            // Modal triggers (Sidebar & Top Sprocket)
+            const triggers = ['settings-trigger', 'settings-sprocket', 'settings-trigger-mobile'];
+            triggers.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.open();
+                });
+            });
+
+            // Logout in modal
+            const logoutTrigger = document.getElementById('modal-logout-trigger');
+            if (logoutTrigger) {
+                logoutTrigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.performLogout();
+                });
+            }
+
+            // Beast Config
+            const saveBeastBtn = document.getElementById('save-beast-config');
+            if (saveBeastBtn) {
+                saveBeastBtn.addEventListener('click', () => this.saveBeastConfig());
+            }
+        }
+
+        open() {
+            if (!this.modal) return;
+            this.modal.classList.remove('hidden');
+            setTimeout(() => {
+                this.modal.classList.remove('opacity-0');
+                this.modal.classList.add('opacity-100');
+            }, 10);
+            this.resetToMain();
+        }
+
+        close() {
+            if (!this.modal) return;
+            this.modal.classList.add('opacity-0');
+            setTimeout(() => this.modal.classList.add('hidden'), 300);
+        }
+
+        navigateTo(screenId) {
+            const currentScreenId = this.history[this.history.length - 1];
+            const currentScreen = document.getElementById(`screen-${currentScreenId}`);
+            const nextScreen = document.getElementById(`screen-${screenId}`);
+
+            if (currentScreen && nextScreen) {
+                currentScreen.classList.add('hidden', 'opacity-0');
+                nextScreen.classList.remove('hidden');
+                setTimeout(() => nextScreen.classList.remove('opacity-0'), 10);
+                
+                this.history.push(screenId);
+                this.updateHeader(screenId);
+            }
+        }
+
+        goBack() {
+            if (this.history.length <= 1) return;
+
+            const currentId = this.history.pop();
+            const prevId = this.history[this.history.length - 1];
+            
+            const currentScreen = document.getElementById(`screen-${currentId}`);
+            const prevScreen = document.getElementById(`screen-${prevId}`);
+
+            if (currentScreen && prevScreen) {
+                currentScreen.classList.add('hidden', 'opacity-0');
+                prevScreen.classList.remove('hidden');
+                setTimeout(() => prevScreen.classList.remove('opacity-0'), 10);
+                this.updateHeader(prevId);
+            }
+        }
+
+        resetToMain() {
+            this.history = ['main-menu'];
+            document.querySelectorAll('.settings-screen').forEach(s => s.classList.add('hidden', 'opacity-0'));
+            const main = document.getElementById('screen-main-menu');
+            if (main) {
+                main.classList.remove('hidden');
+                main.classList.remove('opacity-0');
+            }
+            this.updateHeader('main-menu');
+        }
+
+        updateHeader(screenId) {
+            const config = {
+                'main-menu': { title: 'Settings', icon: 'settings' },
+                'preferences': { title: 'Preferences', icon: 'palette' },
+                'integrations': { title: 'Integrations', icon: 'zap' },
+                'notifications': { title: 'Notifications', icon: 'bell' },
+                'security': { title: 'Security', icon: 'shield' }
+            };
+
+            const screen = config[screenId] || config['main-menu'];
+            if (this.headerTitle) this.headerTitle.textContent = screen.title;
+            if (this.headerIcon) this.headerIcon.setAttribute('data-lucide', screen.icon);
+            
+            if (screenId === 'main-menu') {
+                if (this.backBtn) this.backBtn.classList.add('hidden');
+            } else {
+                if (this.backBtn) this.backBtn.classList.remove('hidden');
+            }
+
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        saveBeastConfig() {
+            const el = document.getElementById('beast-endpoint');
+            if (!el) return;
+            const endpoint = el.value.trim();
+            // Matching key in chatbot.js
+            localStorage.setItem('beast_api_endpoint', endpoint);
+            alert('Beast System Parity Updated. API node synchronized.');
+        }
+    }
+
+    // Global Logout helper
+    window.performLogout = function(e) {
+        if (e) e.preventDefault();
+        console.log('[SYSTEM] Terminating portal session...');
+        if (typeof auth !== 'undefined') {
+            auth.signOut().then(() => {
+                window.location.href = '../index.html';
+            }).catch(err => console.error('Logout error:', err));
+        } else {
+            window.location.href = '../index.html';
+        }
+    };
+
+    // Initialize Settings
+    window.settingsManager = new SettingsManager();
+
+    // Hook existing logout button
+    const logoutBtn = document.getElementById('logout-button');
+    if (logoutBtn) logoutBtn.addEventListener('click', window.performLogout);
+
     // Pre-fill profile name from Firebase when user is known
     if (typeof auth !== 'undefined') {
         auth.onAuthStateChanged(user => {
@@ -332,6 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     profile.email = user.email;
                     saveProfile(profile);
                 }
+                hydrateProfileForm();
             }
         });
     }

@@ -14,6 +14,11 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
 
     <style>
         :root {
@@ -303,19 +308,19 @@
                     <i data-lucide="palette" class="w-5 h-5 mr-3"></i>
                     Preferences
                 </a>
-                <a href="settings-integrations.html" class="nav-item">
+                <a href="settings-preferences.html" class="nav-item">
                     <i data-lucide="share-2" class="w-5 h-5 mr-3"></i>
                     Integrations
                 </a>
-                <a href="settings-notifications.html" class="nav-item">
+                <a href="settings-preferences.html" class="nav-item">
                     <i data-lucide="bell" class="w-5 h-5 mr-3"></i>
                     Notifications
                 </a>
-                <a href="settings-security.html" class="nav-item">
+                <a href="settings-preferences.html" class="nav-item">
                     <i data-lucide="shield" class="w-5 h-5 mr-3"></i>
                     Security
                 </a>
-                <a href="settings-account.html" class="nav-item">
+                <a href="settings-preferences.html" class="nav-item">
                     <i data-lucide="user-cog" class="w-5 h-5 mr-3"></i>
                     Account
                 </a>
@@ -608,6 +613,26 @@
                         </div>
                     </div>
 
+                    <!-- Beast Section -->
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="zap" class="w-5 h-5 text-amber-500"></i>
+                            <h3 class="font-semibold text-white">The Beast - MCP Control</h3>
+                        </div>
+                        <div class="bento-card-body">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-2">Beast API Endpoint</label>
+                                    <div class="flex items-center gap-3">
+                                        <input type="text" id="beast-endpoint" class="input-field" placeholder="http://localhost:8000">
+                                        <button onclick="saveBeastSettings()" class="btn-primary whitespace-nowrap">Save Endpoint</button>
+                                    </div>
+                                    <p class="text-[10px] text-gray-500 mt-2">Default: http://localhost:8000 (Local). Set your Fly.io URL for production.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Reset Section -->
                     <div class="bento-card">
                         <div class="bento-card-header">
@@ -654,7 +679,46 @@
             pageTransitions: true
         };
 
+        // Auth Logic
+        const sidebarUserSection = document.querySelector('.sidebar .p-4.border-t');
+        if (window.auth) {
+            window.auth.onAuthStateChanged((user) => {
+                if (user) {
+                    const displayName = user.displayName || user.email.split('@')[0];
+                    const photoURL = user.photoURL;
+                    const email = user.email;
 
+                    if (sidebarUserSection) {
+                        sidebarUserSection.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold overflow-hidden">
+                                    ${photoURL ? `<img src="${photoURL}" class="w-full h-full object-cover">` : displayName.charAt(0).toUpperCase()}
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-white line-clamp-1">${displayName}</p>
+                                    <p class="text-[10px] text-gray-500 line-clamp-1 uppercase tracking-tighter">${email}</p>
+                                </div>
+                            </div>
+                            <button onclick="logout()" class="btn-secondary w-full mt-3 text-sm">
+                                <i data-lucide="log-out" class="w-4 h-4 inline mr-2"></i>
+                                Logout
+                            </button>
+                        `;
+                        lucide.createIcons();
+                    }
+                } else {
+                    window.location.href = '../index.html';
+                }
+            });
+        }
+
+        function logout() {
+            if (window.auth) {
+                window.auth.signOut().then(() => {
+                    window.location.href = '../index.html';
+                });
+            }
+        }
 
         function loadAllSettings() {
             const saved = localStorage.getItem('tbs_portal_settings');
@@ -665,6 +729,11 @@
             }
             applyAllSettings(false);
             syncUI();
+            
+            // Sync Beast Settings
+            const endpoint = localStorage.getItem('beast_api_endpoint') || 'http://localhost:8000';
+            const endpointInput = document.getElementById('beast-endpoint');
+            if (endpointInput) endpointInput.value = endpoint;
         }
 
         function saveAllSettings() {
@@ -927,6 +996,23 @@
                 notification.remove();
             }, 3000);
         }
+
+        function saveBeastSettings() {
+            const endpointInput = document.getElementById('beast-endpoint');
+            if (endpointInput) {
+                const url = endpointInput.value.trim();
+                localStorage.setItem('beast_api_endpoint', url);
+                showNotification('Beast Endpoint updated!', 'success');
+                
+                // If chatbot is present as an iframe or in the same window, notify it
+                if (window.parent && window.parent.BEAST_API_URL) {
+                    window.parent.BEAST_API_URL = url;
+                }
+            }
+        }
+
+        // Initialize Lucide
+        lucide.createIcons();
     </script>
 </body>
 
