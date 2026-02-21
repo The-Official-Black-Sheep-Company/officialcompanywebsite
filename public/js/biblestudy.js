@@ -415,5 +415,69 @@ document.addEventListener("DOMContentLoaded", () => {
         content += renderStudy(study);
     });
     
+
     container.innerHTML = content;
+
+    // --- COMMENTS LOGIC ---
+    const commentForm = document.getElementById("commentForm");
+    const commentsList = document.getElementById("commentsList");
+
+    const loadComments = () => {
+        const comments = JSON.parse(localStorage.getItem("bibleStudyComments") || "[]");
+        renderComments(comments);
+    };
+
+    const renderComments = (comments) => {
+        if (comments.length === 0) {
+            commentsList.innerHTML = '<p style="color: #71717a;">No comments yet. Be the first to share!</p>';
+            return;
+        }
+
+        commentsList.innerHTML = comments.map(c => `
+            <div class="comment-item">
+                <div class="comment-header">
+                    <span class="comment-author">${escapeHtml(c.name)}</span>
+                    <span class="comment-date">${new Date(c.date).toLocaleDateString()}</span>
+                </div>
+                <div class="comment-text">${escapeHtml(c.text)}</div>
+            </div>
+        `).join('');
+    };
+
+    const saveComment = (name, text) => {
+        const comments = JSON.parse(localStorage.getItem("bibleStudyComments") || "[]");
+        const newComment = {
+            name,
+            text,
+            date: new Date().toISOString()
+        };
+        comments.unshift(newComment); // Add to the beginning
+        localStorage.setItem("bibleStudyComments", JSON.stringify(comments));
+        renderComments(comments);
+    };
+
+    const escapeHtml = (unsafe) => {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    };
+
+    if (commentForm) {
+        commentForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById("userName");
+            const textInput = document.getElementById("commentText");
+
+            if (nameInput.value && textInput.value) {
+                saveComment(nameInput.value, textInput.value);
+                textInput.value = ""; // Clear only comment text
+                alert("Comment posted successfully!");
+            }
+        });
+    }
+
+    loadComments();
 });

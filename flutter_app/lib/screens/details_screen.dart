@@ -14,7 +14,7 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   final ImagePicker _picker = ImagePicker();
-  List<XFile> _images = [];
+  final List<XFile> _images = [];
 
   Future<void> _pickImage() async {
     try {
@@ -29,7 +29,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       print('Error picking image: $e');
     }
   }
-  
+
   // Note: For real apps, you'd want to request permissions.
   // We're keeping it simple for this implementation.
 
@@ -47,7 +47,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
           children: [
             const Text(
               'Job Details',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 8),
             Text(
@@ -63,23 +66,29 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 height: 120,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFF444444), style: BorderStyle.solid), // Dashed border needs custom painter, simple solid for now
+                  border: Border.all(
+                      color: const Color(0xFF444444),
+                      style: BorderStyle
+                          .solid), // Dashed border needs custom painter, simple solid for now
                   borderRadius: BorderRadius.circular(12),
                   color: const Color(0xFF111111),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(LucideIcons.camera, size: 32, color: Colors.grey),
+                    const Icon(LucideIcons.camera,
+                        size: 32, color: Colors.grey),
                     const SizedBox(height: 8),
-                    Text('Tap to upload photo', style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+                    Text('Tap to upload photo',
+                        style:
+                            TextStyle(color: Colors.grey[400], fontSize: 12)),
                   ],
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Image Preview (Horizontal Scroll)
             if (_images.isNotEmpty)
               SizedBox(
@@ -105,9 +114,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
 
             const SizedBox(height: 24),
-            Text('CHECKLIST', style: TextStyle(color: Colors.grey[400], fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1)),
+            Text('CHECKLIST',
+                style: TextStyle(
+                    color: Colors.grey[400],
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1)),
             const SizedBox(height: 12),
-            
+
             Expanded(
               child: ListView.builder(
                 itemCount: items.length,
@@ -119,10 +133,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     child: GestureDetector(
                       onTap: () => model.toggleChecklistItem(item),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
                         decoration: BoxDecoration(
-                          color: isChecked ? const Color(0xFFF97316).withOpacity(0.1) : Colors.transparent,
-                          border: Border.all(color: isChecked ? const Color(0xFFF97316) : const Color(0xFF333333)),
+                          color: isChecked
+                              ? const Color(0xFFF97316).withOpacity(0.1)
+                              : Colors.transparent,
+                          border: Border.all(
+                              color: isChecked
+                                  ? const Color(0xFFF97316)
+                                  : const Color(0xFF333333)),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Row(
@@ -131,16 +151,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               width: 20,
                               height: 20,
                               decoration: BoxDecoration(
-                                color: isChecked ? const Color(0xFFF97316) : null,
-                                border: Border.all(color: isChecked ? const Color(0xFFF97316) : Colors.grey),
+                                color:
+                                    isChecked ? const Color(0xFFF97316) : null,
+                                border: Border.all(
+                                    color: isChecked
+                                        ? const Color(0xFFF97316)
+                                        : Colors.grey),
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child: isChecked ? const Icon(LucideIcons.check, size: 14, color: Colors.white) : null,
+                              child: isChecked
+                                  ? const Icon(LucideIcons.check,
+                                      size: 14, color: Colors.white)
+                                  : null,
                             ),
                             const SizedBox(width: 12),
                             Text(
                               item,
-                              style: const TextStyle(fontWeight: FontWeight.w500),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -157,14 +185,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   model.submitOrder();
-                  Navigator.pushNamedAndRemoveUntil(context, '/live', (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/live', (route) => false);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFF97316),
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('SUBMIT WORK ORDER', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: const Text('SUBMIT WORK ORDER',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],

@@ -7,7 +7,57 @@
     <title>Seek Eternity - The Official Black Sheep Company Dashboard</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/background.css">
-
+    <style>
+        /* Theological Deep Dive Engine Styles */
+        .bible-study-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .bible-study-title, .bible-study-passage {
+            color: #f5c542;
+        }
+        .timeline {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px 0;
+        }
+        .timeline-item {
+            min-width: 200px;
+            background: #262626;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .tree ul {
+            list-style-type: none;
+        }
+        .tree li {
+            margin: 10px 0;
+        }
+        .artifact-card {
+            background: #262626;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .artifact-card img {
+            max-width: 100%;
+            border-radius: 4px;
+        }
+        .toggle-btn {
+            background: #f5c542;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -201,8 +251,63 @@
     <!-- MAIN CONTENT AREA -->
     <div id="main-content">
         <div style="padding: 40px; text-align: center;">
-            <h2>Seek Eternity</h2>
-            <p>This page is under construction. Content for Bible study will be available soon.</p>
+            <div id="bible-study-container">
+                <h1 id="title" class="bible-study-title"></h1>
+                <h2 id="passage" class="bible-study-passage"></h2>
+
+                <div class="bible-study-section" id="thesis"></div>
+                <div class="bible-study-section" id="historical"></div>
+
+                <div class="bible-study-section">
+                    <h2>Original Language Analysis</h2>
+                    <button class="toggle-btn" onclick="toggleHebrew()">Toggle Hebrew Details</button>
+                    <div id="language" style="display:none;"></div>
+                </div>
+
+                <div class="bible-study-section" id="literary"></div>
+                <div class="bible-study-section" id="theology"></div>
+
+                <div class="bible-study-section">
+                    <h2>Timeline</h2>
+                    <div class="timeline" id="timeline"></div>
+                </div>
+
+                <div class="bible-study-section">
+                    <h2>Genealogy</h2>
+                    <div class="tree" id="genealogy"></div>
+                </div>
+
+                <div class="bible-study-section">
+                    <h2>Artifacts</h2>
+                    <div id="artifacts"></div>
+                </div>
+            </div>
+            
+            <!-- COMMENTS SECTION -->
+            <section id="comments-section" style="max-width: 800px; margin: 50px auto; text-align: left;">
+                <div class="comment-form">
+                    <h3>Leave a Comment</h3>
+                    <form id="commentForm">
+                        <div class="form-group">
+                            <label for="userName">Name</label>
+                            <input type="text" id="userName" name="userName" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="commentText">Comment</label>
+                            <textarea id="commentText" name="commentText" required placeholder="Share your thoughts..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-comment-btn">Post Comment</button>
+                    </form>
+                </div>
+                
+                <div id="commentsDisplay">
+                    <h3>Comments</h3>
+                    <div class="comments-list" id="commentsList">
+                        <!-- Comments will be dynamically loaded here -->
+                        <p style="color: #71717a;">No comments yet. Be the first to share!</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 
@@ -215,6 +320,91 @@
 
     <!-- Chatwoot AI Chatbot Widget -->
     <script src="/chatwoot-widget-config.js"></script>
-</body>
+    <script>
+        // SAMPLE DATA (replace later with API)
+        const deepDive = {
+            title: "Genesis 1:1 — Creation and Sovereignty",
+            passage: "Genesis 1:1",
+            thesis: "<h2>Thesis</h2><p>Genesis 1:1 establishes divine sovereignty over all matter and time.</p>",
+            historical: "<h2>Historical Context</h2><p>Contrasts with Babylonian cosmology traditions.</p>",
+            language: "<p><strong>Bereshit</strong> – 'In the beginning' denoting absolute origin.</p>",
+            literary: "<h2>Literary Structure</h2><p>Forming (Days 1–3) / Filling (Days 4–6).</p>",
+            theology: "<h2>Theological Implications</h2><p>God exists before matter and time.</p>",
+            timeline: [
+                {year: -2000, label: "Patriarchal Era"},
+                {year: -1800, label: "Babylonian Creation Texts"},
+                {year: -1446, label: "Traditional Exodus Date"}
+            ],
+            genealogy: {
+                name: "Adam",
+                children: [
+                    {
+                        name: "Seth",
+                        children: [
+                            { name: "Enosh", children: [] }
+                        ]
+                    }
+                ]
+            },
+            artifacts: [
+                {
+                    name: "Enuma Elish Tablet",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Enuma_Elish.jpg",
+                    description: "Babylonian creation epic tablet."
+                }
+            ]
+        };
 
+        // LOAD CONTENT
+        document.getElementById("title").innerText = deepDive.title;
+        document.getElementById("passage").innerText = deepDive.passage;
+        document.getElementById("thesis").innerHTML = deepDive.thesis;
+        document.getElementById("historical").innerHTML = deepDive.historical;
+        document.getElementById("language").innerHTML = deepDive.language;
+        document.getElementById("literary").innerHTML = deepDive.literary;
+        document.getElementById("theology").innerHTML = deepDive.theology;
+
+        // TOGGLE HEBREW
+        function toggleHebrew() {
+            const el = document.getElementById("language");
+            el.style.display = el.style.display === "none" ? "block" : "none";
+        }
+
+        // TIMELINE RENDER
+        deepDive.timeline.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "timeline-item";
+            div.innerHTML = `<strong>${item.year}</strong><p>${item.label}</p>`;
+            document.getElementById("timeline").appendChild(div);
+        });
+
+        // GENEALOGY RENDER
+        function renderTree(node) {
+            let html = `<li>${node.name}`;
+            if (node.children && node.children.length > 0) {
+                html += "<ul>";
+                node.children.forEach(child => {
+                    html += renderTree(child);
+                });
+                html += "</ul>";
+            }
+            html += "</li>";
+            return html;
+        }
+        document.getElementById("genealogy").innerHTML =
+            `<ul>${renderTree(deepDive.genealogy)}</ul>`;
+
+        // ARTIFACTS RENDER
+        deepDive.artifacts.forEach(artifact => {
+            const card = document.createElement("div");
+            card.className = "artifact-card";
+            card.innerHTML = `
+                <img src="${artifact.image}">
+                <h4>${artifact.name}</h4>
+                <p>${artifact.description}</p>
+            `;
+            document.getElementById("artifacts").appendChild(card);
+        });
+    </script>
+</body>
 </html>

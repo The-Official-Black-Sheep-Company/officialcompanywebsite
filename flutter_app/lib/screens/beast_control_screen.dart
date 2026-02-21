@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import '../services/beast_api_service.dart';
 
 class BeastControlScreen extends StatefulWidget {
   const BeastControlScreen({super.key});
@@ -9,6 +10,7 @@ class BeastControlScreen extends StatefulWidget {
 }
 
 class _BeastControlScreenState extends State<BeastControlScreen> {
+  final BeastApiService _apiService = BeastApiService();
   final List<String> _systemLogs = [
     "System parity achieved.",
     "Beast Node active on primary cluster.",
@@ -16,12 +18,23 @@ class _BeastControlScreenState extends State<BeastControlScreen> {
   ];
 
   void _addLog(String msg) {
-    setState(() {
-      _systemLogs.insert(
-        0,
-        "[${DateTime.now().toString().split(' ')[1].substring(0, 8)}] $msg",
-      );
-    });
+    if (mounted) {
+      setState(() {
+        _systemLogs.insert(
+          0,
+          "[${DateTime.now().toString().split(' ')[1].substring(0, 8)}] $msg",
+        );
+      });
+    }
+  }
+
+  Future<void> _handleStrike(
+    String label,
+    Future<Map<String, dynamic>> Function() action,
+  ) async {
+    _addLog("Initiating $label strike...");
+    final result = await action();
+    _addLog(result['message']);
   }
 
   @override
@@ -29,11 +42,11 @@ class _BeastControlScreenState extends State<BeastControlScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('BEAST CONTROL'), centerTitle: true),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: RadialGradient(
             center: Alignment.center,
             radius: 1.5,
-            colors: [const Color(0xFF1A1A1A), const Color(0xFF050505)],
+            colors: [Color(0xFF1A1A1A), Color(0xFF050505)],
           ),
         ),
         child: Padding(
@@ -140,22 +153,35 @@ class _BeastControlScreenState extends State<BeastControlScreen> {
                   _StrikeButton(
                     icon: LucideIcons.search,
                     label: 'Trend Scout',
-                    onTap: () => _addLog("Trend Scout strike initiated."),
+                    onTap: () =>
+                        _handleStrike('Trend Scout', _apiService.triggerScout),
                   ),
                   _StrikeButton(
                     icon: LucideIcons.barChart,
                     label: 'SEO Monitor',
-                    onTap: () => _addLog("SEO Monitoring active."),
+                    onTap: () async {
+                      _addLog("SEO Monitoring active on primary target.");
+                      final result = await _apiService.triggerSeo(
+                        "https://theofficialblacksheepcompany.com",
+                      );
+                      _addLog(result['message']);
+                    },
                   ),
                   _StrikeButton(
-                    icon: LucideIcons.terminal,
-                    label: 'System Status',
-                    onTap: () => _addLog("Global system check performed."),
+                    icon: LucideIcons.activity,
+                    label: 'Health Check',
+                    onTap: () =>
+                        _handleStrike('Health Check', _apiService.checkHealth),
                   ),
                   _StrikeButton(
                     icon: LucideIcons.shieldAlert,
                     label: 'Ghost Mode',
-                    onTap: () => _addLog("Ghost Protocol engaged."),
+                    onTap: () {
+                      _addLog("Ghost Protocol engaged.");
+                      _apiService.sendVoice(
+                        "🔴 GHOST PROTOCOL ENGAGED FROM MOBILE.",
+                      );
+                    },
                   ),
                 ],
               ),
