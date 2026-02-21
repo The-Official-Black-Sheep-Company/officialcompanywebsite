@@ -1,4 +1,5 @@
 console.log('Auth Protocol: Script Loaded');
+alert('Auth Protocol: Handshake Initiated. If you see this, the authentication script is active.');
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Auth Protocol: DOM Content Loaded');
@@ -9,7 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutButton = document.getElementById('logout-button');
     const togglePasswordBtn = document.getElementById('toggle-password');
 
-    console.log('Auth Protocol: Forms detected:', { loginForm: !!loginForm, signupForm: !!signupForm, google: !!googleSignInButton });
+    console.warn('Auth Protocol: System Check', { 
+        loginForm: !!loginForm, 
+        signupForm: !!signupForm, 
+        google: !!googleSignInButton,
+        firebaseExist: typeof firebase !== 'undefined'
+    });
 
     // Password Visibility Toggle
     if (togglePasswordBtn) {

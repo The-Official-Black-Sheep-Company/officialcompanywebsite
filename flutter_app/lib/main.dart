@@ -5,13 +5,15 @@ import 'screens/service_selection_screen.dart';
 import 'screens/calendar_screen.dart';
 import 'screens/details_screen.dart';
 import 'screens/live_job_screen.dart';
+import 'screens/beast_control_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Reserved for: await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => WorkOrderModel()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => WorkOrderModel())],
       child: const WorkOrderApp(),
     ),
   );
@@ -44,8 +46,14 @@ class WorkOrderApp extends StatelessWidget {
           ),
         ),
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontFamily: 'Rajdhani', color: Color(0xFFD4D4D4)),
-          titleLarge: TextStyle(fontFamily: 'Orbitron', fontWeight: FontWeight.bold),
+          bodyMedium: TextStyle(
+            fontFamily: 'Rajdhani',
+            color: Color(0xFFD4D4D4),
+          ),
+          titleLarge: TextStyle(
+            fontFamily: 'Orbitron',
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       initialRoute: '/',
@@ -54,6 +62,7 @@ class WorkOrderApp extends StatelessWidget {
         '/calendar': (context) => const CalendarScreen(),
         '/details': (context) => const DetailsScreen(),
         '/live': (context) => const LiveJobScreen(),
+        '/beast': (context) => const BeastControlScreen(),
       },
     );
   }
