@@ -61,7 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch((error) => {
                     console.error('Authorization Error:', error.code, error.message);
-                    alert(`Authorization Failed: ${error.message}`);
+                    let userFriendlyMsg = `Authorization Failed: ${error.message}`;
+                    if (error.code === 'auth/user-not-found') userFriendlyMsg = "Identity check failed: No record found with this handle.";
+                    if (error.code === 'auth/wrong-password') userFriendlyMsg = "Identity check failed: Password mismatch detected.";
+                    if (error.code === 'auth/invalid-email') userFriendlyMsg = "Identity check failed: Handle format invalid.";
+                    
+                    alert(userFriendlyMsg);
+                    console.trace('Auth Error Source');
                 });
         });
     }
@@ -124,7 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch((error) => {
                     console.error('Recruitment Error:', error.code, error.message);
-                    alert(`Recruitment Failed: ${error.message}`);
+                    let userFriendlyMsg = `Recruitment Failed: ${error.message}`;
+                    if (error.code === 'auth/email-already-in-use') userFriendlyMsg = "Recruitment conflict: This handle is already registered.";
+                    if (error.code === 'auth/weak-password') userFriendlyMsg = "Recruitment failure: Password strength insufficient (needs 6+ chars).";
+                    
+                    alert(userFriendlyMsg);
                 });
         });
     }

@@ -163,6 +163,42 @@ class _BeastControlScreenState extends State<BeastControlScreen> {
               const SizedBox(height: 30),
 
               const Text(
+                'TACTICAL PRESENCE',
+                style: TextStyle(
+                  fontFamily: 'Orbitron',
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                  letterSpacing: 1.5,
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: _PresenceButton(
+                      icon: LucideIcons.video,
+                      label: 'Video Chat',
+                      color: const Color(0xFF8B5CF6), // Violet
+                      onTap: () => _addLog("Video link established."),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _PresenceButton(
+                      icon: LucideIcons.monitor,
+                      label: 'Screen Share',
+                      color: const Color(0xFF06B6D4), // Cyan
+                      onTap: () => _addLog("Screen sharing initiated."),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 30),
+
+              const Text(
                 'SYSTEM LOGS',
                 style: TextStyle(
                   fontFamily: 'Orbitron',
@@ -200,6 +236,54 @@ class _BeastControlScreenState extends State<BeastControlScreen> {
                       );
                     },
                   ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PresenceButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _PresenceButton({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          decoration: BoxDecoration(
+            border: Border.all(color: color.withOpacity(0.3)),
+            borderRadius: BorderRadius.circular(12),
+            color: color.withOpacity(0.05),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: color, size: 28),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white70,
                 ),
               ),
             ],
