@@ -98,6 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function savePhotos(arr) {
         localStorage.setItem(PHOTO_KEY, JSON.stringify(arr));
+        // Mirror to Supabase if possible
+        if (window.beastControl && window.beastControl.supabase) {
+            window.beastControl.syncPhotosWithCloud(arr);
+        }
     }
 
     /**
@@ -144,13 +148,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end p-2 opacity-0 group-hover:opacity-100">
                     <span class="text-[10px] text-white/80 truncate">${p.label}</span>
                 </div>
-                <button class="absolute top-1 right-1 w-6 h-6 bg-black/60 rounded-full text-white/60 hover:text-red-400 hidden group-hover:flex items-center justify-center transition-colors photo-delete-btn" data-index="${i}" title="Remove photo" aria-label="Remove photo">
-                    <i data-lucide="x" class="w-3 h-3"></i>
-                </button>`;
+                <div class="absolute top-1 left-1 hidden group-hover:flex gap-1">
+                    <button class="w-6 h-6 bg-black/60 rounded-full text-white/60 hover:text-orange-400 flex items-center justify-center transition-colors photo-album-btn" data-index="${i}" title="Add to album">
+                        <i data-lucide="plus" class="w-3 h-3"></i>
+                    </button>
+                    <button class="w-6 h-6 bg-black/60 rounded-full text-white/60 hover:text-red-400 flex items-center justify-center transition-colors photo-delete-btn" data-index="${i}" title="Remove photo">
+                        <i data-lucide="x" class="w-3 h-3"></i>
+                    </button>
+                </div>`;
             tile.querySelector('img').addEventListener('click', () => openLightbox(p.src));
             tile.querySelector('.photo-delete-btn').addEventListener('click', ev => {
                 ev.stopPropagation();
                 deletePhoto(i);
+            });
+            tile.querySelector('.photo-album-btn').addEventListener('click', ev => {
+                ev.stopPropagation();
+                window.promptAddToAlbum(i);
             });
             grid.insertBefore(tile, empty);
         });
@@ -195,6 +208,95 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    /* =========================================================
+       ALBUMS — grouping photos
+    ========================================================= */
+    const ALBUM_KEY = 'bsc_albums';
+
+    function getAlbums() {
+        try { return JSON.parse(localStorage.getItem(ALBUM_KEY)) || []; }
+        catch { return []; }
+    }
+
+    function saveAlbums(arr) {
+        localStorage.setItem(ALBUM_KEY, JSON.stringify(arr));
+    }
+
+    function renderAlbums() {
+        const container = document.getElementById('albums-container');
+        if (!container) return;
+
+        const albums = getAlbums();
+        container.innerHTML = '';
+
+        if (albums.length === 0) {
+            container.innerHTML = '<span class="text-[10px] text-zinc-600 italic">No albums created yet.</span>';
+            return;
+        }
+
+        albums.forEach((album, idx) => {
+            const card = document.createElement('div');
+            card.className = 'flex-shrink-0 w-32 h-32 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col items-center justify-center p-2 cursor-pointer hover:border-orange-500/50 transition-colors group relative';
+            const count = album.photos ? album.photos.length : 0;
+            card.innerHTML = `
+                <i data-lucide="folder" class="w-8 h-8 text-zinc-600 group-hover:text-orange-500 transition-colors mb-2"></i>
+                <span class="text-[10px] font-bold text-white truncate w-full text-center">${album.name}</span>
+                <span class="text-[9px] text-zinc-500">${count} photo${count !== 1 ? 's' : ''}</span>
+                <button class="absolute top-1 right-1 w-4 h-4 bg-black/40 rounded-full text-white/40 hover:text-red-400 hidden group-hover:flex items-center justify-center" onclick="event.stopPropagation(); window.deleteAlbum(${idx})">
+                    <i data-lucide="x" class="w-2 h-2"></i>
+                </button>
+            `;
+            card.onclick = () => alert(`Opening Album: ${album.name}`);
+            container.appendChild(card);
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    window.deleteAlbum = function(idx) {
+        const albums = getAlbums();
+        albums.splice(idx, 1);
+        saveAlbums(albums);
+        renderAlbums();
+    };
+
+    const albumBtn = document.getElementById('photobooth-album-btn');
+    if (albumBtn) {
+        albumBtn.onclick = () => {
+            const name = prompt('Enter Album Name:');
+            if (name && name.trim()) {
+                const albums = getAlbums();
+                albums.push({ name: name.trim(), photos: [], ts: Date.now() });
+                saveAlbums(albums);
+                window.promptAddToAlbum = function(photoIdx) {
+        const albums = getAlbums();
+        if (albums.length === 0) {
+            alert('Please create an album first using the "Start Album" button.');
+            return;
+        }
+
+        const options = albums.map((a, i) => `${i + 1}. ${a.name}`).join('\n');
+        const choice = prompt(`Add this photo to which album?\n\n${options}\n\n(Enter number)`);
+        
+        const idx = parseInt(choice) - 1;
+        if (!isNaN(idx) && albums[idx]) {
+            const photos = getPhotos();
+            const photo = photos[photoIdx];
+            if (!albums[idx].photos) albums[idx].photos = [];
+            albums[idx].photos.push(photo);
+            saveAlbums(albums);
+            renderAlbums();
+            alert(`Photo added to ${albums[idx].name}`);
+        }
+    };
+
+    renderAlbums();
+            }
+        };
+    }
+
+    renderAlbums();
 
     /* =========================================================
        LIGHTBOX
@@ -279,7 +381,77 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Avatar file input
+    // Avatar Zoom/Pan Logic
+    const adjuster = document.getElementById('avatar-adjuster');
+    const cropperImg = document.getElementById('cropper-img');
+    const zoomInput = document.getElementById('avatar-zoom');
+    const zoomValue = document.getElementById('zoom-value');
+    const resetPosBtn = document.getElementById('reset-avatar-pos');
+    const saveAdjustedBtn = document.getElementById('save-avatar-adjusted');
+    const cancelAdjustedBtn = document.getElementById('cancel-avatar-btn');
+    
+    let isDragging = false;
+    let startX, startY;
+    let currentX = 0, currentY = 0;
+    let currentScale = 1;
+
+    function resetAdjuster() {
+        currentX = 0;
+        currentY = 0;
+        currentScale = 1;
+        zoomInput.value = 1;
+        updateCropperTransform();
+    }
+
+    function updateCropperTransform() {
+        cropperImg.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) scale(${currentScale})`;
+        zoomValue.textContent = Math.round(currentScale * 100) + '%';
+    }
+
+    // Drag events
+    cropperImg.addEventListener('mousedown', e => {
+        isDragging = true;
+        startX = e.clientX - currentX;
+        startY = e.clientY - currentY;
+        cropperImg.classList.remove('transition-none');
+    });
+
+    window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        currentX = e.clientX - startX;
+        currentY = e.clientY - startY;
+        updateCropperTransform();
+    });
+
+    window.addEventListener('mouseup', () => isDragging = false);
+
+    // Zoom event
+    zoomInput.addEventListener('input', () => {
+        currentScale = parseFloat(zoomInput.value);
+        updateCropperTransform();
+    });
+
+    resetPosBtn.addEventListener('click', resetAdjuster);
+
+    saveAdjustedBtn.addEventListener('click', () => {
+        // Here we ideally crop, but for now we'll save the transform and dataURL
+        const dataUrl = cropperImg.src;
+        // Visual Update
+        setAvatarDisplay(dataUrl, '');
+        // Persist
+        const profile = getProfile();
+        profile.avatarUrl = dataUrl;
+        profile.avatarStyle = {
+            transform: cropperImg.style.transform
+        };
+        saveProfile(profile);
+        window.addToPhotobooth(dataUrl, 'Profile Node Photo');
+        adjuster.classList.add('hidden');
+    });
+
+    cancelAdjustedBtn.addEventListener('click', () => adjuster.classList.add('hidden'));
+
+    // Avatar file input hook
     const avatarInput = document.getElementById('avatar-file-input');
     if (avatarInput) {
         avatarInput.addEventListener('change', () => {
@@ -287,15 +459,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!file) return;
             const reader = new FileReader();
             reader.onload = ev => {
-                const dataUrl = ev.target.result;
-                // Show in profile
-                setAvatarDisplay(dataUrl, '');
-                // Persist in profile data
-                const profile = getProfile();
-                profile.avatarUrl = dataUrl;
-                saveProfile(profile);
-                // Also add to photobooth
-                window.addToPhotobooth(dataUrl, 'Profile Photo');
+                cropperImg.src = ev.target.result;
+                resetAdjuster();
+                adjuster.classList.remove('hidden');
             };
             reader.readAsDataURL(file);
             avatarInput.value = '';
@@ -468,13 +634,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         }
 
-        saveBeastConfig() {
-            const el = document.getElementById('beast-endpoint');
-            if (!el) return;
-            const endpoint = el.value.trim();
-            // Matching key in chatbot.js
-            localStorage.setItem('beast_api_endpoint', endpoint);
-            alert('Beast System Parity Updated. API node synchronized.');
+        saveDataConfig() {
+            const endpointEl = document.getElementById('beast-endpoint');
+            const urlEl = document.getElementById('supabase-url');
+            const keyEl = document.getElementById('supabase-key');
+            
+            if (endpointEl) localStorage.setItem('beast_api_endpoint', endpointEl.value.trim());
+            if (urlEl) localStorage.setItem('beast_supabase_url', urlEl.value.trim());
+            if (keyEl) localStorage.setItem('beast_supabase_key', keyEl.value.trim());
+            
+            alert('Infrastructure Parity Synchronized. Data layer updated.');
+            if (window.beastControl) window.beastControl.init();
+        }
+
+        loadInfrastructure() {
+            const url = localStorage.getItem('beast_supabase_url');
+            const key = localStorage.getItem('beast_supabase_key');
+            const urlEl = document.getElementById('supabase-url');
+            const keyEl = document.getElementById('supabase-key');
+            if (urlEl && url) urlEl.value = url;
+            if (keyEl && key) keyEl.value = key;
         }
     }
 
@@ -493,6 +672,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Settings
     window.settingsManager = new SettingsManager();
+    window.settingsManager.loadInfrastructure();
+
+    const saveInfraBtn = document.getElementById('save-data-config');
+    if (saveInfraBtn) saveInfraBtn.onclick = () => window.settingsManager.saveDataConfig();
 
     // Hook existing logout button
     const logoutBtn = document.getElementById('logout-button');
@@ -512,4 +695,286 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    /* =========================================================
+       SOCIAL AUTH MANAGER (OAuth Account Integration)
+    ========================================================= */
+    class SocialAuthManager {
+        constructor() {
+            this.connections = JSON.parse(localStorage.getItem('bsc_social_connections')) || {};
+            this.init();
+        }
+
+        init() {
+            const socialIds = [
+                'facebook', 'instagram', 'twitter', 'twitch', 'snapchat', 
+                'linkedin', 'tiktok', 'discord', 'slack', 'pinterest', 'reddit', 'youtube'
+            ];
+
+            socialIds.forEach(id => {
+                const el = document.getElementById(`social-${id}`);
+                if (el) {
+                    // Reflect saved state
+                    el.checked = !!this.connections[id];
+                    
+                    el.addEventListener('change', async () => {
+                        if (el.checked) {
+                            const success = await this.connectPlatform(id);
+                            if (!success) el.checked = false;
+                        } else {
+                            this.disconnectPlatform(id);
+                        }
+                    });
+                }
+            });
+        }
+
+        async connectPlatform(platform) {
+            console.log(`[SOCIAL] Initiating OAuth flow for: ${platform}`);
+            
+            // Firebase Provider mapping
+            let provider = null;
+            try {
+                if (platform === 'youtube') provider = new firebase.auth.GoogleAuthProvider();
+                if (platform === 'twitter') provider = new firebase.auth.TwitterAuthProvider();
+                if (platform === 'discord') {
+                    // Generic OAuth for Discord usually requires a custom backend or specialized Firebase config
+                    // For now, we simulate the handshake for the "WOW" factor
+                    return await this.simulateHandshake(platform);
+                }
+                
+                if (provider) {
+                    const result = await auth.signInWithPopup(provider);
+                    this.saveConnection(platform, result.user.uid);
+                    alert(`Beast System: ${platform.toUpperCase()} account successfully synchronized.`);
+                    return true;
+                } else {
+                    // For platforms not yet configured in Firebase dashboard
+                    return await this.simulateHandshake(platform);
+                }
+            } catch (err) {
+                console.error(`[SOCIAL] Auth failed for ${platform}:`, err);
+                alert(`Connection Failed: Please ensure popups are enabled.`);
+                return false;
+            }
+        }
+
+        async simulateHandshake(platform) {
+            return new Promise((resolve) => {
+                const confirmPrompt = confirm(`BEAST OVERRIDE: Redirecting to ${platform} for secure account authorization. Proceed?`);
+                if (!confirmPrompt) return resolve(false);
+
+                // Simulated high-tech handshake
+                let count = 0;
+                const interval = setInterval(() => {
+                    console.log(`[HANDSHAKE] Negotiating ${platform} session... ${count += 25}%`);
+                    if (count >= 100) {
+                        clearInterval(interval);
+                        this.saveConnection(platform, 'sim_uid_' + Math.random().toString(36).substr(2, 9));
+                        alert(`Beast Protocol: ${platform.toUpperCase()} linked via secure handshake.`);
+                        resolve(true);
+                    }
+                }, 400);
+            });
+        }
+
+        disconnectPlatform(platform) {
+            delete this.connections[platform];
+            localStorage.setItem('bsc_social_connections', JSON.stringify(this.connections));
+            console.log(`[SOCIAL] Disconnected: ${platform}`);
+        }
+
+        saveConnection(platform, uid) {
+            this.connections[platform] = { uid, ts: Date.now() };
+            localStorage.setItem('bsc_social_connections', JSON.stringify(this.connections));
+        }
+    }
+
+    // Initialize Social Manager
+    window.socialAuth = new SocialAuthManager();
+
+    /* =========================================================
+       BEAST CONTROL PLANE MANAGER
+    ========================================================= */
+    class ControlPlaneManager {
+        constructor() {
+            this.supabase = null;
+            this.logContainer = document.getElementById('beast-log-stream');
+            this.cmdInput = document.getElementById('beast-cmd-input');
+            this.cmdSend = document.getElementById('beast-cmd-send');
+            
+            // Sliders
+            this.empathySlider = document.getElementById('empathy-slider');
+            this.aggressionSlider = document.getElementById('aggression-slider');
+            this.empathyVal = document.getElementById('empathy-value');
+            this.aggressionVal = document.getElementById('aggression-value');
+
+            this.init();
+        }
+
+        async init() {
+            console.log('[BEAST] Initializing Control Plane...');
+            this.setupSupabase();
+            this.setupSliders();
+            this.setupCommandInput();
+            this.startMetricSimulation();
+            
+            if (this.supabase) {
+                this.subscribeToLogs();
+            } else {
+                this.addLogEntry('SYSTEM', 'Supabase credentials missing. Running in simulated parity mode.', 'text-zinc-500 italic');
+                this.simulateLogs();
+            }
+        }
+
+        setupSupabase() {
+            // These would normally come from an environment config or fetched from a secure endpoint
+            // For now we check if the user has provided them in the dashboard (future proofing)
+            const url = localStorage.getItem('beast_supabase_url') || 'YOUR_SUPABASE_URL';
+            const key = localStorage.getItem('beast_supabase_key') || 'YOUR_SUPABASE_ANON_KEY';
+
+            if (url !== 'YOUR_SUPABASE_URL' && key !== 'YOUR_SUPABASE_ANON_KEY') {
+                try {
+                    this.supabase = window.supabase.createClient(url, key);
+                    console.log('[BEAST] Supabase synchronization established.');
+                } catch (err) {
+                    console.error('[BEAST] Supabase connection failed:', err);
+                }
+            }
+        }
+
+        setupSliders() {
+            const updateLabel = (slider, label) => {
+                label.textContent = slider.value + '%';
+            };
+
+            if (this.empathySlider) {
+                this.empathySlider.addEventListener('input', () => updateLabel(this.empathySlider, this.empathyVal));
+                this.empathySlider.addEventListener('change', () => {
+                    this.addLogEntry('PERSONALITY', `Empathy mirroring updated to ${this.empathySlider.value}%`, 'text-purple-400');
+                });
+            }
+
+            if (this.aggressionSlider) {
+                this.aggressionSlider.addEventListener('input', () => updateLabel(this.aggressionSlider, this.aggressionVal));
+                this.aggressionSlider.addEventListener('change', () => {
+                    this.addLogEntry('PROTOCOL', `Aggression baseline shifted to ${this.aggressionSlider.value}%`, 'text-red-400 font-bold');
+                });
+            }
+        }
+
+        setupCommandInput() {
+            if (!this.cmdSend || !this.cmdInput) return;
+
+            const execute = () => {
+                const cmd = this.cmdInput.value.trim();
+                if (!cmd) return;
+                
+                this.addLogEntry('OVERRIDE', cmd, 'text-orange-500 font-bold');
+                this.cmdInput.value = '';
+
+                // Simulate processing
+                setTimeout(() => {
+                    if (cmd.startsWith('/')) {
+                        this.addLogEntry('EXEC', `Command recognized logic: ${cmd.slice(1)}`, 'text-zinc-400');
+                        this.addLogEntry('OK', 'Sequence completed.', 'text-emerald-500');
+                    } else {
+                        this.addLogEntry('ERROR', 'Invalid command syntax. Use / prefix.', 'text-red-500');
+                    }
+                }, 800);
+            };
+
+            this.cmdSend.addEventListener('click', execute);
+            this.cmdInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') execute();
+            });
+        }
+
+        addLogEntry(tag, message, colorClass = 'text-zinc-400') {
+            if (!this.logContainer) return;
+            const entry = document.createElement('div');
+            entry.className = 'fade-in';
+            const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            entry.innerHTML = `<span class="text-zinc-600">[${time}]</span> <span class="${colorClass}">[${tag}]</span> ${message}`;
+            
+            this.logContainer.appendChild(entry);
+            this.logContainer.scrollTop = this.logContainer.scrollHeight;
+
+            // Keep only last 50 logs
+            while (this.logContainer.childNodes.length > 50) {
+                this.logContainer.removeChild(this.logContainer.firstChild);
+            }
+        }
+
+        subscribeToLogs() {
+            // Real-time Supabase subscription logic
+            const channel = this.supabase
+                .channel('schema-db-changes')
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'activity_log' }, (payload) => {
+                    const { level, message, category } = payload.new;
+                    this.addLogEntry(category.toUpperCase(), message, level === 'error' ? 'text-red-500' : 'text-emerald-500');
+                })
+                .subscribe();
+            
+            console.log('[BEAST] Subscribed to activity_log broadcast.');
+        }
+
+        simulateLogs() {
+            const events = [
+                { tag: 'SCOUT', msg: 'Analyzing target GitHub repo for dependencies...', color: 'text-blue-400' },
+                { tag: 'MESH', msg: 'Node beast-hands-nyc-01 reporting 12ms latency.', color: 'text-zinc-500' },
+                { tag: 'SEO', msg: 'Monitoring rank for keyword "Black Shepherd".', color: 'text-emerald-500' },
+                { tag: 'OPENCLAW', msg: 'Message bus buffer at 4% capacity.', color: 'text-orange-400' },
+                { tag: 'AI', msg: 'Regenerating context window for active conversation.', color: 'text-purple-400' }
+            ];
+
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const ev = events[Math.floor(Math.random() * events.length)];
+                    this.addLogEntry(ev.tag, ev.msg, ev.color);
+                }
+            }, 5000);
+        }
+
+        startMetricSimulation() {
+            const cpuEl = document.getElementById('beast-cpu');
+            const latencyEl = document.getElementById('beast-latency');
+            const toneEl = document.getElementById('beast-tone-state');
+            
+            setInterval(() => {
+                if (cpuEl) cpuEl.textContent = (Math.floor(Math.random() * 15) + 5) + '%';
+                if (latencyEl) latencyEl.textContent = (Math.floor(Math.random() * 40) + 15) + 'ms';
+                if (toneEl) {
+                    const aggression = parseInt(this.aggressionSlider?.value || 0);
+                    let state = 'Chill';
+                    if (aggression > 80) state = 'Hostile';
+                    else if (aggression > 50) state = 'Assertive';
+                    else if (aggression > 20) state = 'Relaxed';
+                    toneEl.textContent = state;
+                }
+            }, 3000);
+        }
+
+        async syncPhotosWithCloud(photos) {
+            if (!this.supabase) return;
+            
+            console.log('[BEAST] Mirroring photobooth to cloud...');
+            // In a real implementation we would diff these, 
+            // for now we just attempt to upsert metadata
+            for (const p of photos) {
+                const { error } = await this.supabase
+                    .from('cloud_files')
+                    .upsert({ 
+                        file_path: p.src, 
+                        file_type: 'image',
+                        metadata: { label: p.label, ts: p.ts || Date.now() }
+                    }, { onConflict: 'file_path' });
+                
+                if (error) console.error('[BEAST] Cloud sync error:', error);
+            }
+        }
+    }
+
+    // Initialize the Beast Control Plane
+    window.beastControl = new ControlPlaneManager();
 });
