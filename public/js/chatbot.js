@@ -109,7 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.auth) {
       window.auth.onAuthStateChanged((user) => {
           console.log("[BEAST DEBUG] Auth state changed. User:", user ? user.email : "none", "isBeastMode:", isBeastMode);
-          if (user && user.email === 'blackshepherddeveloper@gmail.com' && !isBeastMode) {
+          const isDev = user && (user.email === 'blackshepherddeveloper@gmail.com' || user.email?.includes('swoopg111'));
+          if (isDev && !isBeastMode) {
               console.log("[BEAST DEBUG] Identity Verified (Primary Node). Initializing transformation...");
               switchToBeastMode();
           } else if (user && isBeastMode && user.email !== 'blackshepherddeveloper@gmail.com') {
@@ -230,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (err.name === 'AbortError') {
               return "BEAST TIMEOUT: The system mesh is lagging. I'm falling back to my internal knowledge base.";
           }
-          return `BEAST OFFLINE: ${err.message}. I'll use my local processing for now.`;
+          return `BEAST OFFLINE: ${err.message}. (Endpoint: ${BEAST_API_URL}). Please verify the backend is running and the endpoint is correctly configured in Settings > Integrations.`;
       }
   }
 

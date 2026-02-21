@@ -56,23 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Settings modal
-    if (settingsTrigger && settingsModal) {
-        settingsTrigger.addEventListener('click', e => {
-            e.preventDefault();
-            settingsModal.classList.remove('hidden');
-            setTimeout(() => settingsModal.classList.add('opacity-100'), 10);
-        });
-    }
-    if (settingsClose && settingsModal) {
-        settingsClose.addEventListener('click', () => {
-            settingsModal.classList.remove('opacity-100');
-            setTimeout(() => settingsModal.classList.add('hidden'), 300);
-        });
-    }
-    settingsModal?.addEventListener('click', e => {
-        if (e.target === settingsModal) settingsClose?.click();
-    });
+    // Settings Modal initialization is handled by SettingsManager below
 
     // Tactical Override buttons (non-modal / non-profile)
     document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
@@ -711,10 +695,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Beast Config
-            const saveBeastBtn = document.getElementById('save-beast-config');
-            if (saveBeastBtn) {
-                saveBeastBtn.addEventListener('click', () => this.saveBeastConfig());
+            // Infrastructure Sync
+            const saveInfraBtn = document.getElementById('save-data-config');
+            if (saveInfraBtn) {
+                saveInfraBtn.addEventListener('click', () => this.saveDataConfig());
             }
         }
 
@@ -835,12 +819,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initialize Settings
+    // Initialize Settings (Unified Management)
     window.settingsManager = new SettingsManager();
     window.settingsManager.loadInfrastructure();
-
-    const saveInfraBtn = document.getElementById('save-data-config');
-    if (saveInfraBtn) saveInfraBtn.onclick = () => window.settingsManager.saveDataConfig();
 
     // Hook existing logout button
     const logoutBtn = document.getElementById('logout-button');
