@@ -42,26 +42,25 @@
                 <!-- This will be populated by Firebase auth state -->
             </div>
 
-            <!-- Navigation -->
-            <nav class="flex-1 overflow-y-auto py-4">
                 <div class="px-4 mb-2">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">Main Menu</span>
                 </div>
-                <a href="#" class="nav-item active" data-section="dashboard">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
-                    Dashboard
-                </a>
-                <a href="#" class="nav-item" data-section="messages">
-                    <i data-lucide="mail" class="w-5 h-5 mr-3"></i>
-                    Messages
-                </a>
+                <!-- Reordered Navigation Items -->
                 <a href="#" class="nav-item" data-section="profile">
                     <i data-lucide="user" class="w-5 h-5 mr-3"></i>
                     Profile
                 </a>
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                    Dashboard
+                </a>
                 <a href="#" class="nav-item" data-section="feeds">
                     <i data-lucide="rss" class="w-5 h-5 mr-3"></i>
                     Feeds
+                </a>
+                <a href="#" class="nav-item" data-section="messages">
+                    <i data-lucide="mail" class="w-5 h-5 mr-3"></i>
+                    Messages
                 </a>
                 <a href="#" class="nav-item" data-section="friends">
                     <i data-lucide="users" class="w-5 h-5 mr-3"></i>
@@ -84,30 +83,11 @@
                     Activity
                 </a>
 
-                <!-- Settings with Submenu -->
-                <div class="settings-nav-group">
-                    <a href="#" class="nav-item" data-section="settings" id="settings-nav-item">
-                        <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
-                        Settings
-                        <i data-lucide="chevron-down" class="w-4 h-4 chevron-icon"></i>
-                    </a>
-                    <div class="submenu" id="settings-submenu">
-                        <a href="#" class="submenu-item" onclick="openNotifications(); return false;">
-                            Notifications
-                        </a>
-                        <a href="#" class="submenu-item"
-                            onclick="scrollToSettingsCard('social-integrations-card'); return false;">
-                            API Keys
-                        </a>
-                        <a href="#" class="submenu-item"
-                            onclick="scrollToSettingsCard('customization-card'); return false;">
-                            Preferences
-                        </a>
-                        <a href="#" id="logout-button" class="submenu-item">
-                            Logout
-                        </a>
-                    </div>
-                </div>
+                <!-- Settings Button (No Dropdown) -->
+                <a href="#" class="nav-item" id="settings-trigger">
+                    <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                    Settings
+                </a>
 
                 <div class="px-4 mt-6 mb-2">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">Quick Links</span>
@@ -120,8 +100,14 @@
                     <i data-lucide="shopping-bag" class="w-5 h-5 mr-3"></i>
                     Store
                 </a>
+                <!-- Logout Button moved to main menu for clarity -->
+                <a href="#" id="logout-button" class="nav-item text-red-400 hover:bg-red-500/10">
+                    <i data-lucide="log-out" class="w-5 h-5 mr-3"></i>
+                    Logout
+                </a>
             </nav>
         </aside>
+
 
         <!-- MAIN CONTENT -->
         <main class="flex-1 flex flex-col overflow-hidden">
@@ -177,9 +163,144 @@
             </header>
 
             <!-- Content Area -->
-            <div id="main-content-area" class="flex-1 overflow-y-auto p-6">
-                <!-- Content sections will be dynamically loaded here -->
+            <div id="main-content-area" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="section-content active space-y-6">
+                    <!-- Stat Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="stat-card">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="cpu" class="w-5 h-5 text-orange-500"></i>
+                                <span class="text-xs uppercase tracking-widest text-gray-500">System Mesh</span>
+                            </div>
+                            <p class="text-2xl font-bold font-['Orbitron'] text-white">53 <span class="text-xs font-normal text-emerald-500">Active</span></p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="mail" class="w-5 h-5 text-orange-500"></i>
+                                <span class="text-xs uppercase tracking-widest text-gray-500">Unread Mails</span>
+                            </div>
+                            <p class="text-2xl font-bold font-['Orbitron'] text-white">12 <span class="text-xs font-normal text-orange-400">1 Urgent</span></p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="shield" class="w-5 h-5 text-orange-500"></i>
+                                <span class="text-xs uppercase tracking-widest text-gray-500">Threat Level</span>
+                            </div>
+                            <p class="text-2xl font-bold font-['Orbitron'] text-white">Low <span class="text-xs font-normal text-gray-500">Nominal</span></p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="database" class="w-5 h-5 text-orange-500"></i>
+                                <span class="text-xs uppercase tracking-widest text-gray-500">Storage</span>
+                            </div>
+                            <p class="text-2xl font-bold font-['Orbitron'] text-white">74% <span class="text-xs font-normal text-yellow-500">Cleanup Ready</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Bento Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Recent Activity -->
+                        <div class="bento-card lg:col-span-2">
+                            <div class="bento-card-header">
+                                <i data-lucide="activity" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-bold tracking-widest">BEAST ACTIVITY LOG</h3>
+                            </div>
+                            <div class="bento-card-body space-y-4">
+                                <div class="activity-item">
+                                    <div class="activity-dot bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium">Scouted viral pet trends</p>
+                                        <p class="text-[10px] text-gray-500">Generated 5 posting suggestions • 2m ago</p>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-dot bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium">Mail purge completed</p>
+                                        <p class="text-[10px] text-gray-500">Deleted 43 spam/junk messages • 45m ago</p>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-dot bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium">System Mesh Expansion</p>
+                                        <p class="text-[10px] text-gray-500">53 servers successfully synchronized • 2h ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bento-card">
+                            <div class="bento-card-header">
+                                <i data-lucide="zap" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-bold tracking-widest">TACTICAL OVERRIDE</h3>
+                            </div>
+                            <div class="bento-card-body flex flex-col gap-3">
+                                <button class="btn-primary flex items-center justify-center gap-2 text-xs">
+                                    <i data-lucide="search" class="w-4 h-4"></i> RUN TREND SCOUT
+                                </button>
+                                <button class="btn-secondary flex items-center justify-center gap-2 text-xs">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i> CLEAN JUNK MAIL
+                                </button>
+                                <button class="btn-secondary flex items-center justify-center gap-2 text-xs">
+                                    <i data-lucide="camera" class="w-4 h-4"></i> SNAP PHOTOBOOTH
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Beast Control Section (New) -->
+                <section id="feeds-section" class="section-content space-y-6">
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <i data-lucide="mesh" class="w-5 h-5 text-orange-500"></i>
+                            <h3 class="font-bold tracking-widest uppercase">Beast MCP Control Panel</h3>
+                        </div>
+                        <div class="bento-card-body">
+                            <p class="text-sm text-gray-400 mb-4">Direct interaction with the synchronization mesh.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <!-- Example Integration Card -->
+                                <div class="p-4 bg-black/40 border border-zinc-800 rounded-xl hover:border-orange-500/50 transition-colors cursor-pointer group">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <i data-lucide="github" class="w-6 h-6 text-white group-hover:text-orange-500"></i>
+                                        <span class="text-[8px] px-2 py-0.5 bg-emerald-500/10 text-emerald-500 rounded-full">ACTIVE</span>
+                                    </div>
+                                    <h4 class="text-xs font-bold uppercase tracking-tighter">GitHub Integration</h4>
+                                    <p class="text-[10px] text-gray-600 mt-1">Repo management and workflow automation enabled.</p>
+                                </div>
+                                <div class="p-4 bg-black/40 border border-zinc-800 rounded-xl opacity-50 grayscale cursor-not-allowed">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                                        <span class="text-[8px] px-2 py-0.5 bg-zinc-800 text-zinc-500 rounded-full">OFFLINE</span>
+                                    </div>
+                                    <h4 class="text-xs font-bold uppercase tracking-tighter">NMAP Scanner</h4>
+                                    <p class="text-[10px] text-gray-600 mt-1">Credentials verification required in config.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Profile Section -->
+                <section id="profile-section" class="section-content space-y-6">
+                    <div class="bento-card p-6">
+                        <h2 class="text-2xl font-bold font-['Orbitron'] text-white">Profile Content</h2>
+                        <p class="text-gray-400 mt-2">Personalize your identity within The Black Sheep ecosystem.</p>
+                    </div>
+                </section>
+
+                <!-- Fallback/Other Sections -->
+                <section id="settings-section" class="section-content">
+                    <div class="bento-card p-6">
+                        <h2 class="text-2xl font-bold font-['Orbitron'] text-white">Settings</h2>
+                        <p class="text-gray-400 mt-2">System configuration and preferences.</p>
+                    </div>
+                </section>
             </div>
+
         </main>
     </div>
 
@@ -321,6 +442,59 @@
     <script src="../js/chatbot-knowledge.js"></script>
     <script src="../js/chatbot.js"></script>
 
+    <!-- Settings Modal Overlay -->
+    <div id="settings-modal" class="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-zinc-950/80 border border-zinc-800 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-fade-in">
+            <div class="p-6 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="settings" class="w-6 h-6 text-orange-500"></i>
+                    <h2 class="text-xl font-bold font-['Orbitron'] tracking-widest">SYSTEM SETTINGS</h2>
+                </div>
+                <button id="settings-modal-close" class="p-2 text-zinc-500 hover:text-white transition-colors" title="Close Settings" aria-label="Close Settings">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-8 space-y-8 max-h-[70vh] overflow-y-auto chat-scrollbar">
+                <!-- Notifications -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-widest">Notifications</h3>
+                    <div class="flex items-center justify-between p-4 bg-black/40 border border-zinc-800 rounded-xl">
+                        <div>
+                            <p class="text-sm font-bold">Email Alerts</p>
+                            <p class="text-[10px] text-zinc-500">Receive critical system mesh alerts.</p>
+                        </div>
+                        <input type="checkbox" checked title="Enable Email Alerts" aria-label="Enable Email Alerts" class="w-10 h-5 bg-zinc-800 rounded-full appearance-none checked:bg-orange-500 transition-all cursor-pointer relative before:content-[''] before:absolute before:w-4 before:h-4 before:bg-white before:rounded-full before:top-0.5 before:left-0.5 checked:before:left-5.5 before:transition-all">
+                    </div>
+                </div>
+
+                <!-- API Keys -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-widest">API Integrations</h3>
+                    <div class="space-y-3">
+                        <div class="p-4 bg-black/40 border border-zinc-800 rounded-xl">
+                            <label for="beast-endpoint" class="text-[10px] text-zinc-500 uppercase tracking-tighter mb-1 block">The Beast (MCP) Endpoint</label>
+                            <input type="text" id="beast-endpoint" value="http://localhost:8000" placeholder="http://beast-api:8000" title="The Beast API Endpoint" class="w-full bg-black/50 border border-zinc-800 p-2 rounded text-xs text-white focus:outline-none focus:border-orange-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personalization -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-orange-400 uppercase tracking-widest">Appearance</h3>
+                    <div class="flex items-center gap-4">
+                        <button class="flex-1 p-3 bg-orange-500 text-black text-xs font-bold rounded-xl active:scale-95 transition-transform">DARK MODE</button>
+                        <button class="flex-1 p-3 bg-zinc-800 text-white text-xs font-bold rounded-xl opacity-50 cursor-not-allowed">LIGHT MODE</button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-zinc-900/50 border-t border-zinc-800 flex justify-end gap-3">
+                <button class="btn-secondary px-6 text-xs" onclick="document.getElementById('settings-modal').classList.add('hidden')">CANCEL</button>
+                <button class="btn-primary px-8 text-xs">SAVE CHANGES</button>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 
 </html>
