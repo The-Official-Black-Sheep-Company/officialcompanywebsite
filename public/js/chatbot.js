@@ -1,4 +1,8 @@
 
+// ─── BEAST API CONFIG ───────────────────────────────────────────────────────
+const BEAST_API_URL = 'http://localhost:8000';
+// ────────────────────────────────────────────────────────────────────────────
+
 document.addEventListener("DOMContentLoaded", () => {
   const chatLog = document.getElementById('chat-log');
   const chatInput = document.getElementById('chat-input');
@@ -62,6 +66,24 @@ document.addEventListener("DOMContentLoaded", () => {
       botReply(beastConfig.welcomeMessage);
   }
 
+  function addTypingIndicator() {
+      const el = document.createElement('div');
+      el.id = 'beast-typing';
+      el.className = 'flex justify-start';
+      el.innerHTML = `
+        <div class="bg-amber-600/30 border border-amber-600/40 text-amber-400 rounded-2xl rounded-bl-sm px-4 py-2 text-xs flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce" style="animation-delay:0ms"></span>
+          <span class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce" style="animation-delay:150ms"></span>
+          <span class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce" style="animation-delay:300ms"></span>
+        </div>`;
+      chatLog.appendChild(el);
+      chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+      document.getElementById('beast-typing')?.remove();
+  }
+
   function attachBeastButtonListeners() {
       document.querySelectorAll('[data-template^="beast-"]').forEach(btn => {
           btn.addEventListener('click', () => {
@@ -72,14 +94,16 @@ document.addEventListener("DOMContentLoaded", () => {
               
               if (prompt) {
                   addMessage(prompt, 'user');
-                  setTimeout(() => {
-                      const reply = buildBotResponse(prompt);
+                  addTypingIndicator();
+                  callBeastAPI(prompt).then(reply => {
+                      removeTypingIndicator();
                       botReply(reply);
-                  }, 250);
+                  });
               }
           });
       });
   }
+
 
   // Auth State Observer
   if (window.auth) {
@@ -183,6 +207,22 @@ document.addEventListener("DOMContentLoaded", () => {
       return fallbackResponse;
   }
 
+  async function callBeastAPI(text) {
+      try {
+          const res = await fetch(`${BEAST_API_URL}/chat`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ text })
+          });
+          if (!res.ok) throw new Error(`Beast API returned ${res.status}`);
+          const data = await res.json();
+          return data.reply || 'Signal received. No response generated.';
+      } catch (err) {
+          console.error('[BEAST] API call failed:', err);
+          return `BEAST OFFLINE: ${err.message}. Falling back to local mode.`;
+      }
+  }
+
   function handleUserInput() {
       const text = chatInput.value.trim();
       if (!text) return;
@@ -190,10 +230,20 @@ document.addEventListener("DOMContentLoaded", () => {
       addMessage(text, 'user');
       chatInput.value = '';
 
-      setTimeout(() => {
-          const reply = buildBotResponse(text);
-          botReply(reply);
-      }, 300);
+      if (isBeastMode) {
+          // Route to real Beast API with typing indicator
+          addTypingIndicator();
+          callBeastAPI(text).then(reply => {
+              removeTypingIndicator();
+              botReply(reply);
+          });
+      } else {
+          // Regular visitors use local knowledge base
+          setTimeout(() => {
+              const reply = buildBotResponse(text);
+              botReply(reply);
+          }, 300);
+      }
   }
 
   if (chatSend && chatInput) {

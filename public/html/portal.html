@@ -286,11 +286,131 @@
 
                 <!-- Profile Section -->
                 <section id="profile-section" class="section-content space-y-6">
+
+                    <!-- Profile Header Card -->
                     <div class="bento-card p-6">
-                        <h2 class="text-2xl font-bold font-['Orbitron'] text-white">Profile Content</h2>
-                        <p class="text-gray-400 mt-2">Personalize your identity within The Black Sheep ecosystem.</p>
+                        <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+
+                            <!-- Clickable Avatar Circle -->
+                            <div class="relative group flex-shrink-0">
+                                <div id="profile-avatar-ring"
+                                    class="w-28 h-28 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 p-[3px] cursor-pointer"
+                                    onclick="document.getElementById('avatar-file-input').click()"
+                                    title="Click to change photo">
+                                    <div class="w-full h-full rounded-full bg-zinc-900 overflow-hidden flex items-center justify-center">
+                                        <img id="profile-avatar-img" src="" alt="Profile photo"
+                                            class="w-full h-full object-cover hidden">
+                                        <span id="profile-avatar-initial"
+                                            class="text-4xl font-bold text-orange-400 font-['Orbitron']">?</span>
+                                    </div>
+                                </div>
+                                <!-- Camera overlay -->
+                                <div class="absolute inset-0 rounded-full bg-black/60 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer pointer-events-none">
+                                    <i data-lucide="camera" class="w-7 h-7 text-white"></i>
+                                </div>
+                                <input type="file" id="avatar-file-input" accept="image/*" class="hidden">
+                            </div>
+
+                            <!-- Name & Quick Info -->
+                            <div class="flex-1 text-center md:text-left">
+                                <h2 id="profile-display-name"
+                                    class="text-2xl font-bold font-['Orbitron'] text-white">Loading...</h2>
+                                <p id="profile-email-display" class="text-sm text-zinc-500 mt-1"></p>
+                                <p id="profile-bio-preview" class="text-sm text-zinc-400 mt-3 italic">No bio yet — add one below.</p>
+                                <div class="flex items-center justify-center md:justify-start gap-3 mt-4">
+                                    <span class="text-[10px] px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 uppercase tracking-widest">member</span>
+                                    <span id="profile-photo-count" class="text-[10px] px-3 py-1 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-400">0 photos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Profile Form -->
+                    <div class="bento-card p-6 space-y-5">
+                        <div class="bento-card-header mb-4">
+                            <i data-lucide="edit-3" class="w-5 h-5 text-orange-500"></i>
+                            <h3 class="font-bold tracking-widest uppercase">Edit Profile</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="profile-name-input" class="text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Display Name</label>
+                                <input type="text" id="profile-name-input" placeholder="Your name..."
+                                    class="w-full bg-black/50 border border-zinc-800 focus:border-orange-500 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label for="profile-handle-input" class="text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Handle / Username</label>
+                                <input type="text" id="profile-handle-input" placeholder="@yourhandle"
+                                    class="w-full bg-black/50 border border-zinc-800 focus:border-orange-500 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="profile-bio-input" class="text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Bio</label>
+                            <textarea id="profile-bio-input" rows="3" placeholder="Tell the ecosystem who you are..."
+                                class="w-full bg-black/50 border border-zinc-800 focus:border-orange-500 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-none"></textarea>
+                        </div>
+
+                        <div>
+                            <label for="profile-location-input" class="text-[10px] text-zinc-500 uppercase tracking-widest block mb-1">Location</label>
+                            <input type="text" id="profile-location-input" placeholder="City, State..."
+                                class="w-full bg-black/50 border border-zinc-800 focus:border-orange-500 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors">
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button id="profile-save-btn"
+                                class="btn-primary px-8 text-xs flex items-center gap-2">
+                                <i data-lucide="save" class="w-4 h-4"></i> SAVE PROFILE
+                            </button>
+                        </div>
                     </div>
                 </section>
+
+                <!-- Photobooth Gallery Section -->
+                <section id="photobooth-section" class="section-content space-y-6">
+                    <div class="bento-card p-6">
+                        <div class="bento-card-header mb-1">
+                            <i data-lucide="camera" class="w-5 h-5 text-orange-500"></i>
+                            <h3 class="font-bold tracking-widest uppercase">Photobooth Gallery</h3>
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-1 ml-8">Photos from your profile and feed posts. Click any photo to view full size.</p>
+                    </div>
+
+                    <!-- Upload button -->
+                    <div class="flex items-center gap-4">
+                        <button id="photobooth-upload-btn"
+                            class="btn-primary flex items-center gap-2 text-xs px-5"
+                            onclick="document.getElementById('photobooth-file-input').click()">
+                            <i data-lucide="upload" class="w-4 h-4"></i> ADD PHOTO
+                        </button>
+                        <span class="text-[10px] text-zinc-600">Drag and drop or click to select</span>
+                        <input type="file" id="photobooth-file-input" accept="image/*" multiple class="hidden">
+                    </div>
+
+                    <!-- Grid -->
+                    <div id="photobooth-grid"
+                        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <!-- Photos injected by portal.js -->
+                        <div id="photobooth-empty"
+                            class="col-span-full flex flex-col items-center justify-center py-20 text-zinc-700">
+                            <i data-lucide="image" class="w-12 h-12 mb-3"></i>
+                            <p class="text-sm">No photos yet.</p>
+                            <p class="text-xs mt-1">Upload photos or set a profile picture to get started.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Lightbox Overlay -->
+                <div id="photobooth-lightbox"
+                    class="fixed inset-0 z-[20000] bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4"
+                    onclick="closeLightbox()">
+                    <img id="lightbox-img" src="" alt="Full size photo"
+                        class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl object-contain">
+                    <button class="absolute top-4 right-4 p-2 text-white/70 hover:text-white" onclick="closeLightbox()" aria-label="Close lightbox">
+                        <i data-lucide="x" class="w-8 h-8"></i>
+                    </button>
+                </div>
 
                 <!-- Fallback/Other Sections -->
                 <section id="settings-section" class="section-content">
@@ -299,6 +419,7 @@
                         <p class="text-gray-400 mt-2">System configuration and preferences.</p>
                     </div>
                 </section>
+
             </div>
 
         </main>

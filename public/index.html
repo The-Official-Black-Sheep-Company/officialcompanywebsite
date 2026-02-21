@@ -22,6 +22,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     
     <script src="js/firebase-config.js"></script>
+    <script src="js/nav-auth.js"></script>
     <script src="js/homepage.js"></script>
     <script src="js/index.js"></script>
     <script src="js/biblestudy.js"></script>
@@ -48,27 +49,8 @@
                 </a>
             </h1>
             <div class="header-buttons flex items-center gap-[15px]">
-                <!-- Avatar Container (Hidden by default) -->
-                <div id="user-avatar-container" class="relative group hidden">
-                    <button id="user-avatar-btn"
-                        class="bg-none border-none cursor-pointer flex items-center justify-center">
-                        <div
-                            class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 p-[2px]">
-                            <img id="user-avatar-img" src="https://via.placeholder.com/40" alt="Profile"
-                                class="w-full h-full rounded-full object-cover border-2 border-gray-800">
-                        </div>
-                    </button>
-                    <!-- Dropdown for Avatar -->
-                    <div class="absolute right-0 mt-2 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl py-2 hidden group-hover:block z-50">
-                        <a href="html/portal.html"
-                            class="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white">Portal</a>
-                        <a href="html/portal.html#settings"
-                            class="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-800 hover:text-white">Settings</a>
-                        <div class="border-t border-zinc-700 my-1"></div>
-                        <a href="#" id="logout-link"
-                            class="block px-4 py-2 text-sm text-red-400 hover:bg-zinc-800 hover:text-red-300">Logout</a>
-                    </div>
-                </div>
+                <!-- USER AVATAR (Managed by nav-auth.js) -->
+                <div id="user-avatar-container" class="relative" style="display: none;"></div>
 
                 <!-- Login/Signup Container -->
                 <div id="auth-buttons-container" class="flex gap-[15px] items-center">
@@ -81,6 +63,7 @@
         </div>
         </div>
     </header>
+
 
     <div class="search-container">
         <input type="text" id="searchBar" placeholder="Search applications, virtual machines, software etc..." />
