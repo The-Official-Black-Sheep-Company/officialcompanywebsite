@@ -80,7 +80,7 @@
                 </a>
                 <a href="#" class="nav-item" data-section="activity">
                     <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
-                    Activity
+                    Reports
                 </a>
 
                 <div class="px-4 mt-6 mb-2">
@@ -492,16 +492,77 @@
                     </div>
                 </section>
 
-                <!-- Lightbox Overlay -->
-                <div id="photobooth-lightbox"
-                    class="fixed inset-0 z-[20000] bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4"
-                    onclick="closeLightbox()">
-                    <img id="lightbox-img" src="" alt="Full size photo"
-                        class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl object-contain">
-                    <button class="absolute top-4 right-4 p-2 text-white/70 hover:text-white" onclick="closeLightbox()" aria-label="Close lightbox">
-                        <i data-lucide="x" class="w-8 h-8"></i>
-                    </button>
-                </div>
+                <!-- Messages Section -->
+                <section id="messages-section" class="section-content space-y-6">
+                    <div class="bento-card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="bento-card-header">
+                                <i data-lucide="mail" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-bold tracking-widest uppercase">Messages</h3>
+                            </div>
+                            <button id="compose-message-btn" class="btn-primary flex items-center gap-2 text-[10px] px-4 py-2">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i> COMPOSE
+                            </button>
+                        </div>
+                        
+                        <div class="flex flex-col items-center justify-center py-20 text-zinc-700">
+                            <i data-lucide="message-square" class="w-12 h-12 mb-3 opacity-20"></i>
+                            <p class="text-sm italic">There are no messages to display.</p>
+                            <p class="text-[10px] mt-1 opacity-50 uppercase tracking-widest">Secure encrypted channel active</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Friends Section -->
+                <section id="friends-section" class="section-content space-y-6">
+                    <div class="bento-card p-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <div class="bento-card-header">
+                                <i data-lucide="users" class="w-5 h-5 text-orange-500"></i>
+                                <h3 class="font-bold tracking-widest uppercase">Friends Ecosystem</h3>
+                            </div>
+                            
+                            <div class="flex items-center gap-2">
+                                <div class="relative flex-1 md:w-64">
+                                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500"></i>
+                                    <input type="text" id="friends-search" placeholder="Search recruits..." 
+                                        class="w-full bg-black/40 border border-zinc-800 rounded-lg pl-9 pr-4 py-2 text-xs text-white focus:outline-none focus:border-orange-500/50 transition-colors">
+                                </div>
+                                <button id="add-friends-btn" class="btn-primary flex items-center gap-2 text-[10px] px-4 py-2">
+                                    <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> ADD FRIEND
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Friends list placeholder -->
+                        <div id="friends-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Friends will be injected here -->
+                        </div>
+
+                        <!-- Recommended Friends -->
+                        <div class="mt-10 border-t border-zinc-800/50 pt-8">
+                            <h4 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4">Recommended Recruits</h4>
+                            <div id="recommended-friends" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <!-- Recommendations will be injected here -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Activity / Reports Section -->
+                <section id="activity-section" class="section-content space-y-6">
+                    <div class="bento-card p-6">
+                        <div class="bento-card-header mb-1">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-orange-500"></i>
+                            <h3 class="font-bold tracking-widest uppercase">System Intelligence Reports</h3>
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-1 ml-8 italic">Auto-generated diagnostic and reconnaissance summaries.</p>
+                    </div>
+
+                    <div id="reports-feed" class="space-y-4">
+                        <!-- Reports injected as feed posts here -->
+                    </div>
+                </section>
 
                 <!-- Fallback/Other Sections -->
                 <section id="settings-section" class="section-content">

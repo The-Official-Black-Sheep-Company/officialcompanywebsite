@@ -108,11 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Auth State Observer
   if (window.auth) {
       window.auth.onAuthStateChanged((user) => {
+          console.log("[BEAST DEBUG] Auth state changed. User:", user ? user.email : "none", "isBeastMode:", isBeastMode);
           if (user && user.email === 'blackshepherddeveloper@gmail.com' && !isBeastMode) {
-              console.log("Beast Identity Verified (Primary Node). Initializing transformation...");
+              console.log("[BEAST DEBUG] Identity Verified (Primary Node). Initializing transformation...");
               switchToBeastMode();
           } else if (user && isBeastMode && user.email !== 'blackshepherddeveloper@gmail.com') {
-              // Safety: if a different user somehow saw the beast mode, revert it (though unlikely in a single session)
+              console.warn("[BEAST DEBUG] Non-Beast identity detected in Beast Mode. Reverting...");
               window.location.reload(); 
           }
       });

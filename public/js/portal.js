@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         photobooth: 'Photobooth',
         billing:    'Billing',
         support:    'Support',
-        activity:   'Activity',
+        activity:   'Intelligence Reports',
         settings:   'Settings'
     };
 
@@ -34,6 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hydrate profile form when switching to profile
         if (sectionId === 'profile') hydrateProfileForm();
         if (sectionId === 'photobooth') renderPhotobooth();
+        if (sectionId === 'friends') window.socialManager?.render();
+        if (sectionId === 'activity') window.reportEngine?.render();
     }
 
     navItems.forEach(item => {
@@ -494,6 +496,169 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     }
+
+    /* =========================================================
+       SOCIAL & FRIENDS MANAGEMENT
+    ========================================================= */
+    class SocialManager {
+        constructor() {
+            this.friendsList = document.getElementById('friends-list');
+            this.recommendationsGrid = document.getElementById('recommended-friends');
+            this.friendsKey = 'bsc_friends';
+            this.init();
+        }
+
+        init() {
+            // Check for initial friend (swoopg111) if first time
+            const friends = this.getFriends();
+            const devFound = friends.some(f => f.email === 'Blackshepherddeveloper@gmail.com');
+            
+            if (!devFound) {
+                console.log('[SOCIAL] Linking primary developer node (swoopg111)...');
+                friends.push({
+                    name: 'swoopg111',
+                    email: 'Blackshepherddeveloper@gmail.com',
+                    handle: '@blackshepherd',
+                    avatar: 'https://ui-avatars.com/api/?name=S1&background=f97316&color=000&size=128&bold=true',
+                    isDev: true
+                });
+                this.saveFriends(friends);
+            }
+        }
+
+        getFriends() {
+            try { return JSON.parse(localStorage.getItem(this.friendsKey)) || []; }
+            catch { return []; }
+        }
+
+        saveFriends(arr) {
+            localStorage.setItem(this.friendsKey, JSON.stringify(arr));
+        }
+
+        render() {
+            if (!this.friendsList) return;
+            this.friendsList.innerHTML = '';
+            const friends = this.getFriends();
+
+            friends.forEach(f => {
+                const card = document.createElement('div');
+                card.className = 'bento-card p-4 flex items-center gap-4 hover:border-orange-500/30 transition-colors';
+                card.innerHTML = `
+                    <div class="w-12 h-12 rounded-full overflow-hidden border border-zinc-800">
+                        <img src="${f.avatar}" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-white">${f.name}</p>
+                        <p class="text-[10px] text-zinc-500 uppercase tracking-widest">${f.handle}</p>
+                    </div>
+                `;
+                this.friendsList.appendChild(card);
+            });
+
+            this.renderRecommendations();
+        }
+
+        renderRecommendations() {
+            if (!this.recommendationsGrid) return;
+            this.recommendationsGrid.innerHTML = '';
+            
+            const recs = [
+                { name: 'Matrix_Scout', handle: '@scout', initials: 'MS' },
+                { name: 'Seo_Oracle', handle: '@oracle', initials: 'SO' },
+                { name: 'Hands_Operator', handle: '@operator', initials: 'HO' },
+                { name: 'Trend_Watcher', handle: '@watcher', initials: 'TW' }
+            ];
+
+            recs.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'bg-black/40 border border-zinc-800/50 rounded-2xl p-4 flex flex-col items-center text-center group cursor-pointer hover:bg-orange-500/5 transition-all duration-300';
+                card.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400 group-hover:border-orange-500/50 group-hover:text-orange-400 transition-colors mb-3">
+                        ${r.initials}
+                    </div>
+                    <p class="text-[10px] font-bold text-white truncate w-full">${r.name}</p>
+                    <p class="text-[9px] text-zinc-600 uppercase tracking-tighter mb-3">${r.handle}</p>
+                    <button class="w-full py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-[9px] font-bold text-zinc-400 hover:bg-orange-500 hover:text-black hover:border-orange-500 transition-all">CONNECT</button>
+                `;
+                this.recommendationsGrid.appendChild(card);
+            });
+        }
+    }
+
+    /* =========================================================
+       REPORT ENGINE — auto-generated system summaries
+    ========================================================= */
+    class ReportEngine {
+        constructor() {
+            this.feed = document.getElementById('reports-feed');
+        }
+
+        render() {
+            if (!this.feed) return;
+            this.feed.innerHTML = '';
+
+            const reports = [
+                {
+                    title: 'Strategic Market Intelligence',
+                    id: 'SMI-2026-001',
+                    metric: 'VOLATILITY: 14.2%',
+                    summary: 'Trend Scout has detected a significant pivot in junk removal search patterns. High-value clusters emerging in mid-atlantic nodes. Recommend immediate SEO strike.',
+                    ts: '6 hours ago',
+                    tag: 'Market',
+                    color: 'orange'
+                },
+                {
+                    title: 'System Health Optimization',
+                    id: 'SHO-2026-042',
+                    metric: 'EFFICIENCY: 98.4%',
+                    summary: 'Parity check between Ubuntu-Main and Fly-Edge node complete. No synchronization lag detected. Hands API responsiveness optimized by 120ms.',
+                    ts: '14 hours ago',
+                    tag: 'System',
+                    color: 'emerald'
+                },
+                {
+                    title: 'Global Social Footprint',
+                    id: 'GSF-2026-015',
+                    metric: 'ENGAGEMENT: +28%',
+                    summary: 'Matrix synchronization across 12 platforms stable. Automated posting engine for historical artifacts reporting high interaction on Pinterest and Instagram.',
+                    ts: '1 day ago',
+                    tag: 'Social',
+                    color: 'blue'
+                }
+            ];
+
+            reports.forEach(r => {
+                const card = document.createElement('div');
+                card.className = `bento-card p-6 border-l-4 border-l-${r.color}-500 hover:bg-zinc-900/30 transition-colors cursor-pointer group`;
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-[10px] font-bold text-${r.color}-500 uppercase tracking-[0.2em]">${r.tag} REPORT</span>
+                            <h4 class="text-sm font-bold text-white mt-1 uppercase tracking-wider">${r.title}</h4>
+                            <p class="text-[10px] text-zinc-600 mt-0.5">${r.id}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-bold text-white">${r.metric}</p>
+                            <p class="text-[10px] text-zinc-500 mt-1">${r.ts}</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-zinc-400 leading-relaxed mb-4">${r.summary}</p>
+                    <div class="flex items-center gap-3">
+                        <button class="text-[10px] font-bold text-${r.color}-400 uppercase tracking-widest flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                            View Deep Analytics <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                `;
+                this.feed.appendChild(card);
+            });
+            
+            if (window.lucide) window.lucide.createIcons();
+        }
+    }
+
+    // Initialize Managers
+    window.socialManager = new SocialManager();
+    window.reportEngine = new ReportEngine();
 
     /* =========================================================
        SETTINGS MODAL (Multi-level Drill-down)
