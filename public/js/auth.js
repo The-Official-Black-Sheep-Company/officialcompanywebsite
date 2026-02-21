@@ -1,10 +1,27 @@
-// Firebase auth is initialized in firebase-config.js and available as 'auth' globally
+console.log('Auth Protocol: Script Loaded');
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Auth Protocol: DOM Content Loaded');
     const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
     const googleSignInButton = document.getElementById('google-signin-button');
     const userEmailElement = document.getElementById('user-email');
     const logoutButton = document.getElementById('logout-button');
+    const togglePasswordBtn = document.getElementById('toggle-password');
+
+    console.log('Auth Protocol: Forms detected:', { loginForm: !!loginForm, signupForm: !!signupForm, google: !!googleSignInButton });
+
+    // Password Visibility Toggle
+    if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener('click', () => {
+            const passwordInput = document.getElementById('login-password') || document.getElementById('signup-password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle icon visual state if needed
+            togglePasswordBtn.classList.toggle('text-violet-400');
+        });
+    }
 
     // Handle Email/Password Login
     if (loginForm) {
@@ -13,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
-            console.log('Attempting authorization for:', email);
+            console.log('Identity Handshake: Initiating check for', email);
 
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
@@ -67,14 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle Sign-Up
-    const signupForm = document.getElementById('signup-form');
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
 
-            console.log('Initializing recruitment protocol for:', email);
+            console.log('Recruitment Protocol: Initiating for', email);
 
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
@@ -107,10 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Observer for auth state changes (mainly for display on these pages)
+    // Observer for auth state changes
     auth.onAuthStateChanged((user) => {
         if (user) {
-            console.log('Active session detected:', user.email);
+            console.log('Identity Detected: Active session for', user.email);
             if (userEmailElement) {
                 userEmailElement.textContent = user.email;
             }
@@ -119,12 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (user.emailVerified) {
                 const path = window.location.pathname;
                 if (path.includes('login.html') || path.includes('signup.html')) {
-                    console.log('Verified user on auth page - redirecting to portal.');
+                    console.log('Identity Confirmed: Redirecting to Portal.');
                     window.location.href = 'portal.html';
                 }
+            } else {
+                console.warn('Identity Pending: Email verification required.');
             }
         } else {
-            console.log('No active session.');
+            console.log('Identity Status: No session active.');
         }
     });
 
