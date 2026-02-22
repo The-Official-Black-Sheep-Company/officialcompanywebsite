@@ -2341,14 +2341,19 @@
         // Fetch and display products from inventory API
         async function loadProducts() {
             try {
-                const response = await fetch('/products-api.php');
-                const data = await response.json();
+                // Fetch directly from the static JSON file (works on all hosting)
+                const response = await fetch('/api/products.json');
+                if (!response.ok) throw new Error('Could not load products.json');
+                const products = await response.json();
 
-                // Update hero showcase with 4 random featured products
+                // Select 4 for the hero showcase
+                const featured = products.slice(0, 4);
+
+                // Update hero showcase with 4 featured products
                 const showcaseGrid = document.querySelector('.showcase-grid');
-                if (showcaseGrid && data.featured && data.featured.length > 0) {
-                    showcaseGrid.innerHTML = data.featured.map(product => `
-                        <div class="showcase-item" onclick="window.location.href='/product.html?upc=${product.upc}'" style="cursor: pointer;">
+                if (showcaseGrid && featured.length > 0) {
+                    showcaseGrid.innerHTML = featured.map(product => `
+                        <div class="showcase-item" onclick="window.location.href='/html/product.html?upc=${product.upc}'" style="cursor: pointer;">
                             <div class="showcase-image" onmouseenter="showVideo(this)" onmouseleave="hideVideo(this)" style="position: relative;">
                                 <img class="product-img" src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: contain; padding: 10px; border-radius: 12px;" onerror="this.parentElement.innerHTML='📦'">
                                 ${product.video ? `<video class="product-video" src="${product.video}" loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 10px; border-radius: 12px; display: none;"></video>` : ''}
@@ -2361,9 +2366,9 @@
 
                 // Update featured products section
                 const productsGrid = document.querySelector('.products-grid');
-                if (productsGrid && data.all && data.all.length > 0) {
-                    productsGrid.innerHTML = data.all.map((product, index) => `
-                        <div class="product-card" onclick="window.location.href='/product.html?upc=${product.upc}'" style="cursor: pointer;">
+                if (productsGrid && products.length > 0) {
+                    productsGrid.innerHTML = products.map((product, index) => `
+                        <div class="product-card" onclick="window.location.href='/html/product.html?upc=${product.upc}'" style="cursor: pointer;">
                             <div class="product-badges">
                                 ${index < 5 ? '<span class="badge badge-new">New</span>' : ''}
                             </div>
@@ -2398,12 +2403,17 @@
                 // Update product count in hero stats
                 const productCountEl = document.getElementById('productCount');
                 if (productCountEl) {
-                    productCountEl.textContent = data.count;
+                    productCountEl.textContent = products.length + '+';
                 }
 
-                console.log(`Loaded ${data.count} products from inventory`);
+                console.log(`Loaded ${products.length} products from products.json`);
             } catch (error) {
                 console.error('Error loading products:', error);
+                // Show friendly fallback message
+                const productsGrid = document.querySelector('.products-grid');
+                if (productsGrid) {
+                    productsGrid.innerHTML = '<div class="product-card" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;"><p style="color: var(--text-muted); font-size: 1.1rem;">Products loading — check back soon!</p></div>';
+                }
             }
         }
 
