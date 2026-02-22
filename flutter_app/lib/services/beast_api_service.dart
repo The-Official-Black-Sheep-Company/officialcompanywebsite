@@ -65,4 +65,17 @@ class BeastApiService {
       return {'success': false, 'message': 'Voice error: $e'};
     }
   }
+
+  Future<Map<String, dynamic>> triggerScan() async {
+    try {
+      final response = await http.post(Uri.parse('$handsUrl/scan'));
+      return {
+        'success': response.statusCode == 200,
+        'message':
+            jsonDecode(response.body)['message'] ?? 'Scan protocol engaged.',
+      };
+    } catch (e) {
+      return {'success': false, 'message': 'Scan error: $e'};
+    }
+  }
 }

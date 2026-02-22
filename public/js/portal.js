@@ -1,4 +1,14 @@
 
+(function migrateBeastEndpoint() {
+    const oldDefault = 'http://localhost:8000';
+    const newDefault = 'https://beast-hands.fly.dev';
+    const current = localStorage.getItem('beast_api_endpoint');
+    if (!current || current === oldDefault) {
+        localStorage.setItem('beast_api_endpoint', newDefault);
+        console.log('[BEAST] Migrated endpoint from localhost to production.');
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     /* =========================================================
        SECTION NAVIGATION

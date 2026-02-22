@@ -1,6 +1,15 @@
-
 // ─── BEAST API CONFIG ───────────────────────────────────────────────────────
-let BEAST_API_URL = localStorage.getItem('beast_api_endpoint') || 'http://localhost:8000';
+(function migrateBeastEndpoint() {
+    const oldDefault = 'http://localhost:8000';
+    const newDefault = 'https://beast-hands.fly.dev';
+    const current = localStorage.getItem('beast_api_endpoint');
+    if (!current || current === oldDefault) {
+        localStorage.setItem('beast_api_endpoint', newDefault);
+        console.log('[BEAST] Migrated endpoint from localhost to production.');
+    }
+})();
+
+let BEAST_API_URL = localStorage.getItem('beast_api_endpoint') || 'https://beast-hands.fly.dev';
 // ────────────────────────────────────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {

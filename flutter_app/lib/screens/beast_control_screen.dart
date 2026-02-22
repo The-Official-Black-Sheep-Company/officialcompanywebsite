@@ -174,6 +174,12 @@ class _BeastControlScreenState extends State<BeastControlScreen> {
                         _handleStrike('Health Check', _apiService.checkHealth),
                   ),
                   _StrikeButton(
+                    icon: LucideIcons.qrCode,
+                    label: 'Scan Product',
+                    onTap: () =>
+                        _handleStrike('Barcode Scan', _apiService.triggerScan),
+                  ),
+                  _StrikeButton(
                     icon: LucideIcons.shieldAlert,
                     label: 'Ghost Mode',
                     onTap: () {
