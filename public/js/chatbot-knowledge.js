@@ -106,6 +106,18 @@ const chatbotKnowledge = [
     {
         keywords: ['humor', 'joke', 'edgy'],
         response: "Humor mode enabled. But remember, Georg... that's what she said! Precision and edge, that's how we roll."
+    },
+    {
+        keywords: ['diagnostic', 'health', 'diagnose', 'check'],
+        response: "DIAGNOSTIC PROTOCOL INITIATED. Scanning system mesh... checking Supabase parity... verifying Fly.io clusters. Status: ALL SYSTEMS GO. Want a detailed report?"
+    },
+    {
+        keywords: ['self-heal', 'fix', 'repair system'],
+        response: "SELF-HEALING MODULE ACTIVE. I am monitoring the logs for anomalies. If a node drifts, I will realign it automatically. You are protected by the Beast's core logic."
+    },
+    {
+        keywords: ['help', 'commands', 'what can you do'],
+        response: "I can assist with business services (Junk, Cleaning, Pets) OR you can engage BEAST MODE. Try: 'status', 'scout', 'strike', 'diagnostic', or 'self-heal'. I mirror your vision, Georg."
     }
 ];
 

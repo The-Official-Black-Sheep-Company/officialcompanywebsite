@@ -649,7 +649,7 @@
 
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 20px;
         }
 
@@ -2245,6 +2245,62 @@
                     <h3>Gaming</h3>
                     <span>560+ Items</span>
                 </a>
+                <a href="#" class="category-card" style="border-color: var(--accent); background: rgba(201, 162, 39, 0.05);">
+                    <div class="category-icon">👁️</div>
+                    <h3>The Beast</h3>
+                    <span>Digital Intelligence</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Beast Intelligence Hub -->
+    <section class="products-section" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); border-bottom: 1px solid var(--border);">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Beast <span>Intelligence Hub</span></h2>
+                    <p class="section-subtitle">High-autonomy apps and tools for the modern developer</p>
+                </div>
+                <div class="badge badge-hot">Official Release</div>
+            </div>
+            <div class="products-grid">
+                <!-- CLI Tool -->
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="badge badge-new">New</span>
+                    </div>
+                    <div class="product-image" style="background: #111;">
+                        👁️
+                    </div>
+                    <a href="https://github.com/mellyshepdev/TheBEAST" class="quick-add" style="text-decoration: none;">Download CLI</a>
+                    <div class="product-info">
+                        <div class="product-brand">Software</div>
+                        <h3 class="product-name">The Beast: Universal CLI</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">The primary brain interface. Manage trends, SEO, and system parity from any terminal.</p>
+                        <div class="product-price">
+                            <span class="current-price">FREE</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Control Plane App -->
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="badge badge-hot">Hot</span>
+                    </div>
+                    <div class="product-image" style="background: #111;">
+                        📱
+                    </div>
+                    <a href="/html/flutter_placeholder.html" class="quick-add" style="text-decoration: none;">Launch Control Plane</a>
+                    <div class="product-info">
+                        <div class="product-brand">App</div>
+                        <h3 class="product-name">The Beast: Control Plane</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">Visual orchestrator for your digital mesh. Real-time health monitoring and striking.</p>
+                        <div class="product-price">
+                            <span class="current-price">FREE</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
