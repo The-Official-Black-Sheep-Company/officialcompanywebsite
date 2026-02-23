@@ -429,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderComments = (comments) => {
         if (comments.length === 0) {
-            commentsList.innerHTML = '<p style="color: #71717a;">No comments yet. Be the first to share!</p>';
+            commentsList.innerHTML = '<p style="color: #71717a; text-align: center; padding: 20px;">No comments yet. Be the first to share your insights!</p>';
             return;
         }
 
@@ -437,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="comment-item">
                 <div class="comment-header">
                     <span class="comment-author">${escapeHtml(c.name)}</span>
-                    <span class="comment-date">${new Date(c.date).toLocaleDateString()}</span>
+                    <span class="comment-date">${new Date(c.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
                 <div class="comment-text">${escapeHtml(c.text)}</div>
             </div>
@@ -470,11 +470,25 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             const nameInput = document.getElementById("userName");
             const textInput = document.getElementById("commentText");
+            const submitBtn = commentForm.querySelector(".submit-comment-btn");
 
             if (nameInput.value && textInput.value) {
-                saveComment(nameInput.value, textInput.value);
-                textInput.value = ""; // Clear only comment text
-                alert("Comment posted successfully!");
+                // Disable button and show loading state
+                const originalBtnText = submitBtn.innerText;
+                submitBtn.innerText = "Posting...";
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    saveComment(nameInput.value, textInput.value);
+                    textInput.value = ""; // Clear only comment text
+                    
+                    // Reset button
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    // Scroll to comments
+                    document.getElementById("commentsDisplay").scrollIntoView({ behavior: 'smooth' });
+                }, 500);
             }
         });
     }
