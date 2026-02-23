@@ -33,19 +33,31 @@ document.addEventListener('DOMContentLoaded', () => {
         settings:   'Settings'
     };
 
+    // Initialize Managers first (prevent race conditions)
+    window.socialManager = new SocialManager();
+    window.reportEngine = new ReportEngine();
+    window.settingsManager = new SettingsManager();
+    window.beastControl = new ControlPlaneManager();
+
     function loadSection(sectionId) {
         if (!sectionId) return;
         sections.forEach(s => {
             s.classList.toggle('active', s.id === `${sectionId}-section`);
         });
         if (sectionTitle) sectionTitle.textContent = titleMap[sectionId] || 'Portal';
+        
+        // Ensure Lucide icons are updated for the new section
         if (window.lucide) window.lucide.createIcons();
 
-        // Hydrate profile form when switching to profile
+        // Section-specific hydration/rendering
         if (sectionId === 'profile') hydrateProfileForm();
         if (sectionId === 'photobooth') renderPhotobooth();
         if (sectionId === 'friends') window.socialManager?.render();
         if (sectionId === 'activity') window.reportEngine?.render();
+        
+        // Scroll to top of section
+        const targetSection = document.getElementById(`${sectionId}-section`);
+        if (targetSection) targetSection.scrollTop = 0;
     }
 
     navItems.forEach(item => {
@@ -650,9 +662,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize Managers
-    window.socialManager = new SocialManager();
-    window.reportEngine = new ReportEngine();
+    // Managers are now initialized at the top of DOMContentLoaded to prevent race conditions
+    // window.socialManager = new SocialManager();
+    // window.reportEngine = new ReportEngine();
 
     /* =========================================================
        SETTINGS MODAL (Multi-level Drill-down)
@@ -829,9 +841,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initialize Settings (Unified Management)
-    window.settingsManager = new SettingsManager();
-    window.settingsManager.loadInfrastructure();
+    // Managers are now initialized at the top of DOMContentLoaded to prevent race conditions
+    // window.settingsManager = new SettingsManager();
+    // window.settingsManager.loadInfrastructure();
 
     // Hook existing logout button
     const logoutBtn = document.getElementById('logout-button');
@@ -1144,9 +1156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initialize the Settings Manager
-    window.settingsManager = new SettingsManager();
-
-    // Initialize the Beast Control Plane
-    window.beastControl = new ControlPlaneManager();
+    // Managers are now initialized at the top of DOMContentLoaded to prevent race conditions
+    // window.settingsManager = new SettingsManager();
+    // window.beastControl = new ControlPlaneManager();
 });
