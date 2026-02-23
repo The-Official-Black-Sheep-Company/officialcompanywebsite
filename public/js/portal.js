@@ -505,13 +505,13 @@ document.addEventListener('DOMContentLoaded', () => {
         init() {
             // Check for initial friend (swoopg111) if first time
             const friends = this.getFriends();
-            const devFound = friends.some(f => f.email === 'Blackshepherddeveloper@gmail.com');
+            const devFound = friends.some(f => f.email.toLowerCase() === 'blackshepherddeveloper@gmail.com');
             
             if (!devFound) {
                 console.log('[SOCIAL] Linking primary developer node (swoopg111)...');
                 friends.push({
-                    name: 'swoopg111',
-                    email: 'Blackshepherddeveloper@gmail.com',
+                    name: 'Black Shepherd Developer',
+                    email: 'blackshepherddeveloper@gmail.com',
                     handle: '@blackshepherd',
                     avatar: 'https://ui-avatars.com/api/?name=S1&background=f97316&color=000&size=128&bold=true',
                     isDev: true
@@ -1130,6 +1130,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    window.performLogout = function() {
+        if (typeof auth !== 'undefined' && auth.signOut) {
+            auth.signOut().then(() => {
+                window.location.href = '../index.html';
+            }).catch(err => {
+                console.error('Logout failed:', err);
+                window.location.href = '../index.html';
+            });
+        } else {
+            window.location.href = '../index.html';
+        }
+    };
+
+    // Initialize the Settings Manager
+    window.settingsManager = new SettingsManager();
 
     // Initialize the Beast Control Plane
     window.beastControl = new ControlPlaneManager();

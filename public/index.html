@@ -744,6 +744,30 @@
             </div>
             <!-- Content will be dynamically loaded here by JavaScript -->
         </div>
+
+        <!-- COMMENTS SECTION -->
+        <section id="comments-section" class="mt-12 max-w-3xl mx-auto text-left">
+            <div class="bg-white rounded-xl p-6 shadow-sm mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Leave a Comment</h3>
+                <form id="commentForm" class="space-y-4">
+                    <div class="form-group">
+                        <input type="text" id="userName" placeholder="Your Name" required class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="commentText" placeholder="Share your insights..." required class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 h-32 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="submit-comment-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-6 rounded-lg transition-all shadow-lg shadow-amber-500/20 active:scale-[0.98]">Post Comment</button>
+                </form>
+            </div>
+            
+            <div id="commentsDisplay" class="bg-white rounded-xl p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Comments</h3>
+                <div class="comments-list space-y-4" id="commentsList">
+                    <!-- Comments will be loaded here -->
+                    <p class="text-gray-500 text-center py-4">Loading comments...</p>
+                </div>
+            </div>
+        </section>
         <script src="js/biblestudy-init.js"></script>
     </div>
 

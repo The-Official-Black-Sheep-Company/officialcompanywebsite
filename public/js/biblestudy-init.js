@@ -113,6 +113,84 @@ async function initializeBibleStudyContent() {
     for (const sec of sections) {
         container.appendChild(await createSection(sec.title, sec.content));
     }
+
+    // --- COMMENTS LOGIC ---
+    const commentForm = document.getElementById("commentForm");
+    const commentsList = document.getElementById("commentsList");
+
+    const escapeHtml = (unsafe) => {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    };
+
+    const loadComments = () => {
+        const comments = JSON.parse(localStorage.getItem("bibleStudyComments") || "[]");
+        renderComments(comments);
+    };
+
+    const renderComments = (comments) => {
+        if (!commentsList) return;
+        if (comments.length === 0) {
+            commentsList.innerHTML = '<p class="text-gray-400 text-center py-8 italic">No insights shared yet. Be the first to start the conversation!</p>';
+            return;
+        }
+
+        commentsList.innerHTML = comments.map(c => `
+            <div class="comment-item bg-gray-50 p-5 rounded-xl border border-gray-100 transition-all hover:border-amber-200">
+                <div class="comment-header flex justify-between items-center mb-3">
+                    <span class="comment-author font-bold text-gray-800">${escapeHtml(c.name)}</span>
+                    <span class="comment-date text-[10px] text-gray-400 uppercase tracking-widest font-mono">${new Date(c.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                </div>
+                <div class="comment-text text-sm text-gray-600 leading-relaxed">${escapeHtml(c.text)}</div>
+            </div>
+        `).join('');
+    };
+
+    const saveComment = (name, text) => {
+        const comments = JSON.parse(localStorage.getItem("bibleStudyComments") || "[]");
+        const newComment = {
+            name,
+            text,
+            date: new Date().toISOString()
+        };
+        comments.unshift(newComment); // Add to the beginning
+        localStorage.setItem("bibleStudyComments", JSON.stringify(comments));
+        renderComments(comments);
+    };
+
+    if (commentForm) {
+        commentForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById("userName");
+            const textInput = document.getElementById("commentText");
+            const submitBtn = commentForm.querySelector(".submit-comment-btn");
+
+            if (nameInput.value && textInput.value) {
+                // Disable button and show loading state
+                const originalBtnText = submitBtn.innerText;
+                submitBtn.innerText = "Posting...";
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    saveComment(nameInput.value, textInput.value);
+                    textInput.value = ""; // Clear only comment text
+                    
+                    // Reset button
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                    
+                    // Scroll to comments
+                    document.getElementById("commentsDisplay").scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+            }
+        });
+    }
+
+    loadComments();
 }
 
 // Global scope for manual toggling if needed
