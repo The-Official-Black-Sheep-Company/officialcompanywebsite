@@ -61,6 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = item.dataset.section;
             if (!id) return;
             
+            // Special handling for settings modal
+            if (id === 'settings') {
+                e.preventDefault();
+                if (window.settingsManager) window.settingsManager.open();
+                return;
+            }
+
             // If the item has an href that points to an .html file, let the browser navigate
             const href = item.getAttribute('href');
             if (href && href.includes('.html')) {
@@ -828,7 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.performLogout = function(e) {
         if (e) e.preventDefault();
         console.log('[SYSTEM] Terminating portal session...');
-        if (typeof auth !== 'undefined') {
+        if (typeof auth !== 'undefined' && auth.signOut) {
             auth.signOut().then(() => {
                 window.location.href = '../index.html';
             }).catch(err => console.error('Logout error:', err));
@@ -1139,18 +1146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.performLogout = function() {
-        if (typeof auth !== 'undefined' && auth.signOut) {
-            auth.signOut().then(() => {
-                window.location.href = '../index.html';
-            }).catch(err => {
-                console.error('Logout failed:', err);
-                window.location.href = '../index.html';
-            });
-        } else {
-            window.location.href = '../index.html';
-        }
-    };
+
 
     // Initialize remaining managers after definitions
     window.settingsManager = new SettingsManager();

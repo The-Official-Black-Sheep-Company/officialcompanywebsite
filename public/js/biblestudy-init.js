@@ -11,27 +11,47 @@ async function initializeBibleStudyContent() {
         return;
     }
 
-    // Placeholder function to simulate fetching images from multiple sources
+    // --- Dynamic Media Fetcher ---
+    let localImageMap = null;
+    try {
+        const response = await fetch('/media/bible/genesis/image_map.json');
+        if (response.ok) {
+            localImageMap = await response.json();
+            console.log("Bible Study: Local image map synchronized.");
+        }
+    } catch (e) {
+        console.warn("Bible Study: Local map not found, using predictive pathing.");
+    }
+
     async function fetchImages(query) {
-        const urls = {
-            "hebrew": [
-                "https://upload.wikimedia.org/wikipedia/commons/1/11/Bereshit-manuscript.jpg",
-                "https://upload.wikimedia.org/wikipedia/commons/f/fc/Dead_Sea_Scroll_-_Genesis1.jpg"
-            ],
-            "maps": [
-                "https://upload.wikimedia.org/wikipedia/commons/5/5d/Ancient_Near_East_Map.png"
-            ],
-            "timeline": [
-                "https://upload.wikimedia.org/wikipedia/commons/a/a0/Creation_timeline_placeholder.png"
-            ],
-            "familyTree": [
-                "https://upload.wikimedia.org/wikipedia/commons/9/9a/Adam_Eve_genealogy.png"
-            ],
-            "artifact": [
-                "https://upload.wikimedia.org/wikipedia/commons/4/4d/Clay_tablet_ancient_mesopotamia.jpg"
-            ]
+        // Preference 1: Explicit mapping from image_map.json
+        if (localImageMap) {
+            const keys = {
+                "hebrew": "Ancient Hebrew Genesis Manuscript",
+                "maps": "Ancient Near East firmament cosmos map",
+                "artifact": "Enuma Elish Tablet"
+            };
+            const mappedPath = localImageMap[keys[query]];
+            if (mappedPath) return [mappedPath];
+        }
+
+        // Preference 2: Predictive Local Paths
+        const localPaths = {
+            "hebrew": ["/media/bible/genesis/ancient_hebrew_genesis_manuscript.jpg"],
+            "maps": ["/media/bible/genesis/ancient_near_east_firmament_cosmos_map.jpg"],
+            "artifact": ["/media/bible/genesis/enuma_elish_tablet.jpg"],
+            "familyTree": ["/media/bible/genesis/genesis.png"], // Using existing genesis image as placeholder
+            "timeline": ["/media/bible/genesis/placeholder1.jpg"]
         };
-        return urls[query] || [];
+
+        if (localPaths[query]) return localPaths[query];
+
+        // Preference 3: Legacy Cloud Fallback
+        const legacyUrls = {
+            "hebrew": ["https://upload.wikimedia.org/wikipedia/commons/1/11/Bereshit-manuscript.jpg"],
+            "maps": ["https://upload.wikimedia.org/wikipedia/commons/5/5d/Ancient_Near_East_Map.png"]
+        };
+        return legacyUrls[query] || [];
     }
 
     const study = {

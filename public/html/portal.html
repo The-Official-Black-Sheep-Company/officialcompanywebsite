@@ -86,7 +86,7 @@
                 <div class="px-4 mt-6 mb-2">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">System</span>
                 </div>
-                <button id="settings-trigger" class="nav-item w-full text-left">
+                <button id="settings-trigger" class="nav-item w-full text-left" data-section="settings">
                     <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
                     Settings
                 </button>
@@ -591,87 +591,12 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="../js/firebase-config.js"></script>
     
+    <script src="../js/portal.js"></script>
+    
     <script>
-        // auth is already initialized in firebase-config.js and available globally
-        const sidebarUserSection = document.getElementById('user-info-sidebar');
-        const welcomeName = document.getElementById('welcome-name');
-        const headerWelcome = document.getElementById('header-welcome');
-        const logoutButton = document.getElementById('logout-button');
-
-        let initialLoad = true;
-        let authSettled = false;
-
-        auth.onAuthStateChanged((user) => {
-            authSettled = true;
-            if (user) {
-                // User is signed in
-                if (!user.emailVerified) {
-                    console.warn('Unverified access attempt');
-                    auth.signOut().then(() => {
-                        window.location.href = '../index.html';
-                    });
-                    return;
-                }
-
-                console.log('Authenticated member:', user.email);
-                const profile = JSON.parse(localStorage.getItem('bsc_profile') || '{}');
-                const displayName = profile.name || user.displayName || user.email.split('@')[0];
-                const email = user.email;
-                const photoURL = user.photoURL;
-
-                // Update sidebar
-                if (sidebarUserSection) {
-                    sidebarUserSection.innerHTML = `
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-black font-bold overflow-hidden">
-                                ${photoURL ? `<img src="${photoURL}" class="w-full h-full object-cover">` : displayName.charAt(0).toUpperCase()}
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-sm font-medium text-white line-clamp-1">${displayName}</p>
-                                <p class="text-[10px] text-gray-500 line-clamp-1 uppercase tracking-tighter">${email}</p>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                // Update header
-                if (welcomeName) welcomeName.textContent = displayName;
-                if (headerWelcome) {
-                    headerWelcome.innerHTML = `Welcome back, <span class="text-orange-400 font-bold">${displayName}</span>!`;
-                }
-            } else {
-                // User is signed out
-                console.log('No authenticated identity');
-                window.location.href = '../index.html';
-            }
-            initialLoad = false;
-        });
-
-        // Safety fallback if Firebase fails to respond at all
-        setTimeout(() => {
-            if (!authSettled) {
-                console.warn('Auth handshake timeout - verifying session...');
-                if (!auth.currentUser) {
-                    window.location.href = '../index.html';
-                }
-            }
-        }, 3000);
-
-        logoutButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            auth.signOut().then(() => {
-                console.log('Identity logged out');
-                window.location.href = '../index.html';
-            }).catch((error) => {
-                console.error('Logout signal failure:', error);
-            });
-        });
-
-        // Initialize Lucide Icons
+        // lucide initialization
         lucide.createIcons();
     </script>
-    
-    <script src="../js/portal.js"></script>
 
     <!-- Chatbot Integration -->
     <link rel="stylesheet" href="../css/chatbot.css">

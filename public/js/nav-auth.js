@@ -28,7 +28,7 @@
 
                 <!-- Dropdown Menu -->
                 <div id="user-nav-dropdown"
-                    class="absolute right-0 top-full mt-2 w-52 z-50 hidden
+                    class="absolute right-0 top-full mt-2 w-52 z-[2000] hidden
                            bg-zinc-950/90 backdrop-blur-md border border-zinc-800
                            rounded-2xl shadow-2xl shadow-black/50 overflow-hidden
                            transition-all duration-200 origin-top-right">
