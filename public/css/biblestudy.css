@@ -20,37 +20,186 @@
     margin-bottom: 10px;
 }
 
-.timeline-container {
+.timeline-wrapper {
+    position: relative;
+    padding: 60px 20px;
+    margin: 40px 0;
+    width: 100%;
+    overflow-x: auto;
     background: #27272a;
-    padding: 20px;
     border-radius: 8px;
-    margin-bottom: 25px;
     border: 1px solid #3f3f46;
 }
 
-.timeline-item {
-    margin-bottom: 8px;
-    padding-left: 15px;
-    border-left: 2px solid #FBBF24;
-}
-
-.tree ul {
-    list-style-type: none;
-    padding-left: 20px;
-    border-left: 1px dashed #52525b;
-}
-
-.tree li {
-    margin: 10px 0;
-    position: relative;
-    padding-left: 15px;
-}
-
-.tree li::before {
-    content: "∟";
+.timeline-line {
     position: absolute;
+    top: 50%;
+    left: 40px;
+    right: 40px;
+    height: 4px;
+    background: #3f3f46;
+    transform: translateY(-50%);
+    border-radius: 2px;
+}
+
+.timeline-nodes {
+    position: relative;
+    height: 4px;
+    margin: 0 20px;
+}
+
+.timeline-node {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.timeline-point {
+    width: 20px;
+    height: 20px;
+    background: #18181b;
+    border: 3px solid #FBBF24;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+}
+
+.timeline-node:hover .timeline-point {
+    transform: scale(1.4);
+    background: #FBBF24;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+}
+
+.timeline-content {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #18181b;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid #3f3f46;
+    min-width: 150px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    color: #e4e4e7;
+    font-size: 0.85rem;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: #18181b;
+    border-top: 1px solid #3f3f46;
+    border-left: 1px solid #3f3f46;
+}
+
+.timeline-node:hover .timeline-content {
+    opacity: 1;
+    visibility: visible;
+    top: 40px;
+}
+
+/* Graphical Family Tree */
+.tree-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+}
+
+.tree-node-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 20px 10px 0 10px;
+}
+
+/* Connecting Top line to the parent */
+.tree-node-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 2px solid #FBBF24;
+    width: 0;
+    height: 20px;
+}
+
+/* Remove Top line for root node */
+.tree-container > .tree-node-wrapper::before {
+    display: none;
+}
+
+/* Horizontal line connecting siblings */
+.tree-node-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
     left: 0;
+    border-top: 2px solid #FBBF24;
+    width: 100%;
+    height: 0;
+}
+
+/* Fix horizontal lines for first and last siblings */
+.tree-node-wrapper:first-child::after {
+    left: 50%;
+    width: 50%;
+}
+.tree-node-wrapper:last-child::after {
+    width: 50%;
+    left: 0;
+}
+.tree-node-wrapper:only-child::after {
+    display: none;
+}
+
+.tree-node {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Line dropping down to children */
+.tree-children {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.tree-node-content {
+    background: #18181b;
+    border: 2px solid #FBBF24;
     color: #FBBF24;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 100px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.tree-node-content:hover {
+    background: #FBBF24;
+    color: #18181b;
+    transform: scale(1.05);
 }
 
 .hebrew-notes {

@@ -105,7 +105,7 @@ const chatbotKnowledge = [
     },
     {
         keywords: ['humor', 'joke', 'edgy'],
-        response: "Humor mode enabled. But remember, Georg... that's what she said! Precision and edge, that's how we roll."
+        response: "Humor mode enabled. But remember, Swoop... that's what she said! Precision and edge, that's how we roll."
     },
     {
         keywords: ['diagnostic', 'health', 'diagnose', 'check'],

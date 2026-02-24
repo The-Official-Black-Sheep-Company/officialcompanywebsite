@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seek Eternity - The Official Black Sheep Company Dashboard</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/background.css" />
+    <link rel="stylesheet" href="../css/biblestudy.css" />
+  </head>
+
+  <body>
+    <header class="dashboard-header">
+      <div class="header-content">
+        <h1>
+          <a href="../index.html">
+            <span>THE</span>
+            <span>OFFICIAL</span>
+            <span>BLACK</span>
+            <span>SHEEP</span>
+            <span>COMPANY</span>
+          </a>
+        </h1>
+        <div class="header-buttons">
+          <a href="#" class="signup-button">Sign Up</a>
+          <a
+            href="http://172.234.229.103:6684/realms/blacksheep-company/protocol/openid-connect/auth?client_id=blacksheep-dashboard&response_type=code&redirect_uri=http%3A%2F%2F10.0.0.249%3A8888"
+            class="login-button"
+            >Login</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="search-container">
+      <input type="text" id="searchBar" placeholder="Search..." />
+    </div>
+
+    <div class="tabs">
+      <div class="tab-dropdown">
+        <a href="apikeys.html" class="tab-button">API Keys</a>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="biblestudy.html" class="tab-button">Seek Eternity</a>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="reports.html" class="tab-button">Reports ▼</a>
+        <div class="dropdown-menu">
+          <a href="reports.html#HistoricFigures">Historic Figures</a>
+          <a href="reports.html#Artifacts">Artifacts</a>
+          <a href="reports.html#HistoricEvents">Historic Events</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="monitoring.html" class="tab-button">Monitoring ▼</a>
+        <div class="dropdown-menu">
+          <a href="monitoring.html#Dashboards">Dashboards</a>
+          <a href="https://localhost:443">Wazuh Manager</a>
+          <a href="monitoring.html#WazuhAgents">Wazuh Agents</a>
+          <a href="http://localhost:61208">Glances</a>
+          <a href="http://localhost:8001">Kubernetes</a>
+          <a href="http://localhost:8083">Snort IDS</a>
+          <a href="monitoring.html#Fail2Ban">Fail2Ban</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="servers.html" class="tab-button">Servers ▼</a>
+        <div class="dropdown-menu">
+          <div class="dropdown-item">
+            <a href="servers.html#ArtsServer">Arts Server ▶</a>
+            <div class="submenu">
+              <a href="servers.html#Audacity">Audacity</a>
+              <a href="servers.html#BibleServer">Bible Server</a>
+              <a href="servers.html#Blender">Blender</a>
+              <a href="servers.html#Cakewalk">Cakewalk</a>
+              <a href="servers.html#vscode">vscode</a>
+              <a href="servers.html#GIMP">GIMP</a>
+              <a href="servers.html#Inkscape">Inkscape</a>
+              <a href="servers.html#Jellyfin">Jellyfin</a>
+              <a href="servers.html#LeonAI">Leon AI</a>
+              <a href="servers.html#Node-RED">Node-RED</a>
+              <a href="servers.html#UnrealEngine">Unreal Engine</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="servers.html#BusinessServer">Business Server ▶</a>
+            <div class="submenu">
+              <a href="servers.html#BoxBilling">BoxBilling</a>
+              <a href="servers.html#ERPNext">ERPNext</a>
+              <a href="servers.html#FireflyIII">Firefly III</a>
+              <a href="servers.html#Huginn">Huginn</a>
+              <a href="servers.html#Magento2">Magento 2</a>
+              <a href="servers.html#Mautic">Mautic</a>
+              <a href="servers.html#Odoo">Odoo</a>
+              <a href="servers.html#OrangeHRM">OrangeHRM</a>
+              <a href="servers.html#PartsKeeper">PartsKeeper</a>
+              <a href="servers.html#Spree">Spree</a>
+              <a href="servers.html#SuiteCRM">SuiteCRM</a>
+              <a href="servers.html#TimeTrex">TimeTrex</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="servers.html#CloudServer">Cloud Server ▶</a>
+            <div class="submenu">
+              <a href="servers.html#Elasticsearch">Elasticsearch</a>
+              <a href="servers.html#Keycloak">Keycloak</a>
+              <a href="servers.html#Kibana">Kibana</a>
+              <a href="servers.html#OpenVAS">OpenVAS</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="servers.html#HomeServerMain">Home Server ▶</a>
+            <div class="submenu">
+              <a href="servers.html#Fail2Ban">Fail2Ban</a>
+              <a href="servers.html#Falco">Falco</a>
+              <a href="servers.html#Filebeat">Filebeat</a>
+              <a href="servers.html#Glances">Glances</a>
+              <a href="servers.html#Jellyfin">Jellyfin</a>
+              <a href="servers.html#LeonAI">Leon AI</a>
+              <a href="servers.html#Motion">Motion</a>
+              <a href="servers.html#N8N">N8N</a>
+              <a href="servers.html#Netdata">Netdata</a>
+              <a href="servers.html#Node-RED">Node-RED</a>
+              <a href="servers.html#Pcsx2">Pcsx2</a>
+              <a href="servers.html#Snort">Snort</a>
+              <a href="servers.html#WireGuard">WireGuard</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="servers.html#MailServer">Mail Server ▶</a>
+            <div class="submenu">
+              <a href="servers.html#Chatwoot">Chatwoot</a>
+              <a href="servers.html#Dovecot">Dovecot</a>
+              <a href="servers.html#Matrix">Matrix</a>
+              <a href="servers.html#Postfix">Postfix</a>
+              <a href="servers.html#Rasa">Rasa</a>
+              <a href="servers.html#SocioBoard">SocioBoard</a>
+              <a href="servers.html#Synapse">Synapse</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="servers.html#VirtualMachines">Virtual Machines ▶</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="services.html" class="tab-button">Services ▼</a>
+        <div class="dropdown-menu">
+          <a href="techpage.html">Tech-Sector</a>
+          <a href="cleaning-services.html">Cleaning Services</a>
+          <a href="petservices.html">Pet Services</a>
+          <a href="junkremoval.html">Junk Removal, Moving &amp; Hauling</a>
+          <a href="#">Mobile Laundry Mat</a>
+          <a href="#">Merch &amp; Training</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="store.html" class="tab-button">Shopping ▼</a>
+        <div class="dropdown-menu">
+          <a href="store.html">Store</a>
+          <a href="shopping.html#AmazonFBA">Amazon FBA Page</a>
+          <a href="shopping.html#Craigslist">Craigslist</a>
+          <a href="shopping.html#eBay">eBay</a>
+          <a href="shopping.html#FacebookStore">Facebook Store</a>
+          <a href="shopping.html#Shopify">Shopify</a>
+          <a href="product.html">Products</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="appstore.html" class="tab-button">App Store ▼</a>
+        <div class="dropdown-menu">
+          <a href="flutter_app/web/index.html?app=barcode_scanner"
+            >Barcode Scanner Flutter App</a
+          >
+          <a href="flutter_app/web/index.html?app=workorder"
+            >Work Order Flutter App</a
+          >
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="workorder.html">Tools ▼</a>
+        <div class="dropdown-menu">
+          <a href="workorder.html">Work Order Web</a>
+          <a href="#">Work Order App</a>
+          <a href="workorder.html#BarcodeScanner">Barcode Scanner</a>
+          <a href="workorder.html#ScannerDisplay">Scanner Display</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="contacts.html" class="tab-button">Contacts</a>
+      </div>
+    </div>
+
+    <div id="shape-container"></div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+      <div>
+        <div id="bible-study-container">
+          <!-- Loading scholarly deep dive... -->
+          <div>Loading scholarly deep dive...</div>
+        </div>
+
+        <!-- Comments Section -->
+        <section id="comments-section" style="margin: 50px auto; text-align: left">
+          <div class="comment-form">
+            <h3>Leave a Comment</h3>
+            <form id="commentForm" style="display: none">
+              <input type="hidden" id="userName" name="userName" />
+              <div class="form-group">
+                <label for="commentText">Comment</label>
+                <textarea
+                  id="commentText"
+                  name="commentText"
+                  required
+                  placeholder="Share your thoughts..."
+                ></textarea>
+              </div>
+              <button type="submit" class="submit-comment-btn">
+                Post Comment
+              </button>
+            </form>
+            <div id="authMessage">Please log in to leave a comment.</div>
+          </div>
+
+          <!-- Comments Display -->
+          <div id="commentsDisplay">
+            <h3>Comments</h3>
+            <div class="comments-list" id="commentsList">
+              <!-- No comments yet. Be the first to share! -->
+              <p>No comments yet. Be the first to share!</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer>
+      <p id="bible-verse">Loading verse...</p>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/background.js"></script>
+    <script src="../js/biblestudy.js"></script>
+
+    <!-- Chatwoot Widget -->
+    <script src="/chatwoot-widget-config.js"></script>
+  </body>
+</html>

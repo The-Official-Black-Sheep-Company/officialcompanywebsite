@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services - The Official Black Sheep Company Dashboard</title>
+    <link rel="stylesheet" href="../css/adminlandingpage.css" />
+    <link rel="stylesheet" href="../css/background.css" />
+    <link rel="stylesheet" href="../css/services.css" />
+
+    <!-- React & Babel for dynamic components -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+
+  <body>
+    <header class="dashboard-header">
+      <div class="header-content">
+        <h1>
+          <a href="../index.html" class="header-link">
+            <span class="header-title-white">THE</span>
+            <span class="header-title-gold">OFFICIAL</span>
+            <span class="header-title-grey">BLACK</span>
+            <span class="header-title-black">SHEEP</span>
+            <span class="header-title-gold">COMPANY</span>
+          </a>
+        </h1>
+        <div class="header-buttons" id="auth-buttons-container">
+          <a href="signup.html" class="signup-button">Sign Up</a>
+          <a href="login.html" class="login-button-sm">Login</a>
+        </div>
+
+        <div id="user-avatar-container" class="relative"></div>
+      </div>
+    </header>
+
+    <div class="search-container">
+      <input type="text" id="searchBar" placeholder="Search services..." />
+    </div>
+
+    <div class="tabs">
+      <div class="tab-dropdown">
+        <a href="../index.html#APIKeys" class="tab-button">API Keys</a>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="../index.html#BibleStudy" class="tab-button">Seek Eternity</a>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="../index.html#Blogs" class="tab-button">Reports ▼</a>
+        <div class="dropdown-menu">
+          <a href="../index.html#HistoricFigures">Historic Figures</a>
+          <a href="../index.html#Artifacts">Artifacts</a>
+          <a href="../index.html#HistoricEvents">Historic Events</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="../index.html#Monitoring" class="tab-button">Monitoring ▼</a>
+        <div class="dropdown-menu">
+          <a href="../index.html#Dashboards">Dashboards</a>
+          <a href="https://localhost:443">Wazuh Manager</a>
+          <a href="../index.html#Monitoring">Wazuh Agents</a>
+          <a href="http://localhost:61208">Glances</a>
+          <a href="http://localhost:8001">Kubernetes</a>
+          <a href="http://localhost:8083">Snort IDS</a>
+          <a href="../index.html#Monitoring">Fail2Ban</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="../index.html#HomeServerMain" class="tab-button">Servers ▼</a>
+        <div class="dropdown-menu">
+          <div class="dropdown-item">
+            <a href="../index.html#ArtsServer">Arts Server ▶</a>
+            <div class="submenu">
+              <a href="../index.html#Audacity">Audacity</a>
+              <a href="../index.html#BibleServer">Bible Server</a>
+              <a href="../index.html#Blender">Blender</a>
+              <a href="../index.html#Cakewalk">Cakewalk</a>
+              <a href="../index.html#vscode">vscode</a>
+              <a href="../index.html#GIMP">GIMP</a>
+              <a href="../index.html#Inkscape">Inkscape</a>
+              <a href="../index.html#Jellyfin">Jellyfin</a>
+              <a href="../index.html#LeonAI">Leon AI</a>
+              <a href="../index.html#Node-RED">Node-RED</a>
+              <a href="../index.html#UnrealEngine">Unreal Engine</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="../index.html#BusinessServer">Business Server ▶</a>
+            <div class="submenu">
+              <a href="../index.html#BoxBilling">BoxBilling</a>
+              <a href="../index.html#ERPNext">ERPNext</a>
+              <a href="../index.html#FireflyIII">Firefly III</a>
+              <a href="../index.html#Huginn">Huginn</a>
+              <a href="../index.html#Magento2">Magento 2</a>
+              <a href="../index.html#Mautic">Mautic</a>
+              <a href="../index.html#Odoo">Odoo</a>
+              <a href="../index.html#OrangeHRM">OrangeHRM</a>
+              <a href="../index.html#PartsKeeper">PartsKeeper</a>
+              <a href="../index.html#Spree">Spree</a>
+              <a href="../index.html#SuiteCRM">SuiteCRM</a>
+              <a href="../index.html#TimeTrex">TimeTrex</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="../index.html#CloudServer">Cloud Server ▶</a>
+            <div class="submenu">
+              <a href="../index.html#Elasticsearch">Elasticsearch</a>
+              <a href="../index.html#Keycloak">Keycloak</a>
+              <a href="../index.html#Kibana">Kibana</a>
+              <a href="../index.html#OpenVAS">OpenVAS</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="../index.html#HomeServerMain">Home Server ▶</a>
+            <div class="submenu">
+              <a href="../index.html#Fail2Ban">Fail2Ban</a>
+              <a href="../index.html#Falco">Falco</a>
+              <a href="../index.html#Filebeat">Filebeat</a>
+              <a href="../index.html#Glances">Glances</a>
+              <a href="../index.html#Jellyfin">Jellyfin</a>
+              <a href="../index.html#LeonAI">Leon AI</a>
+              <a href="../index.html#Motion">Motion</a>
+              <a href="../index.html#N8N">N8N</a>
+              <a href="../index.html#Netdata">Netdata</a>
+              <a href="../index.html#Node-RED">Node-RED</a>
+              <a href="../index.html#Pcsx2">Pcsx2</a>
+              <a href="../index.html#Snort">Snort</a>
+              <a href="../index.html#WireGuard">WireGuard</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="servers.html#MailServer">Mail Server ▶</a>
+            <div class="submenu">
+              <a href="servers.html#Chatwoot">Chatwoot</a>
+              <a href="servers.html#Dovecot">Dovecot</a>
+              <a href="servers.html#Matrix">Matrix</a>
+              <a href="servers.html#Postfix">Postfix</a>
+              <a href="servers.html#Rasa">Rasa</a>
+              <a href="servers.html#SocioBoard">SocioBoard</a>
+              <a href="servers.html#Synapse">Synapse</a>
+            </div>
+          </div>
+          <div class="dropdown-item">
+            <a href="servers.html#VirtualMachines">Virtual Machines ▶</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="services.html" class="tab-button">Services ▼</a>
+        <div class="dropdown-menu">
+          <a href="techpage.html">Tech-Sector</a>
+          <a href="cleaning-services.html">Cleaning Services</a>
+          <a href="petservices.html">Pet Services</a>
+          <a href="junkremoval.html">Junk Removal, Moving &amp; Hauling</a>
+          <a href="#">Mobile Laundry Mat</a>
+          <a href="#">Merch &amp; Training</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="store.html" class="tab-button">Shopping ▼</a>
+        <div class="dropdown-menu">
+          <a href="store.html">Store</a>
+          <a href="../index.html#AmazonFBA">Amazon FBA Page</a>
+          <a href="../index.html#Craigslist">Craigslist</a>
+          <a href="../index.html#eBay">eBay</a>
+          <a href="../index.html#FacebookStore">Facebook Store</a>
+          <a href="../index.html#Shopify">Shopify</a>
+          <a href="product.html">Products</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="../index.html#AppStoreContent" class="tab-button">App Store ▼</a>
+        <div class="dropdown-menu">
+          <a href="flutter_app/web/index.html?app=barcode_scanner"
+            >Barcode Scanner Flutter App</a
+          >
+          <a href="flutter_app/web/index.html?app=workorder"
+            >Work Order Flutter App</a
+          >
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="workorder.html" class="tab-button">Tools ▼</a>
+        <div class="dropdown-menu">
+          <a href="workorder.html">Work Order Web</a>
+          <a href="#">Work Order App</a>
+          <a href="../index.html#BarcodeScanner">Barcode Scanner</a>
+          <a href="../index.html#ScannerDisplay">Scanner Display</a>
+        </div>
+      </div>
+
+      <div class="tab-dropdown">
+        <a href="../index.html#Contacts" class="tab-button">Contacts</a>
+      </div>
+    </div>
+
+    <div id="shape-container">
+      <div id="gold-cross"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+      <div class="services-grid">
+        <!-- Pet Services Button -->
+        <a href="petservices.html" class="pet-button">
+          <div class="panel">
+            <img src="../media/panel1.png" alt="Daycare" />
+          </div>
+          <div class="panel">
+            <img src="../media/panel2.png" alt="Walking" />
+          </div>
+          <div class="panel">
+            <img src="../media/panel3.png" alt="Poopoo" />
+          </div>
+        </a>
+
+        <!-- Tech Services Button -->
+        <a href="techpage.html" class="tech-btn">
+          <div class="mechanism">
+            <div class="core">
+              <div class="circuit-lines"></div>
+              <div class="core-text">NEXUS: TECH SERVICES</div>
+              <div class="core-subtext">REPAIR • CLOUD • VPS • CLUSTERS</div>
+            </div>
+            <div class="plate plate-top">
+              <div class="status-light"></div>
+            </div>
+            <div class="plate plate-bottom"></div>
+            <div class="lock lock-left"></div>
+            <div class="lock lock-right"></div>
+          </div>
+        </a>
+
+        <!-- Cleaning Services (React Component) -->
+        <div id="cleaning-button-root" class="cleaning-button-container"></div>
+
+        <!-- Junk Removal Button -->
+        <a href="junkremoval.html" class="junk-button">
+          <div class="scene">
+            <div class="scene-bg">
+              <div class="trash t1">🗑️</div>
+              <div class="trash t2">🥱</div>
+              <div class="trash t3">🧴</div>
+              <div class="truck">🚚</div>
+              <div class="mover-container mover-group-1">
+                <div class="couch">🛋️</div>
+                <div class="mover-1">🧑</div>
+              </div>
+              <div class="mover-container mover-group-2">
+                <div class="junk-button-mover-box">📦</div>
+                <div class="junk-button-mover-female">🧑‍🦰</div>
+              </div>
+              <div class="sheep-flock">
+                <div class="sheep">🐑</div>
+                <div class="sheep">🐑</div>
+                <div class="sheep">🐑</div>
+                <div class="sheep">🐑</div>
+                <div class="sheep">🐑</div>
+                <div class="sheep">🐑</div>
+                <div class="shepherd">🤠</div>
+              </div>
+            </div>
+          </div>
+          <div class="flap flap-top">
+            <div class="tape"></div>
+          </div>
+          <div class="flap flap-bottom">
+            <div class="tape"></div>
+          </div>
+          <div class="cta-text">WE MOVE &amp; REMOVE JUNK!</div>
+        </a>
+
+        <!-- Placeholder service buttons -->
+        <div class="service-button"></div>
+        <div class="service-button"></div>
+        <div class="service-button"></div>
+        <div class="service-button"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p id="bible-verse">
+        The Lord bless you and keep you; the Lord make his face shine upon you
+        and be gracious to you; the Lord turn his face toward you and give you
+        peace. - Numbers 6:24-26
+      </p>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Config & Auth Logic -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/nav-auth.js"></script>
+    <script src="../js/index.js"></script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Page-specific scripts -->
+    <script src="../js/background.js"></script>
+    <script src="../js/services.js" type="text/babel"></script>
+
+    <!-- Chatwoot Widget -->
+    <script src="/chatwoot-widget-config.js"></script>
+
+    <!-- Initialize Firebase Auth -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (typeof initFirebaseAuth === "function") initFirebaseAuth();
+      });
+    </script>
+  </body>
+</html>

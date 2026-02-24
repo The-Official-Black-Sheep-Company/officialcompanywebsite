@@ -354,25 +354,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (study.timeline) {
-            html += `<h3>Timeline</h3><div class="timeline-container">`;
-            study.timeline.forEach(t => {
-                html += `<div class="timeline-item"><strong>${t.year}:</strong> ${t.label}</div>`;
+            html += `<h3>Timeline</h3><div class="timeline-wrapper">`;
+            html += `<div class="timeline-line"></div>`;
+            html += `<div class="timeline-nodes">`;
+            study.timeline.forEach((t, index) => {
+                html += `
+                    <div class="timeline-node" style="left: ${(index / Math.max(1, study.timeline.length - 1)) * 100}%;">
+                        <div class="timeline-point"></div>
+                        <div class="timeline-content">
+                            <strong>${t.year}:</strong><br/>${t.label}
+                        </div>
+                    </div>
+                `;
             });
-            html += `</div>`;
+            html += `</div></div>`;
         }
 
         if (study.genealogy) {
             const renderTree = (node) => {
-                let treeHtml = `<li>${node.name}`;
+                let treeHtml = `
+                    <div class="tree-node-wrapper">
+                        <div class="tree-node">
+                            <div class="tree-node-content">${node.name}</div>
+                        </div>`;
                 if (node.children && node.children.length > 0) {
-                    treeHtml += "<ul>";
+                    treeHtml += `<div class="tree-children">`;
                     node.children.forEach(child => { treeHtml += renderTree(child); });
-                    treeHtml += "</ul>";
+                    treeHtml += `</div>`;
                 }
-                treeHtml += "</li>";
+                treeHtml += `</div>`;
                 return treeHtml;
             };
-            html += `<h3>Genealogy</h3><div class="tree"><ul>${renderTree(study.genealogy)}</ul></div>`;
+            html += `<h3>Genealogy</h3><div class="tree-container">${renderTree(study.genealogy)}</div>`;
         }
 
         study.verses.forEach(v => {
