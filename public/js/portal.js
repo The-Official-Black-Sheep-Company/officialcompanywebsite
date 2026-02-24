@@ -669,6 +669,101 @@ document.addEventListener('DOMContentLoaded', () => {
     window.socialManager = new SocialManager();
     window.reportEngine = new ReportEngine();
 
+    // ---- DASHBOARD FEED: render filtered ISMM/Social reports into dashboard ----
+    function renderDashboardFeed() {
+        const container = document.getElementById('dashboard-feed-container');
+        if (!container) return;
+
+        const connections = JSON.parse(localStorage.getItem('bsc_social_connections')) || {};
+        const connectedPlatforms = Object.keys(connections);
+
+        // Official ISMM + System reports
+        const feedItems = [
+            {
+                dot: 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]',
+                title: 'Official ISMM Post',
+                detail: 'Automated posting engine synced across integrated platforms.',
+                ts: 'Just now',
+                tag: 'Social'
+            },
+            {
+                dot: 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]',
+                title: 'System Health Report',
+                detail: 'All Beast nodes reporting nominal. Hands API latency optimized.',
+                ts: '6 hours ago',
+                tag: 'System'
+            }
+        ];
+
+        // Add connected platform entries
+        connectedPlatforms.forEach(platform => {
+            feedItems.push({
+                dot: 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]',
+                title: `${platform.charAt(0).toUpperCase() + platform.slice(1)} Sync`,
+                detail: `Account linked. Content mirroring active for ${platform}.`,
+                ts: 'Active',
+                tag: 'Integration'
+            });
+        });
+
+        container.innerHTML = feedItems.map(item => `
+            <div class="activity-item">
+                <div class="activity-dot ${item.dot}"></div>
+                <div class="flex-1">
+                    <p class="text-sm font-medium">${item.title}</p>
+                    <p class="text-[10px] text-gray-500">${item.detail} • ${item.ts}</p>
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 uppercase tracking-widest">${item.tag}</span>
+            </div>
+        `).join('');
+    }
+
+    // Render dashboard feed when dashboard loads
+    const origLoadSection = window.loadSection;
+    if (typeof origLoadSection === 'function') {
+        window.loadSection = function(sectionId) {
+            origLoadSection(sectionId);
+            if (sectionId === 'dashboard') renderDashboardFeed();
+        };
+    }
+    // Also render on first load
+    renderDashboardFeed();
+
+    // ---- SELECT ALBUM BUTTON LOGIC ----
+    const selectAlbumBtn = document.getElementById('photobooth-select-album-btn');
+    if (selectAlbumBtn) {
+        selectAlbumBtn.addEventListener('click', () => {
+            const albums = getAlbums();
+            if (albums.length === 0) {
+                alert('No albums yet. Create one with "Start New Album" first.');
+                return;
+            }
+            const options = albums.map((a, i) => `${i + 1}. ${a.name}`).join('\n');
+            const choice = prompt(`Select an album to view:\n${options}\n\nEnter number:`);
+            if (!choice) return;
+            const idx = parseInt(choice) - 1;
+            if (idx >= 0 && idx < albums.length) {
+                const albumName = albums[idx].name;
+                const photos = getPhotos().filter(p => p.albumName === albumName);
+                const grid = document.getElementById('photobooth-grid');
+                if (grid) {
+                    if (photos.length === 0) {
+                        grid.innerHTML = `<div class="col-span-full text-center py-10 text-zinc-500">No photos in "${albumName}" yet.</div>`;
+                    } else {
+                        grid.innerHTML = photos.map((p, i) => `
+                            <div class="relative group rounded-xl overflow-hidden border border-zinc-800 cursor-pointer hover:border-orange-500/50 transition-all" onclick="window.openLightbox('${p.src}')">
+                                <img src="${p.src}" class="w-full h-32 object-cover">
+                                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                                    <p class="text-[10px] text-white truncate">${p.label || 'Photo'}</p>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            }
+        });
+    }
+
     /* =========================================================
        SETTINGS MODAL (Multi-level Drill-down)
     ========================================================= */

@@ -207,7 +207,7 @@
                                 <i data-lucide="activity" class="w-5 h-5 text-orange-500"></i>
                                 <h3 class="font-bold tracking-widest">BEAST ACTIVITY LOG</h3>
                             </div>
-                            <div class="bento-card-body space-y-4">
+                            <div id="dashboard-feed-container" class="bento-card-body space-y-4">
                                 <div class="activity-item">
                                     <div class="activity-dot bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
                                     <div class="flex-1">
@@ -466,15 +466,19 @@
                     </div>
 
                     <!-- Upload button -->
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4 flex-wrap">
                         <button id="photobooth-upload-btn"
                             class="btn-primary flex items-center gap-2 text-xs px-5"
                             onclick="document.getElementById('photobooth-file-input').click()">
                             <i data-lucide="upload" class="w-4 h-4"></i> ADD PHOTO
                         </button>
+                        <button id="photobooth-select-album-btn"
+                            class="btn-secondary flex items-center gap-2 text-xs px-5">
+                            <i data-lucide="folder" class="w-4 h-4"></i> SELECT ALBUM
+                        </button>
                         <button id="photobooth-album-btn"
                             class="btn-secondary flex items-center gap-2 text-xs px-5">
-                            <i data-lucide="folder-plus" class="w-4 h-4"></i> START ALBUM
+                            <i data-lucide="folder-plus" class="w-4 h-4"></i> START NEW ALBUM
                         </button>
                         <span class="text-[10px] text-zinc-600">Drag and drop or click to select</span>
                         <input type="file" id="photobooth-file-input" accept="image/*" multiple class="hidden">
