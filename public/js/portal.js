@@ -1246,4 +1246,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize remaining managers after definitions
     window.settingsManager = new SettingsManager();
     window.beastControl = new ControlPlaneManager();
+
+    // Check for hash on load
+    if (window.location.hash === '#settings') {
+        window.settingsManager.open();
+    }
 });
