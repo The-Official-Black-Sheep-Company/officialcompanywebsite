@@ -614,7 +614,8 @@
                 }
 
                 console.log('Authenticated member:', user.email);
-                const displayName = user.displayName || user.email.split('@')[0];
+                const profile = JSON.parse(localStorage.getItem('bsc_profile') || '{}');
+                const displayName = profile.name || user.displayName || user.email.split('@')[0];
                 const email = user.email;
                 const photoURL = user.photoURL;
 

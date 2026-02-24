@@ -466,6 +466,25 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     if (commentForm) {
+        if (typeof auth !== 'undefined') {
+            auth.onAuthStateChanged((user) => {
+                const form = document.getElementById("commentForm");
+                const authMessage = document.getElementById("authMessage");
+                const nameInput = document.getElementById("userName");
+                
+                if (user) {
+                    const profile = JSON.parse(localStorage.getItem('bsc_profile') || '{}');
+                    const displayName = profile.name || user.displayName || user.email.split('@')[0];
+                    if(nameInput) nameInput.value = displayName;
+                    if(form) form.style.display = "block";
+                    if(authMessage) authMessage.style.display = "none";
+                } else {
+                    if(form) form.style.display = "none";
+                    if(authMessage) authMessage.style.display = "block";
+                }
+            });
+        }
+
         commentForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const nameInput = document.getElementById("userName");

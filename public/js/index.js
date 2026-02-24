@@ -108,7 +108,7 @@ function checkAccess() {
 
     const tabs = tabsContainer.querySelectorAll('.tab-dropdown');
     
-    const restrictedIndices = [1, 3, 4, 5, 7, 9];
+    const restrictedIndices = [1, 4, 5, 7, 9];
 
     tabs.forEach((tab, index) => {
         if (restrictedIndices.includes(index)) {

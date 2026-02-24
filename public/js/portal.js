@@ -33,11 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settings:   'Settings'
     };
 
-    // Initialize Managers first (prevent race conditions)
-    window.socialManager = new SocialManager();
-    window.reportEngine = new ReportEngine();
-    window.settingsManager = new SettingsManager();
-    window.beastControl = new ControlPlaneManager();
+    // Managers will be initialized after their class definitions
 
     function loadSection(sectionId) {
         if (!sectionId) return;
@@ -662,9 +658,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Managers are now initialized at the top of DOMContentLoaded to prevent race conditions
-    // window.socialManager = new SocialManager();
-    // window.reportEngine = new ReportEngine();
+    // Initialize managers after definitions
+    window.socialManager = new SocialManager();
+    window.reportEngine = new ReportEngine();
 
     /* =========================================================
        SETTINGS MODAL (Multi-level Drill-down)
@@ -1156,7 +1152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Managers are now initialized at the top of DOMContentLoaded to prevent race conditions
-    // window.settingsManager = new SettingsManager();
-    // window.beastControl = new ControlPlaneManager();
+    // Initialize remaining managers after definitions
+    window.settingsManager = new SettingsManager();
+    window.beastControl = new ControlPlaneManager();
 });
