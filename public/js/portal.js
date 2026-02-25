@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const titleMap = {
         profile:    'Profile',
         dashboard:  'Dashboard',
-        feeds:      'Beast Control',
+        feeds:      'Social Feed',
         messages:   'Messages',
         friends:    'Friends',
         photobooth: 'Photobooth',
@@ -608,31 +608,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const reports = [
                 {
-                    title: 'Strategic Market Intelligence',
-                    id: 'SMI-2026-001',
-                    metric: 'VOLATILITY: 14.2%',
-                    summary: 'Trend Scout has detected a significant pivot in junk removal search patterns. High-value clusters emerging in mid-atlantic nodes. Recommend immediate SEO strike.',
+                    title: 'Community Engagement Surge',
+                    id: 'CES-2026-001',
+                    metric: 'GROWTH: +15%',
+                    summary: 'Significant spike in member interaction on historical artifacts posts. High-value discussions emerging in the General channel.',
                     ts: '6 hours ago',
-                    tag: 'Market',
-                    color: 'orange'
-                },
-                {
-                    title: 'System Health Optimization',
-                    id: 'SHO-2026-042',
-                    metric: 'EFFICIENCY: 98.4%',
-                    summary: 'Parity check between Ubuntu-Main and Fly-Edge node complete. No synchronization lag detected. Hands API responsiveness optimized by 120ms.',
-                    ts: '14 hours ago',
-                    tag: 'System',
-                    color: 'emerald'
-                },
-                {
-                    title: 'Global Social Footprint',
-                    id: 'GSF-2026-015',
-                    metric: 'ENGAGEMENT: +28%',
-                    summary: 'Matrix synchronization across 12 platforms stable. Automated posting engine for historical artifacts reporting high interaction on Pinterest and Instagram.',
-                    ts: '1 day ago',
-                    tag: 'Social',
+                    tag: 'Community',
                     color: 'blue'
+                },
+                {
+                    title: 'New Member Onboarding',
+                    id: 'NMO-2026-042',
+                    metric: 'STATUS: ACTIVE',
+                    summary: 'Welcoming 12 new recruits to the Black Sheep ecosystem this week. Automated orientation sequence complete.',
+                    ts: '14 hours ago',
+                    tag: 'Member',
+                    color: 'emerald'
                 }
             ];
 
@@ -677,21 +668,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const connections = JSON.parse(localStorage.getItem('bsc_social_connections')) || {};
         const connectedPlatforms = Object.keys(connections);
 
-        // Official ISMM + System reports
+        // Official ISMM + Community activity
         const feedItems = [
             {
                 dot: 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]',
                 title: 'Official ISMM Post',
-                detail: 'Automated posting engine synced across integrated platforms.',
+                detail: 'New Bible Study module synchronized across the portal.',
                 ts: 'Just now',
                 tag: 'Social'
             },
             {
                 dot: 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]',
-                title: 'System Health Report',
-                detail: 'All Beast nodes reporting nominal. Hands API latency optimized.',
-                ts: '6 hours ago',
-                tag: 'System'
+                title: 'Member Milestone',
+                detail: 'Congratulations to our top contributor this month.',
+                ts: '12 hours ago',
+                tag: 'Community'
             }
         ];
 

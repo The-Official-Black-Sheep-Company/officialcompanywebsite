@@ -36,12 +36,22 @@ class BeastApiService {
 
   Future<Map<String, dynamic>> checkHealth() async {
     try {
-      final response = await http.post(Uri.parse('$handsUrl/health'));
-      return {
-        'success': response.statusCode == 200,
-        'message':
-            jsonDecode(response.body)['message'] ?? 'Health check active.',
-      };
+      final response = await http.get(Uri.parse('$handsUrl/health'));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return {
+          'success': true,
+          'message': data['status'] == 'online'
+              ? 'Beast is live. Diagnostics complete.'
+              : 'Beast is responding but status is ${data['status']}',
+          'diagnostics': data['diagnostics'],
+        };
+      } else {
+        return {
+          'success': false,
+          'message': 'API Error: ${response.statusCode}',
+        };
+      }
     } catch (e) {
       return {'success': false, 'message': 'Connection error: $e'};
     }

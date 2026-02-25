@@ -82,6 +82,10 @@
                     <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
                     Reports
                 </a>
+                <a href="beast.html" class="nav-item">
+                    <i data-lucide="terminal" class="w-5 h-5 mr-3 text-orange-500"></i>
+                    Beast Control
+                </a>
 
                 <div class="px-4 mt-6 mb-2">
                     <span class="text-xs text-gray-500 uppercase tracking-widest">System</span>
@@ -204,8 +208,8 @@
                         <!-- Recent Activity -->
                         <div class="bento-card lg:col-span-2">
                             <div class="bento-card-header">
-                                <i data-lucide="activity" class="w-5 h-5 text-orange-500"></i>
-                                <h3 class="font-bold tracking-widest">BEAST ACTIVITY LOG</h3>
+                                <i data-lucide="activity" class="w-5 h-5 text-blue-500"></i>
+                                <h3 class="font-bold tracking-widest">COMMUNITY ACTIVITY</h3>
                             </div>
                             <div id="dashboard-feed-container" class="bento-card-body space-y-4">
                                 <div class="activity-item">
@@ -235,21 +239,18 @@
                         <!-- Quick Actions -->
                         <div class="bento-card">
                             <div class="bento-card-header">
-                                <i data-lucide="zap" class="w-5 h-5 text-orange-500"></i>
-                                <h3 class="font-bold tracking-widest">TACTICAL OVERRIDE</h3>
+                                <i data-lucide="zap" class="w-5 h-5 text-blue-500"></i>
+                                <h3 class="font-bold tracking-widest">MEMBER TOOLS</h3>
                             </div>
                             <div class="bento-card-body flex flex-col gap-3">
-                                <button id="join-ops-btn" class="btn-primary flex items-center justify-center gap-2 text-xs bg-purple-600 hover:bg-purple-500 border-purple-400">
-                                    <i data-lucide="video" class="w-4 h-4"></i> JOIN OPS CHANNEL
+                                <button id="join-ops-btn" class="btn-primary flex items-center justify-center gap-2 text-xs bg-blue-600 hover:bg-blue-500 border-blue-400">
+                                    <i data-lucide="video" class="w-4 h-4"></i> START VIDEO CALL
                                 </button>
                                 <button id="share-screen-btn" class="btn-secondary flex items-center justify-center gap-2 text-xs border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
-                                    <i data-lucide="monitor" class="w-4 h-4"></i> SHARE SCREEN
+                                    <i data-lucide="monitor" class="w-4 h-4"></i> SHARE CONTENT
                                 </button>
-                                <button class="btn-primary flex items-center justify-center gap-2 text-xs">
-                                    <i data-lucide="search" class="w-4 h-4"></i> RUN TREND SCOUT
-                                </button>
-                                <button class="btn-secondary flex items-center justify-center gap-2 text-xs">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i> CLEAN JUNK MAIL
+                                <button class="btn-secondary flex items-center justify-center gap-2 text-xs" onclick="window.location.href='beast.html'">
+                                    <i data-lucide="terminal" class="w-4 h-4"></i> BEAST OPS
                                 </button>
                                 <button class="btn-secondary flex items-center justify-center gap-2 text-xs">
                                     <i data-lucide="camera" class="w-4 h-4"></i> SNAP PHOTOBOOTH
@@ -259,112 +260,86 @@
                     </div>
                 </section>
 
-                <!-- Beast Control Section (New Control Plane) -->
+                <!-- Social & Community Feeds Section -->
                 <section id="feeds-section" class="section-content space-y-6">
-                    <!-- Global Status Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bento-card p-4 flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                                <i data-lucide="activity" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Sys Latency</p>
-                                <p id="beast-latency" class="text-xl font-bold font-['Orbitron'] text-white">24ms</p>
-                            </div>
-                        </div>
-                        <div class="bento-card p-4 flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                                <i data-lucide="cpu" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Mesh CPU</p>
-                                <p id="beast-cpu" class="text-xl font-bold font-['Orbitron'] text-white">12%</p>
-                            </div>
-                        </div>
-                        <div class="bento-card p-4 flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.2)]">
-                                <i data-lucide="brain" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Tone State</p>
-                                <p id="beast-tone-state" class="text-xl font-bold font-['Orbitron'] text-white">Relaxed</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Real-time Log Stream -->
-                        <div class="bento-card lg:col-span-2 flex flex-col h-[500px]">
+                        <!-- Main Social Feed -->
+                        <div class="bento-card lg:col-span-2 flex flex-col h-[600px]">
                             <div class="bento-card-header border-b border-zinc-800/50 p-4">
                                 <div class="flex items-center justify-between w-full">
                                     <div class="flex items-center gap-3">
-                                        <i data-lucide="terminal" class="w-5 h-5 text-orange-500"></i>
-                                        <h3 class="font-bold tracking-widest uppercase text-sm">Real-time Log Stream</h3>
+                                        <i data-lucide="rss" class="w-5 h-5 text-orange-500"></i>
+                                        <h3 class="font-bold tracking-widest uppercase text-sm">Community Stream</h3>
                                     </div>
-                                    <span class="flex items-center gap-2 text-[10px] text-emerald-500 uppercase tracking-tighter">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                        Synced to Supabase
-                                    </span>
+                                    <div class="flex items-center gap-2">
+                                        <button class="px-2 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400 hover:text-white transition-colors uppercase font-bold tracking-tighter">Official</button>
+                                        <button class="px-2 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400 hover:text-white transition-colors uppercase font-bold tracking-tighter">Public</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="beast-log-stream" class="flex-1 overflow-y-auto p-4 space-y-3 font-mono text-[11px] bg-black/20">
-                                <!-- Logs will be injected here -->
-                                <div class="text-zinc-500 italic">[SYSTEM] Establishing secure tunnel to node beast-hands...</div>
-                                <div class="text-emerald-500">[OK] Handshake verified. Synchronization mesh active.</div>
-                            </div>
-                            <div class="p-4 border-t border-zinc-800/50 flex gap-2">
-                                <input type="text" id="beast-cmd-input" placeholder="Enter override command... (e.g., /purge junk)" class="flex-1 bg-black/50 border border-zinc-800 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-orange-500">
-                                <button id="beast-cmd-send" class="btn-primary px-4 py-2 text-[10px] uppercase font-bold tracking-widest leading-none">Execute</button>
+                            <div id="social-feed-container" class="flex-1 overflow-y-auto p-4 space-y-6 bg-black/20">
+                                <!-- Social posts will be injected here -->
+                                <div class="flex flex-col items-center justify-center h-full text-zinc-700">
+                                    <i data-lucide="share-2" class="w-12 h-12 mb-4 opacity-20"></i>
+                                    <p class="text-sm italic">Connecting to social nodes...</p>
+                                    <p class="text-[10px] uppercase tracking-widest mt-2">Facebook | Instagram | Twitter</p>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Personality Lab -->
+                        <!-- Platform Connect & Trending -->
                         <div class="space-y-6">
-                            <div class="bento-card p-6 space-y-6">
-                                <div class="bento-card-header border-b border-zinc-800/50 -mt-2 -mx-2 pb-4 mb-4">
-                                    <i data-lucide="sliders" class="w-5 h-5 text-purple-500"></i>
-                                    <h3 class="font-bold tracking-widest uppercase text-sm">Personality Lab</h3>
+                            <!-- Platform Sync -->
+                            <div class="bento-card p-6">
+                                <div class="bento-card-header mb-4">
+                                    <i data-lucide="link" class="w-5 h-5 text-blue-500"></i>
+                                    <h3 class="font-bold tracking-widest uppercase text-sm">Linked Nodes</h3>
                                 </div>
-                                <div class="space-y-6">
-                                    <div class="space-y-4">
-                                        <div class="flex justify-between items-center text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
-                                            <span>Empathy Mirroring</span>
-                                            <span id="empathy-value">75%</span>
+                                <div class="space-y-3">
+                                    <button class="w-full flex items-center justify-between p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-blue-500/50 transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="facebook" class="w-5 h-5 text-zinc-500 group-hover:text-blue-500 transition-colors"></i>
+                                            <span class="text-xs font-bold text-zinc-400 group-hover:text-white transition-colors">FACEBOOK</span>
                                         </div>
-                                        <input type="range" id="empathy-slider" min="0" max="100" value="75" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
-                                    </div>
-                                    <div class="space-y-4">
-                                        <div class="flex justify-between items-center text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
-                                            <span>Aggression Protocol</span>
-                                            <span id="aggression-value">20%</span>
+                                        <span class="text-[9px] text-emerald-500 font-bold uppercase tracking-widest">Connected</span>
+                                    </button>
+                                    <button class="w-full flex items-center justify-between p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-pink-500/50 transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="instagram" class="w-5 h-5 text-zinc-500 group-hover:text-pink-500 transition-colors"></i>
+                                            <span class="text-xs font-bold text-zinc-400 group-hover:text-white transition-colors">INSTAGRAM</span>
                                         </div>
-                                        <input type="range" id="aggression-slider" min="0" max="100" value="20" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-500">
-                                    </div>
-                                    <div class="pt-4 flex items-center justify-between gap-4">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                                            <span class="text-[10px] text-zinc-400 uppercase">Always Polite</span>
+                                        <span class="text-[9px] text-zinc-600 font-bold uppercase tracking-widest">Not Linked</span>
+                                    </button>
+                                    <button class="w-full flex items-center justify-between p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-cyan-500/50 transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="twitter" class="w-5 h-5 text-zinc-500 group-hover:text-cyan-500 transition-colors"></i>
+                                            <span class="text-xs font-bold text-zinc-400 group-hover:text-white transition-colors">TWITTER</span>
                                         </div>
-                                        <button class="text-[10px] text-orange-500 hover:text-white transition-colors uppercase font-bold underline">Reset Docs</button>
-                                    </div>
+                                        <span class="text-[9px] text-zinc-600 font-bold uppercase tracking-widest">Not Linked</span>
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Connectivity Node -->
-                            <div class="bento-card p-6 bg-gradient-to-br from-zinc-950 to-orange-950/20">
-                                <h4 class="text-xs font-bold uppercase tracking-widest text-white mb-2">Sync Status</h4>
-                                <div class="space-y-3">
-                                    <div class="flex items-center justify-between text-[10px]">
-                                        <span class="text-zinc-500">LOCAL HANDS</span>
-                                        <span class="text-emerald-500 font-bold">ONLINE</span>
+                            <!-- Trending Topics -->
+                            <div class="bento-card p-6">
+                                <div class="bento-card-header mb-4">
+                                    <i data-lucide="trending-up" class="w-5 h-5 text-orange-500"></i>
+                                    <h3 class="font-bold tracking-widest uppercase text-sm">Trending Now</h3>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex items-start gap-3">
+                                        <span class="text-orange-500 font-black text-sm font-['Orbitron']">01</span>
+                                        <div class="flex-1 border-b border-zinc-900 pb-2">
+                                            <p class="text-[10px] font-bold text-white uppercase tracking-tight">#BlackSheepEcosystem</p>
+                                            <p class="text-[9px] text-zinc-500">2.4k missions active</p>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center justify-between text-[10px]">
-                                        <span class="text-zinc-500">OPENCLAW BUS</span>
-                                        <span class="text-orange-500 font-bold">SYNCING...</span>
-                                    </div>
-                                    <div class="flex items-center justify-between text-[10px]">
-                                        <span class="text-zinc-500">UPTIME</span>
-                                        <span class="text-zinc-400">14d 05h 22m</span>
+                                    <div class="flex items-start gap-3">
+                                        <span class="text-zinc-700 font-black text-sm font-['Orbitron']">02</span>
+                                        <div class="flex-1 border-b border-zinc-900 pb-2">
+                                            <p class="text-[10px] font-bold text-white uppercase tracking-tight">#MissionVictory</p>
+                                            <p class="text-[9px] text-zinc-500">1.8k recruits joined</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

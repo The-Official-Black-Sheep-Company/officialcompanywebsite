@@ -35,6 +35,32 @@ class _BeastControlScreenState extends State<BeastControlScreen> {
     _addLog("Initiating $label strike...");
     final result = await action();
     _addLog(result['message']);
+
+    // Process diagnostics if available (e.g. from Health Check)
+    if (result.containsKey('diagnostics')) {
+      final diag = result['diagnostics'] as Map<String, dynamic>;
+
+      if (diag.containsKey('ssl')) {
+        final ssl = diag['ssl'] as Map<String, dynamic>;
+        _addLog(
+          "SSL: ${ssl['status'] == 'ok' ? 'OK (${ssl['days_remaining']} days)' : 'CRITICAL: ${ssl['message']}'}",
+        );
+      }
+
+      if (diag.containsKey('containers')) {
+        final containers = diag['containers'] as Map<String, dynamic>;
+        if (containers['status'] == 'ok') {
+          final checks = containers['checks'] as List<dynamic>;
+          for (var check in checks) {
+            _addLog(
+              "${check['service'].toString().toUpperCase()}: ${check['status']}",
+            );
+          }
+        } else {
+          _addLog("Containers: ${containers['status']}");
+        }
+      }
+    }
   }
 
   @override
