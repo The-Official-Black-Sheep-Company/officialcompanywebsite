@@ -286,6 +286,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (chatClose) {
       chatClose.addEventListener('click', () => chatWindow.classList.add('hidden'));
   }
+  // Mobile minimize button (above the input area) — mirrors the top-right close button
+  const chatMinimizeMobile = document.getElementById('chat-minimize-mobile');
+  if (chatMinimizeMobile) {
+      chatMinimizeMobile.addEventListener('click', () => chatWindow.classList.add('hidden'));
+  }
   if (chatExpand) {
       chatExpand.addEventListener('click', () => chatWindow.classList.toggle('fullscreen'));
   }

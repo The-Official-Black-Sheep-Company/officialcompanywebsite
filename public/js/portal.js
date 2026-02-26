@@ -96,6 +96,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadSection('dashboard');
 
+    // Mobile sidebar toggle
+    const mobileSidebar = document.querySelector('aside.sidebar');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+    if (mobileMenuBtn && mobileSidebar) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileSidebar.classList.add('mobile-open');
+        });
+    }
+    if (mobileMenuClose && mobileSidebar) {
+        mobileMenuClose.addEventListener('click', () => {
+            mobileSidebar.classList.remove('mobile-open');
+        });
+    }
 
     /* =========================================================
        PHOTOBOOTH — shared photo store (localStorage)

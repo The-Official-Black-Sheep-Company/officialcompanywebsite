@@ -344,6 +344,26 @@ body {
   }
 }
 
+/* Mobile sidebar overlay when opened */
+@media (max-width: 1024px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    display: flex !important;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 40px rgba(0,0,0,0.7);
+  }
+}
+
 @media (min-width: 1025px) {
   .mobile-header {
     display: none !important;

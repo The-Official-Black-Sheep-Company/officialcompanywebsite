@@ -769,7 +769,6 @@
                 </div>
             </div>
         </section>
-        <script src="js/biblestudy-init.js"></script>
     </div>
 
     <!-- CONTACTS SECTION -->
@@ -985,6 +984,9 @@
             </div>
 
             <!-- Input area -->
+            <div class="border-t border-zinc-800 px-2 pt-1 bg-zinc-900/90 flex justify-center md:hidden">
+                <button id="chat-minimize-mobile" class="text-[10px] text-zinc-500 hover:text-zinc-300 flex items-center gap-1 py-1">▲ Minimize chat</button>
+            </div>
             <div class="border-t border-zinc-800 px-3 py-2 bg-zinc-900/90 flex items-end gap-2">
                 <textarea id="chat-input" rows="1" placeholder="Ask about any of our services..."
                     class="flex-1 resize-none bg-black/60 border border-zinc-800 rounded-2xl px-3 py-1.5 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"></textarea>
@@ -998,6 +1000,27 @@
     <script src="js/chatbot-knowledge.js"></script>
     <script src="js/chatwoot-widget-config.js"></script>
     <script src="js/chatbot.js"></script>
+    <script src="js/biblestudy-init.js"></script>
+    <script>
+    // Daily Bible Verse Fetcher
+    (function() {
+        const verses = [
+            "The Lord bless you and keep you; the Lord make his face shine upon you and be gracious to you. - Numbers 6:24-25",
+            "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish. - John 3:16",
+            "I can do all this through him who gives me strength. - Philippians 4:13",
+            "Trust in the Lord with all your heart and lean not on your own understanding. - Proverbs 3:5",
+            "The Lord is my shepherd, I lack nothing. He makes me lie down in green pastures. - Psalm 23:1-2",
+            "Be strong and courageous. Do not be afraid; do not be discouraged. - Joshua 1:9",
+            "And we know that in all things God works for the good of those who love him. - Romans 8:28"
+        ];
+        const el = document.getElementById('bible-verse');
+        if (el) {
+            // Pick verse based on day of year so it changes daily
+            const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+            el.textContent = verses[dayOfYear % verses.length];
+        }
+    })();
+    </script>
     <script src="js/background.js"></script>
 
     <!-- Legal Modal -->
